@@ -13,11 +13,11 @@ body {
 }
 
 .drop-example {
-  width: 350px;
-  height: 350px;
-  overflow: auto;
-  //margin-top: 500px;
+  //width: 350px;
+  //height: 350px;
+  margin-top: 500px;
   background: #fff;
+  //overflow: auto;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -25,7 +25,7 @@ body {
 }
 
 .drop-scroll-content {
-  width: 2000px;
-  height: 2000px;
-  padding: 1000px;
+  //width: 2000px;
+  //height: 2000px;
+  //padding: 1000px;
 }
