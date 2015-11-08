@@ -1,83 +1,81 @@
 import React, { Component, Children, PropTypes, createElement } from 'react'
 import ReactDOM from 'react-dom'
+import shallowCompare from 'react-addons-shallow-compare'
 import Tether from 'tether'
-
-// TetherElement
-// TetherTarget
-// 
-// <TetherElement
-//   target={this.refs.trigger}
-//   options={{}}
-// >
-//   <div>
-//     I'm a cool box that's tethered to a trigger
-//   </div>
-// <TetherElement>
-
-class TetheredElement {
-  constructor(reactComponent, tetherOptions) {
-    this.reactComponent = reactComponent
-
-    this._node = document.createElement('div')
-    this._node.style.position = 'absolute'
-    
-    document.body.appendChild(this._node)
-
-    this.tether = new Tether({
-      element: this._node,
-      ...tetherOptions
-    })
-
-    this.update()
-  }
-
-  update() {
-    ReactDOM.render(
-      this.reactComponent,
-      this._node,
-      () => this.tether.position()
-    )
-  }
-
-  destroy() {
-    React.unmountComponentAtNode(this._node)
-    this.domNode.parentNode.removeChild(this._node)
-    this.tether.destroy()
-  }
-}
 
 class TetherElement extends Component {
   static propTypes = {
-    tethered: React.PropTypes.node.isRequired,
-    tetherOptions: React.PropTypes.object.isRequired
+    target: PropTypes.object,
+    options: PropTypes.object.isRequired
   }
 
-  state = {
-    tooltipVisible: false
-  }
+  _tetherInitialized = false
 
   componentDidMount() {
-    const tetherOptions = {
-      target: ReactDOM.findDOMNode(this),
-      ...this.props.tetherOptions
-    }
+    this._node = document.createElement('div')
+    this._node.style.position = 'absolute'
+    
+    // append node to end of body
+    document.body.appendChild(this._node)
 
-    this._tethered = new TetheredElement(
-      this.props.tethered, tetherOptions
-    )
+    // if target is available initialize tether
+    if (this.props.target) {
+      this._initTether(this.props)
+    }
   }
 
-  componentDidUpdate() {
-    this._tethered.update()
+  componentWillReceiveProps(nextProps) {
+    if (!this._tetherInitialized) {
+      this._initTether(nextProps)
+    } else {
+      this._update(nextProps)
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
   }
 
   componentWillUnmount() {
-    this._tethered.destroy()
+    ReactDOM.unmountComponentAtNode(this._node)
+    this._node.parentNode.removeChild(this._node)
+    this._tether.destroy()
+  }
+
+  _initTether(props) {
+    // initialize tether with respective elements
+    this._tether = new Tether({
+      element: this._node,
+      target: props.target,
+      ...props.options
+    })
+
+    // update DOM
+    this._update(props)
+
+    this._tetherInitialized = true
+  }
+
+  _update(props) {
+    const child = React.Children.only(props.children)
+
+    // set options
+    this._tether.setOptions({
+      element: this._node,
+      target: props.target,
+      ...props.options
+    })
+
+    // render to DOM
+    ReactDOM.render(
+      child,
+      this._node,
+      () => this._tether.position()
+    )
   }
 
   render() {
-    const { tethered, tetherOptions, children, ...props } = this.props
-    return Children.only(children)
+    return null
   }
 }
 
