@@ -42,6 +42,14 @@ class TetherElement extends Component {
     this._tether.destroy()
   }
 
+  disable() {
+    this._tether.disable()
+  }
+
+  enable() {
+    this._tether.enable()
+  }
+
   _initTether(props) {
     // initialize tether with respective elements
     this._tether = new Tether({
