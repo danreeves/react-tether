@@ -11,7 +11,7 @@ var config = {
     publicPath: 'dist/',
     filename: 'react-tether.js',
     sourceMapFilename: 'react-tether.sourcemap.js',
-    library: 'TetherElement',
+    library: 'ReactTether',
     libraryTarget: 'umd'
   },
   module: {
@@ -25,7 +25,8 @@ var config = {
   },
   externals: {
     'react': 'React',
-    'react-dom': 'ReactDOM'
+    'react-dom': 'ReactDOM',
+    'tether': 'Tether'
   },
 };
 
@@ -37,7 +38,7 @@ if(TARGET === 'minify') {
       warnings: false
     },
     mangle: {
-      except: ['React', 'ReactDOM', 'TetherElement']
+      except: ['React', 'ReactDOM', 'ReactTether']
     }
   }));
 }

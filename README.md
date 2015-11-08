@@ -1,12 +1,61 @@
-## React Tether 0.0.1
+## React Tether 0.1.0
 
-Drop content anywhere on the page.
+React wrapper around [Tether](https://github.com/hubspot/tether) lib from Hub Spot.
 
 ## Install
 
 `npm install react-tether --save`
 
 `bower install react-tether --save`
+
+## Example Usage
+
+```javascript
+import TetherElement from 'react-tether'
+
+class App extends Component {
+  state = {
+    isOpen: false,
+    vertical: 'left',
+    horizontal: 'top'
+  }
+
+  render() {
+    return(
+      const { isOpen, vertical, horizontal } = this.state
+
+      <div>
+        <button
+          ref="target"
+          onClick={() => {this.setState({isOpen: !isOpen})}}
+        >
+          Toggle Tethered Content
+        </button>
+        {
+          isOpen &&
+          <TetherElement
+            target={this.refs.target}
+            options={{
+              attachment: `${vertical} ${horizontal}`,
+              constraints: [
+                {
+                  to: 'scrollParent',
+                  attachment: 'together'
+                }
+              ]
+            }}
+          >
+            <div>
+              <h2>Tethered Content</h2>
+              <p>A paragraph to accompany the title.</p>
+            </div>
+          </TetherElement>
+        }
+      </div>
+    )
+  }
+}
+```
 
 ## Run Example
 
