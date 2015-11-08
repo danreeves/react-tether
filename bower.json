@@ -1,0 +1,23 @@
+{
+  "name": "react-tether",
+  "version": "0.0.1",
+  "homepage": "https://github.com/souporserious/react-tether",
+  "authors": [
+    "Travis Arnold <ftntravis@gmail.com>"
+  ],
+  "description": "Drop content anywhere on the page.",
+  "main": ["./dist/react-tether.js"],
+  "keywords": [
+    "react",
+    "component",
+    "drop"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
