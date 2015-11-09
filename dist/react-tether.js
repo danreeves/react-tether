@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["React", "ReactDOM", "Tether"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactTether"] = factory(require("React"), require("ReactDOM"), require("Tether"));
+		exports["TetherElement"] = factory(require("React"), require("ReactDOM"), require("Tether"));
 	else
-		root["ReactTether"] = factory(root["React"], root["ReactDOM"], root["Tether"]);
+		root["TetherElement"] = factory(root["React"], root["ReactDOM"], root["Tether"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_7__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -152,6 +152,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _reactDom2['default'].unmountComponentAtNode(this._node);
 	      this._node.parentNode.removeChild(this._node);
 	      this._tether.destroy();
+	    }
+	  }, {
+	    key: 'disable',
+	    value: function disable() {
+	      this._tether.disable();
+	    }
+	  }, {
+	    key: 'enable',
+	    value: function enable() {
+	      this._tether.enable();
 	    }
 	  }, {
 	    key: '_initTether',

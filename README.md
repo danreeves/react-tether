@@ -1,8 +1,8 @@
-## React Tether 0.1.0
+## React Tether 0.1.1
 
 [![Dependency Status](https://david-dm.org/souporserious/react-tether.svg)](https://david-dm.org/souporserious/react-tether)
 
-React wrapper around [Tether](https://github.com/hubspot/tether) lib from Hub Spot.
+React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 
 ## Install
 
