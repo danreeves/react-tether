@@ -13,7 +13,6 @@ class TetherElement extends Component {
 
   componentDidMount() {
     this._node = document.createElement('div')
-    this._node.style.position = 'absolute'
     
     // append node to end of body
     document.body.appendChild(this._node)
