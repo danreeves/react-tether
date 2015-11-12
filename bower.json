@@ -9,6 +9,8 @@
   "main": ["./dist/react-tether.js"],
   "keywords": [
     "react",
+    "react-tether",
+    "tether",
     "component",
     "drop"
   ],
