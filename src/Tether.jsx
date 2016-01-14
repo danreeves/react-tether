@@ -1,22 +1,24 @@
-import React, { Component, Children, PropTypes, createElement } from 'react'
-import ReactDOM from 'react-dom'
-import shallowCompare from 'react-addons-shallow-compare'
+import React, { Component, PropTypes } from 'react'
+import Portal from 'react-portal'
+
 import Tether from 'tether'
 
 class TetherElement extends Component {
   static propTypes = {
     target: PropTypes.object,
-    options: PropTypes.object.isRequired
+    options: PropTypes.object.isRequired,
+    children: PropTypes.node,
   }
 
-  _tetherInitialized = false
+  render() {
+    return (
+      <Portal isOpened onOpen={node => this._node = node}>
+        {this.props.children}
+      </Portal>
+    )
+  }
 
   componentDidMount() {
-    this._node = document.createElement('div')
-    
-    // append node to end of body
-    document.body.appendChild(this._node)
-
     // if target is available initialize tether
     if (this.props.target) {
       this._initTether(this.props)
@@ -31,15 +33,11 @@ class TetherElement extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
-
   componentWillUnmount() {
-    ReactDOM.unmountComponentAtNode(this._node)
-    this._node.parentNode.removeChild(this._node)
     this._tether.destroy()
   }
+
+  _tetherInitialized = false
 
   disable() {
     this._tether.disable()
@@ -54,7 +52,7 @@ class TetherElement extends Component {
     this._tether = new Tether({
       element: this._node,
       target: props.target,
-      ...props.options
+      ...props.options,
     })
 
     // update DOM
@@ -64,25 +62,13 @@ class TetherElement extends Component {
   }
 
   _update(props) {
-    const child = React.Children.only(props.children)
-
     // set options
     this._tether.setOptions({
       element: this._node,
       target: props.target,
-      ...props.options
+      ...props.options,
     })
-
-    // render to DOM
-    ReactDOM.render(
-      child,
-      this._node,
-      () => this._tether.position()
-    )
-  }
-
-  render() {
-    return null
+    this._tether.position()
   }
 }
 
