@@ -33,6 +33,7 @@
     "react": "^0.14.0",
     "react-addons-shallow-compare": "^0.14.0",
     "react-dom": "^0.14.0",
+    "react-portal": "^1.5.5",
     "tether": "^1.1.1"
   },
   "devDependencies": {
