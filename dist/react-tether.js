@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["React", "ReactDOM", "Tether"], factory);
 	else if(typeof exports === 'object')
-		exports["TetherElement"] = factory(require("React"), require("ReactDOM"), require("Tether"));
+		exports["TetherComponent"] = factory(require("React"), require("ReactDOM"), require("Tether"));
 	else
-		root["TetherElement"] = factory(root["React"], root["ReactDOM"], root["Tether"]);
+		root["TetherComponent"] = factory(root["React"], root["ReactDOM"], root["Tether"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_7__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -62,11 +62,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _Tether = __webpack_require__(1);
+	var _TetherComponent = __webpack_require__(1);
 
-	var _Tether2 = _interopRequireDefault(_Tether);
+	var _TetherComponent2 = _interopRequireDefault(_TetherComponent);
 
-	exports['default'] = _Tether2['default'];
+	exports['default'] = _TetherComponent2['default'];
 	module.exports = exports['default'];
 
 /***/ },
@@ -107,50 +107,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _tether2 = _interopRequireDefault(_tether);
 
-	var TetherElement = (function (_Component) {
-	  _inherits(TetherElement, _Component);
+	var TetherComponent = (function (_Component) {
+	  _inherits(TetherComponent, _Component);
 
-	  function TetherElement() {
-	    _classCallCheck(this, TetherElement);
+	  function TetherComponent() {
+	    _classCallCheck(this, TetherComponent);
 
-	    _get(Object.getPrototypeOf(TetherElement.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(TetherComponent.prototype), 'constructor', this).apply(this, arguments);
 
-	    this._tetherInitialized = false;
+	    this._targetNode = null;
+	    this._elementParentNode = null;
+	    this._tether = false;
 	  }
 
-	  _createClass(TetherElement, [{
+	  _createClass(TetherComponent, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this._node = document.createElement('div');
-
-	      // append node to end of body
-	      document.body.appendChild(this._node);
-
-	      // if target is available initialize tether
-	      if (this.props.target) {
-	        this._initTether(this.props);
-	      }
+	      this._targetNode = _reactDom2['default'].findDOMNode(this);
+	      this._update(this.props);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (!this._tetherInitialized) {
-	        this._initTether(nextProps);
-	      } else {
-	        this._update(nextProps);
-	      }
-	    }
-	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return (0, _reactAddonsShallowCompare2['default'])(this, nextProps, nextState);
+	      this._update(nextProps);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      _reactDom2['default'].unmountComponentAtNode(this._node);
-	      this._node.parentNode.removeChild(this._node);
-	      this._tether.destroy();
+	      this._destroy();
 	    }
 	  }, {
 	    key: 'disable',
@@ -163,41 +147,88 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._tether.enable();
 	    }
 	  }, {
-	    key: '_initTether',
-	    value: function _initTether(props) {
-	      // initialize tether with respective elements
-	      this._tether = new _tether2['default'](_extends({
-	        element: this._node,
-	        target: props.target
-	      }, props.options));
+	    key: '_destroy',
+	    value: function _destroy() {
+	      _reactDom2['default'].unmountComponentAtNode(this._elementParentNode);
+	      this._elementParentNode.parentNode.removeChild(this._elementParentNode);
 
-	      // update DOM
-	      this._update(props);
+	      if (this._tether) {
+	        this._tether.destroy();
+	      }
 
-	      this._tetherInitialized = true;
+	      this._elementParentNode = null;
+	      this._tether = null;
 	    }
 	  }, {
 	    key: '_update',
-	    value: function _update(props) {
-	      var _this = this;
+	    value: function _update(_ref) {
+	      var children = _ref.children;
+	      var options = _ref.options;
 
-	      var child = _react2['default'].Children.only(props.children);
+	      var updateTether = this._updateTether.bind(this);
+	      var elementComponent = children[1];
 
-	      // set options
-	      this._tether.setOptions(_extends({
-	        element: this._node,
-	        target: props.target
-	      }, props.options));
+	      // if no element component provided, bail out
+	      if (!elementComponent) {
+	        // destroy Tether elements if they have been created
+	        if (this._tether) {
+	          this._destroy();
+	        }
 
-	      // render to DOM
-	      _reactDom2['default'].render(child, this._node, function () {
-	        return _this._tether.position();
+	        return;
+	      }
+
+	      // create element node container if it hasn't been yet
+	      if (!this._elementParentNode) {
+	        // create a node that we can stick our content Component in
+	        this._elementParentNode = document.createElement('div');
+
+	        // append node to the end of the body
+	        document.body.appendChild(this._elementParentNode);
+	      }
+
+	      // render element component at the end of the DOM
+	      _reactDom2['default'].unstable_renderSubtreeIntoContainer(this, elementComponent, this._elementParentNode, function () {
+	        // we need "this" scope so we can get the newly rendered DOM node
+	        updateTether(this, options);
 	      });
+	    }
+	  }, {
+	    key: '_updateTether',
+	    value: function _updateTether(element, options) {
+	      // initialize or update tether with new elements & options
+	      var tetherOptions = _extends({
+	        target: this._targetNode,
+	        element: element
+	      }, options);
+
+	      if (!this._tether) {
+	        this._tether = new _tether2['default'](tetherOptions);
+
+	        // reposition because when rendering/not rendering
+	        // the element the position will be off
+	        this._tether.position();
+	      } else {
+	        this._tether.setOptions(tetherOptions);
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return null;
+	      var children = this.props.children;
+
+	      var firstChild = null;
+
+	      // we use forEach because the second child could be null
+	      // causing children to not be an array
+	      _react.Children.forEach(children, function (child, index) {
+	        if (index === 0) {
+	          firstChild = child;
+	          return;
+	        }
+	      });
+
+	      return firstChild;
 	    }
 	  }], [{
 	    key: 'propTypes',
@@ -208,10 +239,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    enumerable: true
 	  }]);
 
-	  return TetherElement;
+	  return TetherComponent;
 	})(_react.Component);
 
-	exports['default'] = TetherElement;
+	exports['default'] = TetherComponent;
 	module.exports = exports['default'];
 
 /***/ },
