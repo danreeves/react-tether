@@ -16,8 +16,11 @@ React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 import TetherComponent from 'react-tether'
 
 class SimpleDemo extends React.Component {
-  state = {
-    isOpen: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      isOpen: false
+    }
   }
 
   render() {
