@@ -28,7 +28,6 @@ class SimpleDemo extends React.Component {
 
     return(
       <TetherComponent
-        target={this.refs.target}
         options={{
           attachment: 'bottom center',
           constraints: [
@@ -54,6 +53,16 @@ class SimpleDemo extends React.Component {
   }
 }
 ```
+
+## Props
+
+#### `options`: PropTypes.object
+
+Accepts [Tether options](http://tether.io/#options).
+
+#### `children`: PropTypes.element (2 Max)
+
+The first child is used as the Tether's `target` and the second child (which is optional) is used as Tether's `element` that will be moved.
 
 ## Run Example
 
