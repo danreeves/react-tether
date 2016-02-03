@@ -15,13 +15,13 @@ React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 ```javascript
 import TetherComponent from 'react-tether'
 
-class SimpleDemo extends Component {
+class SimpleDemo extends React.Component {
   state = {
     isOpen: false
   }
 
   render() {
-    const { isOpen, vertical, horizontal } = this.state
+    const { isOpen } = this.state
 
     return(
       <TetherComponent
