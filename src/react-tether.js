@@ -1,1 +1,1 @@
-export default from './Tether'
+export default from './TetherComponent'

@@ -1,14 +1,50 @@
 import React, { Component, Children, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import TetherElement from '../src/react-tether'
+import TetherComponent from '../src/react-tether'
 import './main.scss'
 
-class App extends Component {
+class SimpleDemo extends Component {
+  state = {
+    isOpen: false
+  }
+
+  render() {
+    const { isOpen, vertical, horizontal } = this.state
+
+    return(
+      <TetherComponent
+        target={this.refs.target}
+        options={{
+          attachment: 'bottom center',
+          constraints: [
+            {
+              to: 'scrollParent',
+              attachment: 'together'
+            }
+          ]
+        }}
+      >
+        <button onClick={() => {this.setState({isOpen: !isOpen})}}>
+          Toggle Tethered Content
+        </button>
+        {
+          isOpen &&
+          <div>
+            <h2>Tethered Content</h2>
+            <p>A paragraph to accompany the title.</p>
+          </div>
+        }
+      </TetherComponent>
+    )
+  }
+}
+
+class ComplexDemo extends Component {
   state = {
     isOpen: true,
     toggleHeight: false,
-    vertical: 'top',
-    horizontal: 'left',
+    vertical: 'middle',
+    horizontal: 'right',
     toggleContent: false
   }
 
@@ -16,9 +52,6 @@ class App extends Component {
     // position example in the middle
     this.refs.example.scrollLeft = 925
     this.refs.example.scrollTop = 925
-    
-    // allow correct position of drop after first render
-    this.forceUpdate()
   }
 
   render() {
@@ -60,30 +93,30 @@ class App extends Component {
 
         <div ref="example" className="drop-example">
           <div className="drop-scroll-content">
-            <div
-              ref="target"
-              style={{
-                width: 200,
-                height: toggleHeight ? 300 : 200,
-                padding: 12,
-                background: '#b4da55',
+            <TetherComponent
+              options={{
+                attachment: `${vertical} ${horizontal}`,
+                constraints: [
+                  {
+                    to: 'scrollParent',
+                    attachment: 'together'
+                  }
+                ]
               }}
-              onClick={() => this.setState({isOpen: !isOpen})}
-            />
-            {
-              isOpen &&
-              <TetherElement
-                target={this.refs.target}
-                options={{
-                  attachment: `${vertical} ${horizontal}`,
-                  constraints: [
-                    {
-                      to: 'scrollParent',
-                      attachment: 'together'
-                    }
-                  ]
+            >
+              <div
+                style={{
+                  width: 200,
+                  height: toggleHeight ? 300 : 200,
+                  padding: 12,
+                  background: '#b4da55',
                 }}
+                onClick={() => this.setState({isOpen: !isOpen})}
               >
+                Target
+              </div>
+              {
+                isOpen &&
                 <div
                   style={{
                     padding: 12,
@@ -96,8 +129,8 @@ class App extends Component {
                     <div>Can have state too :)</div>
                   }
                 </div>
-              </TetherElement>
-            }
+              }
+            </TetherComponent>
           </div>
         </div>
       </div>
@@ -105,4 +138,15 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+class App extends Component {
+  render () {
+    return(
+      <div>
+        <ComplexDemo />
+        <SimpleDemo />
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('app'))

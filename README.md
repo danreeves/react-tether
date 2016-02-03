@@ -1,4 +1,4 @@
-## React Tether 0.1.2
+## React Tether 0.2.0
 
 [![Dependency Status](https://david-dm.org/souporserious/react-tether.svg)](https://david-dm.org/souporserious/react-tether)
 
@@ -13,47 +13,40 @@ React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 ## Example Usage
 
 ```javascript
-import TetherElement from 'react-tether'
+import TetherComponent from 'react-tether'
 
-class App extends Component {
+class SimpleDemo extends Component {
   state = {
-    isOpen: false,
-    vertical: 'left',
-    horizontal: 'top'
+    isOpen: false
   }
 
   render() {
-    return(
-      const { isOpen, vertical, horizontal } = this.state
+    const { isOpen, vertical, horizontal } = this.state
 
-      <div>
-        <button
-          ref="target"
-          onClick={() => {this.setState({isOpen: !isOpen})}}
-        >
+    return(
+      <TetherComponent
+        target={this.refs.target}
+        options={{
+          attachment: 'bottom center',
+          constraints: [
+            {
+              to: 'scrollParent',
+              attachment: 'together'
+            }
+          ]
+        }}
+      >
+        <button onClick={() => {this.setState({isOpen: !isOpen})}}>
           Toggle Tethered Content
         </button>
         {
           isOpen &&
-          <TetherElement
-            target={this.refs.target}
-            options={{
-              attachment: `${vertical} ${horizontal}`,
-              constraints: [
-                {
-                  to: 'scrollParent',
-                  attachment: 'together'
-                }
-              ]
-            }}
-          >
-            <div>
-              <h2>Tethered Content</h2>
-              <p>A paragraph to accompany the title.</p>
-            </div>
-          </TetherElement>
+          <div>
+            <h2>Tethered Content</h2>
+            <p>A paragraph to accompany the title.</p>
+          </div>
         }
-      </div>
+      </TetherComponent>
     )
   }
 }
