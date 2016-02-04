@@ -56,11 +56,11 @@ class SimpleDemo extends React.Component {
 
 ## Props
 
-#### `options`: PropTypes.object
+#### `options`: PropTypes.object.isRequired
 
 Accepts [Tether options](http://tether.io/#options).
 
-#### `children`: PropTypes.element (2 Max)
+#### `children`: PropTypes.node.isRequired (2 Max)
 
 The first child is used as the Tether's `target` and the second child (which is optional) is used as Tether's `element` that will be moved.
 

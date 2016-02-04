@@ -5,7 +5,6 @@ import Tether from 'tether'
 
 class TetherComponent extends Component {
   static propTypes = {
-    target: PropTypes.object,
     options: PropTypes.object.isRequired
   }
 
@@ -15,11 +14,11 @@ class TetherComponent extends Component {
 
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
-    this._update(this.props)
+    this._update()
   }
 
-  componentWillReceiveProps(nextProps) {
-    this._update(nextProps)
+  componentDidUpdate() {
+    this._update()
   }
 
   componentWillUnmount() {
@@ -46,8 +45,8 @@ class TetherComponent extends Component {
     this._tether = null
   }
 
-  _update({ children, options }) {
-    const updateTether = this._updateTether.bind(this)
+  _update() {
+    const { children, options } = this.props
     let elementComponent = children[1]
 
     // if no element component provided, bail out
@@ -56,7 +55,6 @@ class TetherComponent extends Component {
       if (this._tether) {
         this._destroy()
       }
-
       return
     }
 
@@ -69,29 +67,27 @@ class TetherComponent extends Component {
       document.body.appendChild(this._elementParentNode)
     }
 
-    // render element component at the end of the DOM
+    // render element component into the DOM
     ReactDOM.unstable_renderSubtreeIntoContainer(
-      this, elementComponent, this._elementParentNode, function () {
-        // we need "this" scope so we can get the newly rendered DOM node
-        updateTether(this, options)
+      this, elementComponent, this._elementParentNode, () => {
+        // don't update Tether until the subtree has finished rendering
+        this._updateTether()
       }
     )
   }
 
-  _updateTether(element, options) {
+  _updateTether() {
+    const { options } = this.props
+
     // initialize or update tether with new elements & options
     const tetherOptions = {
       target: this._targetNode,
-      element,
+      element: this._elementParentNode,
       ...options
     }
 
     if (!this._tether) {
       this._tether = new Tether(tetherOptions)
-
-      // reposition because when rendering/not rendering
-      // the element the position will be off
-      this._tether.position()
     } else {
       this._tether.setOptions(tetherOptions)
     }
