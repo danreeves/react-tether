@@ -5,7 +5,14 @@ import Tether from 'tether'
 
 class TetherComponent extends Component {
   static propTypes = {
-    options: PropTypes.object.isRequired
+    options: PropTypes.object.isRequired,
+    renderElementTag: PropTypes.string,
+    renderElementTo: PropTypes.any
+  }
+
+  static defaultProps = {
+    renderElementTag: 'div',
+    renderElementTo: document.body
   }
 
   _targetNode = null
@@ -46,7 +53,7 @@ class TetherComponent extends Component {
   }
 
   _update() {
-    const { children, options } = this.props
+    const { children, renderElementTag, renderElementTo } = this.props
     let elementComponent = children[1]
 
     // if no element component provided, bail out
@@ -61,10 +68,10 @@ class TetherComponent extends Component {
     // create element node container if it hasn't been yet
     if (!this._elementParentNode) { 
       // create a node that we can stick our content Component in
-      this._elementParentNode = document.createElement('div')
+      this._elementParentNode = document.createElement(renderElementTag)
     
       // append node to the end of the body
-      document.body.appendChild(this._elementParentNode)
+      renderElementTo.appendChild(this._elementParentNode)
     }
 
     // render element component into the DOM
