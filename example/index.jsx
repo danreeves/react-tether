@@ -9,21 +9,10 @@ class SimpleDemo extends Component {
   }
 
   render() {
-    const { isOpen, vertical, horizontal } = this.state
+    const { isOpen } = this.state
 
     return(
-      <TetherComponent
-        target={this.refs.target}
-        options={{
-          attachment: 'bottom center',
-          constraints: [
-            {
-              to: 'scrollParent',
-              attachment: 'together'
-            }
-          ]
-        }}
-      >
+      <TetherComponent attachment="top center">
         <button onClick={() => {this.setState({isOpen: !isOpen})}}>
           Toggle Tethered Content
         </button>
@@ -94,15 +83,11 @@ class ComplexDemo extends Component {
         <div ref="example" className="drop-example">
           <div className="drop-scroll-content">
             <TetherComponent
-              options={{
-                attachment: `${vertical} ${horizontal}`,
-                constraints: [
-                  {
-                    to: 'scrollParent',
-                    attachment: 'together'
-                  }
-                ]
-              }}
+              attachment={`${vertical} ${horizontal}`}
+              constraints={[{
+                to: 'scrollParent',
+                attachment: 'together'
+              }]}
             >
               <div
                 style={{

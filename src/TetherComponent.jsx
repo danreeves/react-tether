@@ -1,13 +1,43 @@
 import React, { Component, Children, PropTypes, createElement } from 'react'
 import ReactDOM from 'react-dom'
-import shallowCompare from 'react-addons-shallow-compare'
 import Tether from 'tether'
+
+const childrenPropType = ({ children }, propName, componentName) => {
+  const childCount = Children.count(children)
+  if (childCount <= 0) {
+    return new Error(`${componentName} expects at least one child to use as the target element.`)
+  } else if (childCount > 2) {
+    return new Error(`Only a max of two children allowed in ${componentName}.`)
+  }
+}
+
+const attachmentPositions = [
+  'top left',
+  'top center',
+  'top right',
+  'middle left',
+  'middle center',
+  'middle right',
+  'bottom left',
+  'bottom center',
+  'bottom right'
+]
 
 class TetherComponent extends Component {
   static propTypes = {
-    options: PropTypes.object.isRequired,
+    children: childrenPropType,
     renderElementTag: PropTypes.string,
-    renderElementTo: PropTypes.any
+    renderElementTo: PropTypes.any,
+    attachment: PropTypes.oneOf(attachmentPositions).isRequired,
+    targetAttachment: PropTypes.oneOf(attachmentPositions),
+    offset: PropTypes.string,
+    targetOffset: PropTypes.string,
+    targetModifier: PropTypes.string,
+    enabled: PropTypes.bool,
+    classes: PropTypes.object,
+    classPrefix: PropTypes.string,
+    optimizations: PropTypes.object,
+    constraints: PropTypes.array
   }
 
   static defaultProps = {
@@ -38,6 +68,10 @@ class TetherComponent extends Component {
 
   enable() {
     this._tether.enable()
+  }
+
+  position() {
+    this._tether.position()
   }
 
   _destroy() {
@@ -84,7 +118,7 @@ class TetherComponent extends Component {
   }
 
   _updateTether() {
-    const { options } = this.props
+    const { children, renderElementTag, renderElementTo, ...options } = this.props
 
     // initialize or update tether with new elements & options
     const tetherOptions = {
