@@ -4,6 +4,8 @@
 
 React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 
+![alt tag](images/tether-demo.gif)
+
 ## Install
 
 `npm install react-tether --save`
@@ -52,13 +54,21 @@ class SimpleDemo extends React.Component {
 
 ## Props
 
-#### `options`: PropTypes.object.isRequired
-
-Accepts [Tether options](http://tether.io/#options).
-
 #### `children`: PropTypes.node.isRequired (2 Max)
 
 The first child is used as the Tether's `target` and the second child (which is optional) is used as Tether's `element` that will be moved.
+
+#### `renderElementTag`: PropTypes.string
+
+The tag that is used to render the Tether element, defaults to `div`.
+
+#### `renderElementTo`: PropTypes.any
+
+Where in the DOM the Tether element is appended, defaults to `document.body`.
+
+#### `Tether Options`:
+
+Any valid [Tether options](http://tether.io/#options).
 
 ## Run Example
 

@@ -91,8 +91,8 @@ class ComplexDemo extends Component {
             >
               <div
                 style={{
-                  width: 200,
-                  height: toggleHeight ? 300 : 200,
+                  width: 150,
+                  height: toggleHeight ? 200 : 150,
                   padding: 12,
                   background: '#b4da55',
                 }}
