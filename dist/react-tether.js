@@ -7,7 +7,7 @@
 		exports["TetherComponent"] = factory(require("React"), require("ReactDOM"), require("Tether"));
 	else
 		root["TetherComponent"] = factory(root["React"], root["ReactDOM"], root["Tether"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_7__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -87,6 +87,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
@@ -99,13 +101,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactAddonsShallowCompare = __webpack_require__(4);
-
-	var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
-
-	var _tether = __webpack_require__(7);
+	var _tether = __webpack_require__(4);
 
 	var _tether2 = _interopRequireDefault(_tether);
+
+	var childrenPropType = function childrenPropType(_ref, propName, componentName) {
+	  var children = _ref.children;
+
+	  var childCount = _react.Children.count(children);
+	  if (childCount <= 0) {
+	    return new Error(componentName + ' expects at least one child to use as the target element.');
+	  } else if (childCount > 2) {
+	    return new Error('Only a max of two children allowed in ' + componentName + '.');
+	  }
+	};
+
+	var attachmentPositions = ['top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right'];
 
 	var TetherComponent = (function (_Component) {
 	  _inherits(TetherComponent, _Component);
@@ -124,12 +135,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this._targetNode = _reactDom2['default'].findDOMNode(this);
-	      this._update(this.props);
+	      this._update();
 	    }
 	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this._update(nextProps);
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      this._update();
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -147,6 +158,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._tether.enable();
 	    }
 	  }, {
+	    key: 'position',
+	    value: function position() {
+	      this._tether.position();
+	    }
+	  }, {
 	    key: '_destroy',
 	    value: function _destroy() {
 	      _reactDom2['default'].unmountComponentAtNode(this._elementParentNode);
@@ -161,11 +177,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '_update',
-	    value: function _update(_ref) {
-	      var children = _ref.children;
-	      var options = _ref.options;
+	    value: function _update() {
+	      var _this = this;
 
-	      var updateTether = this._updateTether.bind(this);
+	      var _props = this.props;
+	      var children = _props.children;
+	      var renderElementTag = _props.renderElementTag;
+	      var renderElementTo = _props.renderElementTo;
+
 	      var elementComponent = children[1];
 
 	      // if no element component provided, bail out
@@ -174,40 +193,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this._tether) {
 	          this._destroy();
 	        }
-
 	        return;
 	      }
 
 	      // create element node container if it hasn't been yet
 	      if (!this._elementParentNode) {
 	        // create a node that we can stick our content Component in
-	        this._elementParentNode = document.createElement('div');
+	        this._elementParentNode = document.createElement(renderElementTag);
 
 	        // append node to the end of the body
-	        document.body.appendChild(this._elementParentNode);
+	        renderElementTo.appendChild(this._elementParentNode);
 	      }
 
-	      // render element component at the end of the DOM
+	      // render element component into the DOM
 	      _reactDom2['default'].unstable_renderSubtreeIntoContainer(this, elementComponent, this._elementParentNode, function () {
-	        // we need "this" scope so we can get the newly rendered DOM node
-	        updateTether(this, options);
+	        // don't update Tether until the subtree has finished rendering
+	        _this._updateTether();
 	      });
 	    }
 	  }, {
 	    key: '_updateTether',
-	    value: function _updateTether(element, options) {
+	    value: function _updateTether() {
+	      var _props2 = this.props;
+	      var children = _props2.children;
+	      var renderElementTag = _props2.renderElementTag;
+	      var renderElementTo = _props2.renderElementTo;
+
+	      var options = _objectWithoutProperties(_props2, ['children', 'renderElementTag', 'renderElementTo']);
+
 	      // initialize or update tether with new elements & options
 	      var tetherOptions = _extends({
 	        target: this._targetNode,
-	        element: element
+	        element: this._elementParentNode
 	      }, options);
 
 	      if (!this._tether) {
 	        this._tether = new _tether2['default'](tetherOptions);
-
-	        // reposition because when rendering/not rendering
-	        // the element the position will be off
-	        this._tether.position();
 	      } else {
 	        this._tether.setOptions(tetherOptions);
 	      }
@@ -233,8 +254,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }], [{
 	    key: 'propTypes',
 	    value: {
-	      target: _react.PropTypes.object,
-	      options: _react.PropTypes.object.isRequired
+	      children: childrenPropType,
+	      renderElementTag: _react.PropTypes.string,
+	      renderElementTo: _react.PropTypes.any,
+	      attachment: _react.PropTypes.oneOf(attachmentPositions).isRequired,
+	      targetAttachment: _react.PropTypes.oneOf(attachmentPositions),
+	      offset: _react.PropTypes.string,
+	      targetOffset: _react.PropTypes.string,
+	      targetModifier: _react.PropTypes.string,
+	      enabled: _react.PropTypes.bool,
+	      classes: _react.PropTypes.object,
+	      classPrefix: _react.PropTypes.string,
+	      optimizations: _react.PropTypes.object,
+	      constraints: _react.PropTypes.array
+	    },
+	    enumerable: true
+	  }, {
+	    key: 'defaultProps',
+	    value: {
+	      renderElementTag: 'div',
+	      renderElementTo: document.body
 	    },
 	    enumerable: true
 	  }]);
@@ -259,101 +298,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(5);
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	* @providesModule shallowCompare
-	*/
-
-	'use strict';
-
-	var shallowEqual = __webpack_require__(6);
-
-	/**
-	 * Does a shallow comparison for props and state.
-	 * See ReactComponentWithPureRenderMixin
-	 */
-	function shallowCompare(instance, nextProps, nextState) {
-	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
-	}
-
-	module.exports = shallowCompare;
-
-/***/ },
-/* 6 */
 /***/ function(module, exports) {
 
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule shallowEqual
-	 * @typechecks
-	 * 
-	 */
-
-	'use strict';
-
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-	/**
-	 * Performs equality by iterating through keys on an object and returning false
-	 * when any key has values which are not strictly equal between the arguments.
-	 * Returns true when the values of all keys are strictly equal.
-	 */
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-
-	  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-	    return false;
-	  }
-
-	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
-
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
-
-	  // Test for A's keys different from B.
-	  var bHasOwnProperty = hasOwnProperty.bind(objB);
-	  for (var i = 0; i < keysA.length; i++) {
-	    if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-	      return false;
-	    }
-	  }
-
-	  return true;
-	}
-
-	module.exports = shallowEqual;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
 
 /***/ }
 /******/ ])

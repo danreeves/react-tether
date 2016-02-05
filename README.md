@@ -1,4 +1,4 @@
-## React Tether 0.2.0
+## React Tether 0.3.0
 
 [![Dependency Status](https://david-dm.org/souporserious/react-tether.svg)](https://david-dm.org/souporserious/react-tether)
 
@@ -28,15 +28,11 @@ class SimpleDemo extends React.Component {
 
     return(
       <TetherComponent
-        options={{
-          attachment: 'bottom center',
-          constraints: [
-            {
-              to: 'scrollParent',
-              attachment: 'together'
-            }
-          ]
-        }}
+        attachment="top center"
+        constraints={[{
+          to: 'scrollParent',
+          attachment: 'together'
+        }]}
       >
         <button onClick={() => {this.setState({isOpen: !isOpen})}}>
           Toggle Tethered Content
