@@ -1,4 +1,7 @@
 ## CHANGELOG
+### 0.3.1
+Fix tethered element not being positioned correctly
+
 ### 0.3.0
 All [Tether options](http://tether.io/#options) are now props
 

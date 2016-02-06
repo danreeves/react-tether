@@ -119,8 +119,6 @@ class TetherComponent extends Component {
 
   _updateTether() {
     const { children, renderElementTag, renderElementTo, ...options } = this.props
-
-    // initialize or update tether with new elements & options
     const tetherOptions = {
       target: this._targetNode,
       element: this._elementParentNode,
@@ -132,6 +130,8 @@ class TetherComponent extends Component {
     } else {
       this._tether.setOptions(tetherOptions)
     }
+
+    this._tether.position()
   }
 
   render() {

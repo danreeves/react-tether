@@ -1,4 +1,4 @@
-## React Tether 0.3.0
+## React Tether 0.3.1
 
 [![Dependency Status](https://david-dm.org/souporserious/react-tether.svg)](https://david-dm.org/souporserious/react-tether)
 

@@ -221,7 +221,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var options = _objectWithoutProperties(_props2, ['children', 'renderElementTag', 'renderElementTo']);
 
-	      // initialize or update tether with new elements & options
 	      var tetherOptions = _extends({
 	        target: this._targetNode,
 	        element: this._elementParentNode
@@ -232,6 +231,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        this._tether.setOptions(tetherOptions);
 	      }
+
+	      this._tether.position();
 	    }
 	  }, {
 	    key: 'render',
