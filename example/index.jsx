@@ -1,5 +1,6 @@
 import React, { Component, Children, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import Transition from 'react-motion-ui-pack'
 import TetherComponent from '../src/react-tether'
 import './main.scss'
 
@@ -83,6 +84,7 @@ class ComplexDemo extends Component {
         <div ref="example" className="drop-example">
           <div className="drop-scroll-content">
             <TetherComponent
+              ref="tethered-component"
               attachment={`${vertical} ${horizontal}`}
               constraints={[{
                 to: 'scrollParent',
@@ -100,21 +102,39 @@ class ComplexDemo extends Component {
               >
                 Target
               </div>
-              {
-                isOpen &&
-                <div
-                  style={{
-                    padding: 12,
-                    background: '#FF9800'
-                  }}
-                >
-                  Dropped Content
-                  {
-                    toggleContent &&
-                    <div>Can have state too :)</div>
-                  }
-                </div>
-              }
+              <Transition
+                component={false}
+                enter={{
+                  scale: 1,
+                  opacity: 1
+                }}
+                leave={{
+                  scale: 0.95,
+                  opacity: 0
+                }}
+                onEnter={() => 
+                  setTimeout(() =>
+                    this.refs['tethered-component'].position()
+                  )
+                }
+              >
+                {
+                  isOpen &&
+                  <div
+                    key="tethered"
+                    style={{
+                      padding: 12,
+                      background: '#FF9800'
+                    }}
+                  >
+                    Dropped Content
+                    {
+                      toggleContent &&
+                      <div>Can have state too :)</div>
+                    }
+                  </div>
+                }
+              </Transition>
             </TetherComponent>
           </div>
         </div>
