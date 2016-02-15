@@ -1,4 +1,10 @@
 ## CHANGELOG
+### 0.3.2
+Fixes the following:
+- Unmount node only if it was mounted [#8](https://github.com/souporserious/react-tether/issues/8)
+- Lazily evaluate document.body [#6](https://github.com/souporserious/react-tether/issues/6)
+- Server-side rendering [#4](https://github.com/souporserious/react-tether/issues/4)
+
 ### 0.3.1
 Fix tethered element not being positioned correctly
 
@@ -17,4 +23,3 @@ removed `shallowCompare`
 Bower exposed lib name renamed to `TetherComponent` from `TetherElement`
 
 New API accepts a max of two children. First child is used as the target and second child is used as the element that is being tethered.
-

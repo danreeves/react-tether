@@ -165,8 +165,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_destroy',
 	    value: function _destroy() {
-	      _reactDom2['default'].unmountComponentAtNode(this._elementParentNode);
-	      this._elementParentNode.parentNode.removeChild(this._elementParentNode);
+	      if (this._elementParentNode) {
+	        _reactDom2['default'].unmountComponentAtNode(this._elementParentNode);
+	        this._elementParentNode.parentNode.removeChild(this._elementParentNode);
+	      }
 
 	      if (this._tether) {
 	        this._tether.destroy();
@@ -199,10 +201,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // create element node container if it hasn't been yet
 	      if (!this._elementParentNode) {
 	        // create a node that we can stick our content Component in
-	        this._elementParentNode = document.createElement(renderElementTag);
+	        this._elementParentNode = document.createElement(renderElementTag)
 
 	        // append node to the end of the body
-	        renderElementTo.appendChild(this._elementParentNode);
+	        (renderElementTo || document.body).appendChild(this._elementParentNode);
 	      }
 
 	      // render element component into the DOM
@@ -274,7 +276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'defaultProps',
 	    value: {
 	      renderElementTag: 'div',
-	      renderElementTo: document.body
+	      renderElementTo: null
 	    },
 	    enumerable: true
 	  }]);
