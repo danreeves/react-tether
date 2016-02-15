@@ -42,7 +42,7 @@ class TetherComponent extends Component {
 
   static defaultProps = {
     renderElementTag: 'div',
-    renderElementTo: typeof document !== 'undefined' && document.body
+    renderElementTo: null
   }
 
   _targetNode = null
@@ -105,7 +105,7 @@ class TetherComponent extends Component {
       this._elementParentNode = document.createElement(renderElementTag)
     
       // append node to the end of the body
-      renderElementTo.appendChild(this._elementParentNode)
+      (renderElementTo || document.body).appendChild(this._elementParentNode)
     }
 
     // render element component into the DOM
