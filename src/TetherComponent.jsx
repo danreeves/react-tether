@@ -107,7 +107,8 @@ class TetherComponent extends Component {
       this._elementParentNode = document.createElement(renderElementTag)
     
       // append node to the end of the body
-      (renderElementTo || document.body).appendChild(this._elementParentNode)
+      const renderTo = renderElementTo || document.body
+      renderTo.appendChild(this._elementParentNode)
     }
 
     // render element component into the DOM
