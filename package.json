@@ -1,6 +1,6 @@
 {
   "name": "react-tether",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Drop content anywhere on the page.",
   "main": "lib/react-tether.js",
   "scripts": {

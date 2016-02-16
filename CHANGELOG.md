@@ -1,4 +1,7 @@
 ## CHANGELOG
+### 0.3.3
+Fix ASI issue with document.body [PR #12](https://github.com/souporserious/react-tether/pull/12)
+
 ### 0.3.2
 Fixes the following:
 - Unmount node only if it was mounted [#8](https://github.com/souporserious/react-tether/issues/8)
