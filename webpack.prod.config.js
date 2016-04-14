@@ -30,7 +30,7 @@ var config = {
   },
 };
 
-if(TARGET === 'minify') {
+if (TARGET === 'minify') {
   config.output.filename = 'react-tether.min.js';
   config.output.sourceMapFilename = 'react-tether.min.js';
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -38,7 +38,7 @@ if(TARGET === 'minify') {
       warnings: false
     },
     mangle: {
-      except: ['React', 'ReactDOM', 'TetherComponent']
+      except: ['React', 'ReactDOM', 'Tether', 'TetherComponent']
     }
   }));
 }

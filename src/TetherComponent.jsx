@@ -2,6 +2,10 @@ import React, { Component, Children, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import Tether from 'tether'
 
+if (!Tether) {
+  console.error('It looks like Tether has not been included. Please load this dependency first https://github.com/HubSpot/tether')
+}
+
 const childrenPropType = ({ children }, propName, componentName) => {
   const childCount = Children.count(children)
   if (childCount <= 0) {
@@ -27,7 +31,7 @@ class TetherComponent extends Component {
   static propTypes = {
     children: childrenPropType,
     renderElementTag: PropTypes.string,
-    renderElementTo: PropTypes.any,
+    renderElementTo: PropTypes.string,
     attachment: PropTypes.oneOf(attachmentPositions).isRequired,
     targetAttachment: PropTypes.oneOf(attachmentPositions),
     offset: PropTypes.string,
@@ -51,10 +55,17 @@ class TetherComponent extends Component {
 
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
+    this._renderNode = document.querySelector(this.props.renderElementTo) || document.body
     this._update()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const { renderElementTo } = this.props
+
+    if (prevProps.renderElementTo !== renderElementTo) {
+      this._renderNode = document.querySelector(renderElementTo) || document.body
+    }
+
     this._update()
   }
 
@@ -102,13 +113,12 @@ class TetherComponent extends Component {
     }
 
     // create element node container if it hasn't been yet
-    if (!this._elementParentNode) { 
+    if (!this._elementParentNode) {
       // create a node that we can stick our content Component in
       this._elementParentNode = document.createElement(renderElementTag)
-    
-      // append node to the end of the body
-      const renderTo = renderElementTo || document.body
-      renderTo.appendChild(this._elementParentNode)
+
+      // append node to the render node
+      this._renderNode.appendChild(this._elementParentNode)
     }
 
     // render element component into the DOM
@@ -140,7 +150,7 @@ class TetherComponent extends Component {
   render() {
     const { children } = this.props
     let firstChild = null
-    
+
     // we use forEach because the second child could be null
     // causing children to not be an array
     Children.forEach(children, (child, index) => {

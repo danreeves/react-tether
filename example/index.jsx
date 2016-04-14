@@ -84,6 +84,7 @@ class ComplexDemo extends Component {
         <div ref="example" className="drop-example">
           <div className="drop-scroll-content">
             <TetherComponent
+              renderElementTo="#tool-tip-container"
               ref="tethered-component"
               attachment={`${vertical} ${horizontal}`}
               constraints={[{
@@ -112,7 +113,7 @@ class ComplexDemo extends Component {
                   scale: 0.95,
                   opacity: 0
                 }}
-                onEnter={() => 
+                onEnter={() =>
                   setTimeout(() =>
                     this.refs['tethered-component'].position()
                   )
@@ -136,6 +137,7 @@ class ComplexDemo extends Component {
                 }
               </Transition>
             </TetherComponent>
+            <div id="tool-tip-container"></div>
           </div>
         </div>
       </div>
