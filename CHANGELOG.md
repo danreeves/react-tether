@@ -1,4 +1,7 @@
 ## CHANGELOG
+### 0.5.0
+Added the ability to apply an `id`, `className`, or `style` to the wrapper Tether element.
+
 ### 0.4.0
 Fixes:
   `renderElementTo` now uses `document.querySelector`

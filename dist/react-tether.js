@@ -196,6 +196,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props;
 	      var children = _props.children;
 	      var renderElementTag = _props.renderElementTag;
+	      var id = _props.id;
+	      var className = _props.className;
+	      var style = _props.style;
 	      var renderElementTo = _props.renderElementTo;
 
 	      var elementComponent = children[1];
@@ -213,6 +216,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!this._elementParentNode) {
 	        // create a node that we can stick our content Component in
 	        this._elementParentNode = document.createElement(renderElementTag);
+
+	        if (id) {
+	          this._elementParentNode.id = id;
+	        }
+	        if (className) {
+	          this._elementParentNode.className = className;
+	        }
+	        if (style) {
+	          Object.keys(style).forEach(function (key) {
+	            _this._elementParentNode.style[key] = style[key];
+	          });
+	        }
 
 	        // append node to the render node
 	        this._renderNode.appendChild(this._elementParentNode);
@@ -268,7 +283,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }], [{
 	    key: 'propTypes',
 	    value: {
-	      children: childrenPropType,
 	      renderElementTag: _react.PropTypes.string,
 	      renderElementTo: _react.PropTypes.string,
 	      attachment: _react.PropTypes.oneOf(attachmentPositions).isRequired,
@@ -280,7 +294,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      classes: _react.PropTypes.object,
 	      classPrefix: _react.PropTypes.string,
 	      optimizations: _react.PropTypes.object,
-	      constraints: _react.PropTypes.array
+	      constraints: _react.PropTypes.array,
+	      id: _react.PropTypes.string,
+	      className: _react.PropTypes.string,
+	      style: _react.PropTypes.object,
+	      children: childrenPropType
 	    },
 	    enumerable: true
 	  }, {
