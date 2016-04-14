@@ -1,9 +1,15 @@
 ## CHANGELOG
+### 0.4.0
+Fixes:
+  `renderElementTo` now uses `document.querySelector`
+
+Add dependency warning for people using old school script tags
+
 ### 0.3.3
 Fix ASI issue with document.body [PR #12](https://github.com/souporserious/react-tether/pull/12)
 
 ### 0.3.2
-Fixes the following:
+Fixes:
 - Unmount node only if it was mounted [#8](https://github.com/souporserious/react-tether/issues/8)
 - Lazily evaluate document.body [#6](https://github.com/souporserious/react-tether/issues/6)
 - Server-side rendering [#4](https://github.com/souporserious/react-tether/issues/4)

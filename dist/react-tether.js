@@ -105,6 +105,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _tether2 = _interopRequireDefault(_tether);
 
+	if (!_tether2['default']) {
+	  console.error('It looks like Tether has not been included. Please load this dependency first https://github.com/HubSpot/tether');
+	}
+
 	var childrenPropType = function childrenPropType(_ref, propName, componentName) {
 	  var children = _ref.children;
 
@@ -135,11 +139,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this._targetNode = _reactDom2['default'].findDOMNode(this);
+	      this._renderNode = document.querySelector(this.props.renderElementTo) || document.body;
 	      this._update();
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
+	    value: function componentDidUpdate(prevProps) {
+	      var renderElementTo = this.props.renderElementTo;
+
+	      if (prevProps.renderElementTo !== renderElementTo) {
+	        this._renderNode = document.querySelector(renderElementTo) || document.body;
+	      }
+
 	      this._update();
 	    }
 	  }, {
@@ -203,9 +214,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // create a node that we can stick our content Component in
 	        this._elementParentNode = document.createElement(renderElementTag);
 
-	        // append node to the end of the body
-	        var renderTo = renderElementTo || document.body;
-	        renderTo.appendChild(this._elementParentNode);
+	        // append node to the render node
+	        this._renderNode.appendChild(this._elementParentNode);
 	      }
 
 	      // render element component into the DOM
@@ -260,7 +270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: {
 	      children: childrenPropType,
 	      renderElementTag: _react.PropTypes.string,
-	      renderElementTo: _react.PropTypes.any,
+	      renderElementTo: _react.PropTypes.string,
 	      attachment: _react.PropTypes.oneOf(attachmentPositions).isRequired,
 	      targetAttachment: _react.PropTypes.oneOf(attachmentPositions),
 	      offset: _react.PropTypes.string,

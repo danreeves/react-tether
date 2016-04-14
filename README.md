@@ -1,4 +1,4 @@
-## React Tether 0.3.3
+## React Tether
 
 [![Dependency Status](https://david-dm.org/souporserious/react-tether.svg)](https://david-dm.org/souporserious/react-tether)
 
@@ -62,9 +62,9 @@ The first child is used as the Tether's `target` and the second child (which is 
 
 The tag that is used to render the Tether element, defaults to `div`.
 
-#### `renderElementTo`: PropTypes.any
+#### `renderElementTo`: PropTypes.string
 
-Where in the DOM the Tether element is appended, defaults to `document.body`.
+Where in the DOM the Tether element is appended. Passes in any valid selector to `document.querySelector`. Defaults to `document.body`.
 
 #### `Tether Options`:
 
