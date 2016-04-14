@@ -29,7 +29,6 @@ const attachmentPositions = [
 
 class TetherComponent extends Component {
   static propTypes = {
-    children: childrenPropType,
     renderElementTag: PropTypes.string,
     renderElementTo: PropTypes.string,
     attachment: PropTypes.oneOf(attachmentPositions).isRequired,
@@ -41,7 +40,11 @@ class TetherComponent extends Component {
     classes: PropTypes.object,
     classPrefix: PropTypes.string,
     optimizations: PropTypes.object,
-    constraints: PropTypes.array
+    constraints: PropTypes.array,
+    id: PropTypes.string,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    children: childrenPropType
   }
 
   static defaultProps = {
@@ -100,7 +103,7 @@ class TetherComponent extends Component {
   }
 
   _update() {
-    const { children, renderElementTag, renderElementTo } = this.props
+    const { children, renderElementTag, id, className, style, renderElementTo } = this.props
     let elementComponent = children[1]
 
     // if no element component provided, bail out
@@ -116,6 +119,18 @@ class TetherComponent extends Component {
     if (!this._elementParentNode) {
       // create a node that we can stick our content Component in
       this._elementParentNode = document.createElement(renderElementTag)
+
+      if (id) {
+        this._elementParentNode.id = id
+      }
+      if (className) {
+        this._elementParentNode.className = className
+      }
+      if (style) {
+        Object.keys(style).forEach(key => {
+          this._elementParentNode.style[key] = style[key]
+        })
+      }
 
       // append node to the render node
       this._renderNode.appendChild(this._elementParentNode)

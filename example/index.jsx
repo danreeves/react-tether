@@ -13,7 +13,13 @@ class SimpleDemo extends Component {
     const { isOpen } = this.state
 
     return(
-      <TetherComponent attachment="top center">
+      <TetherComponent
+        attachment="top center"
+        style={{
+          background: 'red',
+          color: '#fff'
+        }}
+      >
         <button onClick={() => {this.setState({isOpen: !isOpen})}}>
           Toggle Tethered Content
         </button>
