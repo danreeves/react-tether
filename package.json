@@ -30,9 +30,11 @@
   },
   "homepage": "https://github.com/souporserious/react-tether",
   "dependencies": {
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
     "tether": "^1.1.1"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
