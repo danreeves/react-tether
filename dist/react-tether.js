@@ -196,9 +196,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props;
 	      var children = _props.children;
 	      var renderElementTag = _props.renderElementTag;
-	      var id = _props.id;
-	      var className = _props.className;
-	      var style = _props.style;
 	      var renderElementTo = _props.renderElementTo;
 
 	      var elementComponent = children[1];
@@ -217,18 +214,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // create a node that we can stick our content Component in
 	        this._elementParentNode = document.createElement(renderElementTag);
 
-	        if (id) {
-	          this._elementParentNode.id = id;
-	        }
-	        if (className) {
-	          this._elementParentNode.className = className;
-	        }
-	        if (style) {
-	          Object.keys(style).forEach(function (key) {
-	            _this._elementParentNode.style[key] = style[key];
-	          });
-	        }
-
 	        // append node to the render node
 	        this._renderNode.appendChild(this._elementParentNode);
 	      }
@@ -242,17 +227,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_updateTether',
 	    value: function _updateTether() {
+	      var _this2 = this;
+
 	      var _props2 = this.props;
 	      var children = _props2.children;
 	      var renderElementTag = _props2.renderElementTag;
 	      var renderElementTo = _props2.renderElementTo;
+	      var id = _props2.id;
+	      var className = _props2.className;
+	      var style = _props2.style;
 
-	      var options = _objectWithoutProperties(_props2, ['children', 'renderElementTag', 'renderElementTo']);
+	      var options = _objectWithoutProperties(_props2, ['children', 'renderElementTag', 'renderElementTo', 'id', 'className', 'style']);
 
 	      var tetherOptions = _extends({
 	        target: this._targetNode,
 	        element: this._elementParentNode
 	      }, options);
+
+	      if (id) {
+	        this._elementParentNode.id = id;
+	      }
+
+	      if (className) {
+	        this._elementParentNode.className = className;
+	      }
+
+	      if (style) {
+	        Object.keys(style).forEach(function (key) {
+	          _this2._elementParentNode.style[key] = style[key];
+	        });
+	      }
 
 	      if (!this._tether) {
 	        this._tether = new _tether2['default'](tetherOptions);

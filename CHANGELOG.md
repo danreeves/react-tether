@@ -1,4 +1,7 @@
 ## CHANGELOG
+### 0.5.1
+Fixed Tether element props not being re-rendered on change
+
 ### 0.5.0
 Added the ability to apply an `id`, `className`, or `style` to the wrapper Tether element.
 
