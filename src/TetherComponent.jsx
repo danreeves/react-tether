@@ -103,7 +103,7 @@ class TetherComponent extends Component {
   }
 
   _update() {
-    const { children, renderElementTag, id, className, style, renderElementTo } = this.props
+    const { children, renderElementTag, renderElementTo } = this.props
     let elementComponent = children[1]
 
     // if no element component provided, bail out
@@ -120,18 +120,6 @@ class TetherComponent extends Component {
       // create a node that we can stick our content Component in
       this._elementParentNode = document.createElement(renderElementTag)
 
-      if (id) {
-        this._elementParentNode.id = id
-      }
-      if (className) {
-        this._elementParentNode.className = className
-      }
-      if (style) {
-        Object.keys(style).forEach(key => {
-          this._elementParentNode.style[key] = style[key]
-        })
-      }
-
       // append node to the render node
       this._renderNode.appendChild(this._elementParentNode)
     }
@@ -146,11 +134,25 @@ class TetherComponent extends Component {
   }
 
   _updateTether() {
-    const { children, renderElementTag, renderElementTo, ...options } = this.props
+    const { children, renderElementTag, renderElementTo, id, className, style, ...options } = this.props
     const tetherOptions = {
       target: this._targetNode,
       element: this._elementParentNode,
       ...options
+    }
+
+    if (id) {
+      this._elementParentNode.id = id
+    }
+
+    if (className) {
+      this._elementParentNode.className = className
+    }
+
+    if (style) {
+      Object.keys(style).forEach(key => {
+        this._elementParentNode.style[key] = style[key]
+      })
     }
 
     if (!this._tether) {

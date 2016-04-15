@@ -6,17 +6,18 @@ import './main.scss'
 
 class SimpleDemo extends Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    toggleColor: false
   }
 
   render() {
-    const { isOpen } = this.state
+    const { isOpen, toggleColor } = this.state
 
     return(
       <TetherComponent
         attachment="top center"
         style={{
-          background: 'red',
+          background: toggleColor ? 'red' : '',
           color: '#fff'
         }}
       >
@@ -25,7 +26,7 @@ class SimpleDemo extends Component {
         </button>
         {
           isOpen &&
-          <div>
+          <div onClick={() => this.setState({toggleColor: !toggleColor})}>
             <h2>Tethered Content</h2>
             <p>A paragraph to accompany the title.</p>
           </div>
