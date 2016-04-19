@@ -58,17 +58,10 @@ class TetherComponent extends Component {
 
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
-    this._renderNode = document.querySelector(this.props.renderElementTo) || document.body
     this._update()
   }
 
   componentDidUpdate(prevProps) {
-    const { renderElementTo } = this.props
-
-    if (prevProps.renderElementTo !== renderElementTo) {
-      this._renderNode = document.querySelector(renderElementTo) || document.body
-    }
-
     this._update()
   }
 
@@ -131,6 +124,11 @@ class TetherComponent extends Component {
         this._updateTether()
       }
     )
+  }
+
+  get _renderNode() {
+    const { renderElementTo } = this.props
+    return document.querySelector(renderElementTo) || document.body
   }
 
   _updateTether() {
