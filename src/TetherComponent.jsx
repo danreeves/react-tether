@@ -103,7 +103,7 @@ class TetherComponent extends Component {
   }
 
   _update() {
-    const { children, renderElementTag, renderElementTo } = this.props
+    const { children, renderElementTag } = this.props
     let elementComponent = children[1]
 
     // if no element component provided, bail out
