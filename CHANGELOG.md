@@ -1,4 +1,9 @@
 ## CHANGELOG
+### 0.5.2
+Better `renderElementTo` [PR #19](https://github.com/souporserious/react-tether/pull/19)
+
+Use `Children.toArray` instead of `Children.forEach` to get individual children
+
 ### 0.5.1
 Fixed Tether element props not being re-rendered on change
 

@@ -109,6 +109,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  console.error('It looks like Tether has not been included. Please load this dependency first https://github.com/HubSpot/tether');
 	}
 
+	var renderElementToPropTypes = [_react.PropTypes.string, _react.PropTypes.shape({
+	  appendChild: _react.PropTypes.func.isRequired
+	})];
+
 	var childrenPropType = function childrenPropType(_ref, propName, componentName) {
 	  var children = _ref.children;
 
@@ -139,18 +143,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this._targetNode = _reactDom2['default'].findDOMNode(this);
-	      this._renderNode = document.querySelector(this.props.renderElementTo) || document.body;
 	      this._update();
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps) {
-	      var renderElementTo = this.props.renderElementTo;
-
-	      if (prevProps.renderElementTo !== renderElementTo) {
-	        this._renderNode = document.querySelector(renderElementTo) || document.body;
-	      }
-
 	      this._update();
 	    }
 	  }, {
@@ -196,13 +193,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props;
 	      var children = _props.children;
 	      var renderElementTag = _props.renderElementTag;
-	      var renderElementTo = _props.renderElementTo;
 
-	      var elementComponent = children[1];
+	      var elementComponent = _react.Children.toArray(children)[1];
 
 	      // if no element component provided, bail out
 	      if (!elementComponent) {
-	        // destroy Tether elements if they have been created
+	        // destroy Tether element if it has been created
 	        if (this._tether) {
 	          this._destroy();
 	        }
@@ -269,26 +265,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var children = this.props.children;
+	      return _react.Children.toArray(this.props.children)[0];
+	    }
+	  }, {
+	    key: '_renderNode',
+	    get: function get() {
+	      var renderElementTo = this.props.renderElementTo;
 
-	      var firstChild = null;
-
-	      // we use forEach because the second child could be null
-	      // causing children to not be an array
-	      _react.Children.forEach(children, function (child, index) {
-	        if (index === 0) {
-	          firstChild = child;
-	          return;
-	        }
-	      });
-
-	      return firstChild;
+	      if (typeof renderElementTo === 'string') {
+	        return document.querySelector(renderElementTo);
+	      } else {
+	        return renderElementTo || document.body;
+	      }
 	    }
 	  }], [{
 	    key: 'propTypes',
 	    value: {
 	      renderElementTag: _react.PropTypes.string,
-	      renderElementTo: _react.PropTypes.string,
+	      renderElementTo: _react.PropTypes.oneOfType(renderElementToPropTypes),
 	      attachment: _react.PropTypes.oneOf(attachmentPositions).isRequired,
 	      targetAttachment: _react.PropTypes.oneOf(attachmentPositions),
 	      offset: _react.PropTypes.string,
