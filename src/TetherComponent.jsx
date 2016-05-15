@@ -15,6 +15,13 @@ const childrenPropType = ({ children }, propName, componentName) => {
   }
 }
 
+const renderElementToTypes = [
+  PropTypes.string,
+  PropTypes.shape({
+    appendChild: PropTypes.func.isRequired
+  })
+]
+
 const attachmentPositions = [
   'top left',
   'top center',
@@ -30,7 +37,7 @@ const attachmentPositions = [
 class TetherComponent extends Component {
   static propTypes = {
     renderElementTag: PropTypes.string,
-    renderElementTo: PropTypes.string,
+    renderElementTo: PropTypes.oneOfType(renderElementToTypes),
     attachment: PropTypes.oneOf(attachmentPositions).isRequired,
     targetAttachment: PropTypes.oneOf(attachmentPositions),
     offset: PropTypes.string,
@@ -58,17 +65,10 @@ class TetherComponent extends Component {
 
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
-    this._renderNode = document.querySelector(this.props.renderElementTo) || document.body
     this._update()
   }
 
   componentDidUpdate(prevProps) {
-    const { renderElementTo } = this.props
-
-    if (prevProps.renderElementTo !== renderElementTo) {
-      this._renderNode = document.querySelector(renderElementTo) || document.body
-    }
-
     this._update()
   }
 
@@ -103,7 +103,7 @@ class TetherComponent extends Component {
   }
 
   _update() {
-    const { children, renderElementTag, renderElementTo } = this.props
+    const { children, renderElementTag } = this.props
     let elementComponent = children[1]
 
     // if no element component provided, bail out
@@ -131,6 +131,15 @@ class TetherComponent extends Component {
         this._updateTether()
       }
     )
+  }
+
+  get _renderNode() {
+    const { renderElementTo } = this.props
+    if (typeof renderElementTo === 'string') {
+      return document.querySelector(renderElementTo)
+    } else {
+      return renderElementTo || document.body
+    }
   }
 
   _updateTether() {
