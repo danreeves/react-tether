@@ -6,6 +6,13 @@ if (!Tether) {
   console.error('It looks like Tether has not been included. Please load this dependency first https://github.com/HubSpot/tether')
 }
 
+const renderElementToPropTypes = [
+  PropTypes.string,
+  PropTypes.shape({
+    appendChild: PropTypes.func.isRequired
+  })
+]
+
 const childrenPropType = ({ children }, propName, componentName) => {
   const childCount = Children.count(children)
   if (childCount <= 0) {
@@ -14,13 +21,6 @@ const childrenPropType = ({ children }, propName, componentName) => {
     return new Error(`Only a max of two children allowed in ${componentName}.`)
   }
 }
-
-const renderElementToTypes = [
-  PropTypes.string,
-  PropTypes.shape({
-    appendChild: PropTypes.func.isRequired
-  })
-]
 
 const attachmentPositions = [
   'top left',
@@ -37,7 +37,7 @@ const attachmentPositions = [
 class TetherComponent extends Component {
   static propTypes = {
     renderElementTag: PropTypes.string,
-    renderElementTo: PropTypes.oneOfType(renderElementToTypes),
+    renderElementTo: PropTypes.oneOfType(renderElementToPropTypes),
     attachment: PropTypes.oneOf(attachmentPositions).isRequired,
     targetAttachment: PropTypes.oneOf(attachmentPositions),
     offset: PropTypes.string,
@@ -88,6 +88,15 @@ class TetherComponent extends Component {
     this._tether.position()
   }
 
+  get _renderNode() {
+    const { renderElementTo } = this.props
+    if (typeof renderElementTo === 'string') {
+      return document.querySelector(renderElementTo)
+    } else {
+      return renderElementTo || document.body
+    }
+  }
+
   _destroy() {
     if (this._elementParentNode) {
       ReactDOM.unmountComponentAtNode(this._elementParentNode)
@@ -104,11 +113,11 @@ class TetherComponent extends Component {
 
   _update() {
     const { children, renderElementTag } = this.props
-    let elementComponent = children[1]
+    const elementComponent = Children.toArray(children)[1]
 
     // if no element component provided, bail out
     if (!elementComponent) {
-      // destroy Tether elements if they have been created
+      // destroy Tether element if it has been created
       if (this._tether) {
         this._destroy()
       }
@@ -131,15 +140,6 @@ class TetherComponent extends Component {
         this._updateTether()
       }
     )
-  }
-
-  get _renderNode() {
-    const { renderElementTo } = this.props
-    if (typeof renderElementTo === 'string') {
-      return document.querySelector(renderElementTo)
-    } else {
-      return renderElementTo || document.body
-    }
   }
 
   _updateTether() {
@@ -174,19 +174,7 @@ class TetherComponent extends Component {
   }
 
   render() {
-    const { children } = this.props
-    let firstChild = null
-
-    // we use forEach because the second child could be null
-    // causing children to not be an array
-    Children.forEach(children, (child, index) => {
-      if (index === 0) {
-        firstChild = child
-        return
-      }
-    })
-
-    return firstChild
+    return Children.toArray(this.props.children)[0]
   }
 }
 
