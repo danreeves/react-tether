@@ -36,9 +36,11 @@ class SimpleDemo extends React.Component {
           attachment: 'together'
         }]}
       >
+        { /* First child: This is what the item will be tethered to */ }
         <button onClick={() => {this.setState({isOpen: !isOpen})}}>
           Toggle Tethered Content
         </button>
+        { /* Second child: If present, this item will be tethered to the the first child */ }
         {
           isOpen &&
           <div>
