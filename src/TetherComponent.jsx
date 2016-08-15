@@ -51,6 +51,8 @@ class TetherComponent extends Component {
     id: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
+    onUpdate: PropTypes.func,
+    onRepositioned: PropTypes.func,
     children: childrenPropType
   }
 
@@ -66,6 +68,7 @@ class TetherComponent extends Component {
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
+    this._registerEventListeners()
   }
 
   componentDidUpdate(prevProps) {
@@ -75,7 +78,11 @@ class TetherComponent extends Component {
   componentWillUnmount() {
     this._destroy()
   }
-
+  
+  getTether() {
+    return this._tether
+  }
+  
   disable() {
     this._tether.disable()
   }
@@ -83,9 +90,30 @@ class TetherComponent extends Component {
   enable() {
     this._tether.enable()
   }
+  
+  on(event, handler, ctx) {
+    this._tether.on(event,handler,ctx);
+  }
+  
+  once(event, handler, ctx) {
+    this._tether.once(event,handler,ctx);
+  }
+  
+  off(event, handler) {
+    this._tether.off(event,handler)
+  }
 
   position() {
     this._tether.position()
+  }
+  
+  _registerEventListeners() {
+    if ( this.props.onUpdate ) {
+      this.on('update',this.props.onUpdate);
+    }
+    if ( this.props.onRepositioned ) {
+      this.on('repositioned',this.props.onRepositioned);
+    }
   }
 
   get _renderNode() {
