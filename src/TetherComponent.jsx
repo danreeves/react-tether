@@ -79,7 +79,7 @@ class TetherComponent extends Component {
     this._destroy()
   }
   
-  getTether() {
+  getTetherInstance() {
     return this._tether
   }
   
@@ -92,15 +92,15 @@ class TetherComponent extends Component {
   }
   
   on(event, handler, ctx) {
-    this._tether.on(event,handler,ctx);
+    this._tether.on(event, handler, ctx);
   }
   
   once(event, handler, ctx) {
-    this._tether.once(event,handler,ctx);
+    this._tether.once(event, handler, ctx);
   }
   
   off(event, handler) {
-    this._tether.off(event,handler)
+    this._tether.off(event, handler)
   }
 
   position() {
@@ -108,11 +108,11 @@ class TetherComponent extends Component {
   }
   
   _registerEventListeners() {
-    if ( this.props.onUpdate ) {
-      this.on('update',this.props.onUpdate);
+    if (this.props.onUpdate) {
+      this.on('update', this.props.onUpdate);
     }
-    if ( this.props.onRepositioned ) {
-      this.on('repositioned',this.props.onRepositioned);
+    if (this.props.onRepositioned) {
+      this.on('repositioned', this.props.onRepositioned);
     }
   }
 
