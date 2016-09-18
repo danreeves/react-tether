@@ -22,7 +22,7 @@ const childrenPropType = ({ children }, propName, componentName) => {
   }
 }
 
-const attachmentPositions = [
+export const attachmentPositions = [
   'top left',
   'top center',
   'top right',
