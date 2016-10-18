@@ -23,6 +23,7 @@ const childrenPropType = ({ children }, propName, componentName) => {
 }
 
 const attachmentPositions = [
+  'auto auto',
   'top left',
   'top center',
   'top right',

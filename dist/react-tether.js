@@ -124,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	var attachmentPositions = ['top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right'];
+	var attachmentPositions = ['auto auto', 'top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right'];
 
 	var TetherComponent = (function (_Component) {
 	  _inherits(TetherComponent, _Component);
