@@ -1,4 +1,11 @@
 ## CHANGELOG
+### 0.5.3
+Expose Tether event system as imperative and props API [PR #30](https://github.com/souporserious/react-tether/pull/30)
+
+Update tether version to 1.3.7 [PR #32](https://github.com/souporserious/react-tether/pull/32)
+
+Attachment positions [PR #33](https://github.com/souporserious/react-tether/pull/33)
+
 ### 0.5.2
 Better `renderElementTo` [PR #19](https://github.com/souporserious/react-tether/pull/19)
 
