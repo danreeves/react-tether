@@ -1,5 +1,8 @@
 ## CHANGELOG
-### 0.5.3
+### 0.5.5
+Add `.npmignore` [PR #39](https://github.com/souporserious/react-tether/pull/39)
+
+### 0.5.4
 Expose Tether event system as imperative and props API [PR #30](https://github.com/souporserious/react-tether/pull/30)
 
 Update tether version to 1.3.7 [PR #32](https://github.com/souporserious/react-tether/pull/32)
