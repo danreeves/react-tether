@@ -69,7 +69,6 @@ class TetherComponent extends Component {
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
-    this._registerEventListeners()
   }
 
   componentDidUpdate(prevProps) {
@@ -196,6 +195,7 @@ class TetherComponent extends Component {
 
     if (!this._tether) {
       this._tether = new Tether(tetherOptions)
+      this._registerEventListeners()
     } else {
       this._tether.setOptions(tetherOptions)
     }
