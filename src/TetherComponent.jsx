@@ -107,14 +107,15 @@ class TetherComponent extends Component {
   position() {
     this._tether.position()
   }
-  
+
   _registerEventListeners() {
-    if (this.props.onUpdate) {
-      this.on('update', this.props.onUpdate);
-    }
-    if (this.props.onRepositioned) {
-      this.on('repositioned', this.props.onRepositioned);
-    }
+    this.on('update', function () {
+      return this.props.onUpdate && this.props.onUpdate.apply(this, arguments);
+    });
+
+    this.on('repositioned', function () {
+      return this.props.onRepositioned && this.props.onRepositioned.apply(this, arguments);
+    });
   }
 
   get _renderNode() {
