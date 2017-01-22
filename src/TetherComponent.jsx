@@ -108,11 +108,11 @@ class TetherComponent extends Component {
   }
 
   _registerEventListeners() {
-    this.on('update', function () {
+    this.on('update', () => {
       return this.props.onUpdate && this.props.onUpdate.apply(this, arguments);
     });
 
-    this.on('repositioned', function () {
+    this.on('repositioned', () => {
       return this.props.onRepositioned && this.props.onRepositioned.apply(this, arguments);
     });
   }
