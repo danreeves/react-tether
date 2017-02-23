@@ -69,7 +69,6 @@ class TetherComponent extends Component {
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
-    this._registerEventListeners()
   }
 
   componentDidUpdate(prevProps) {
@@ -107,14 +106,15 @@ class TetherComponent extends Component {
   position() {
     this._tether.position()
   }
-  
+
   _registerEventListeners() {
-    if (this.props.onUpdate) {
-      this.on('update', this.props.onUpdate);
-    }
-    if (this.props.onRepositioned) {
-      this.on('repositioned', this.props.onRepositioned);
-    }
+    this.on('update', () => {
+      return this.props.onUpdate && this.props.onUpdate.apply(this, arguments)
+    })
+
+    this.on('repositioned', () => {
+      return this.props.onRepositioned && this.props.onRepositioned.apply(this, arguments)
+    })
   }
 
   get _renderNode() {
@@ -197,6 +197,7 @@ class TetherComponent extends Component {
 
     if (!this._tether) {
       this._tether = new Tether(tetherOptions)
+      this._registerEventListeners()
     } else {
       this._tether.setOptions(tetherOptions)
     }
