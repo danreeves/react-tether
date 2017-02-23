@@ -4,6 +4,8 @@ Properly call `onUpdate` and `onRepositioned` [PR #40](https://github.com/soupor
 
 Only render subtree if `destroy` method was not called yet [PR #41](https://github.com/souporserious/react-tether/pull/41)
 
+Use `babel-plugin-add-module-exports` for `dist` files
+
 ### 0.5.5
 Add `.npmignore` [PR #39](https://github.com/souporserious/react-tether/pull/39)
 
