@@ -165,8 +165,10 @@ class TetherComponent extends Component {
     // render element component into the DOM
     ReactDOM.unstable_renderSubtreeIntoContainer(
       this, elementComponent, this._elementParentNode, () => {
-        // don't update Tether until the subtree has finished rendering
-        this._updateTether()
+        // if we're not destroyed, update Tether once the subtree has finished rendering
+        if (this._elementParentNode) {
+          this._updateTether()
+        }
       }
     )
   }
