@@ -72,17 +72,18 @@ class TetherComponent extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
   }
 
   componentWillUnmount() {
     this._destroy()
   }
-  
+
   getTetherInstance() {
     return this._tether
   }
-  
+
   disable() {
     this._tether.disable()
   }
@@ -90,15 +91,15 @@ class TetherComponent extends Component {
   enable() {
     this._tether.enable()
   }
-  
+
   on(event, handler, ctx) {
     this._tether.on(event, handler, ctx);
   }
-  
+
   once(event, handler, ctx) {
     this._tether.once(event, handler, ctx);
   }
-  
+
   off(event, handler) {
     this._tether.off(event, handler)
   }
