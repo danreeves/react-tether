@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react'
+import React, { Component, Children, cloneElement } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Tether from 'tether'
@@ -68,12 +68,10 @@ class TetherComponent extends Component {
   _tether = false
 
   componentDidMount() {
-    this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
   }
 
   componentDidUpdate(prevProps) {
-    this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
   }
 
@@ -208,7 +206,9 @@ class TetherComponent extends Component {
   }
 
   render() {
-    return Children.toArray(this.props.children)[0]
+    return cloneElement(Children.toArray(this.props.children)[0], {
+      ref: el => this._targetNode = el
+    })
   }
 }
 
