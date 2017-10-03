@@ -1,15 +1,15 @@
 {
   "name": "react-tether",
-  "version": "0.5.7",
+  "version": "0.6.0",
   "description": "Drop content anywhere on the page.",
   "main": "lib/react-tether.js",
   "scripts": {
     "build:lib": "babel src --out-dir lib",
-    "build": "yarn run build:lib && NODE_ENV=production webpack --config webpack.prod.config.js",
+    "build": "npm run build:lib && NODE_ENV=production webpack --config webpack.prod.config.js",
     "dev": "webpack-dev-server --inline --hot --progress --colors --host 0.0.0.0 --devtool eval",
     "postbuild": "NODE_ENV=production TARGET=minify webpack --config webpack.prod.config.js",
     "prebuild": "rm -rf dist && mkdir dist",
-    "prepublish": "yarn run build",
+    "prepublish": "npm run build",
     "deploy": "NODE_ENV=production TARGET=minify webpack && git-directory-deploy --directory example --branch gh-pages"
   },
   "repository": {
