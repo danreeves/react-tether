@@ -1,4 +1,8 @@
 ## CHANGELOG
+### 0.6.0
+- Update compatibility for React 16 [#57](https://github.com/souporserious/react-tether/pull/57)
+- Update repo to point at danreeves/react-tether
+
 ### 0.5.7
 Update the target node when updating the component [PR #48](https://github.com/souporserious/react-tether/pull/48)
 

@@ -1,6 +1,6 @@
 ## React Tether
 
-[![Dependency Status](https://david-dm.org/souporserious/react-tether.svg)](https://david-dm.org/souporserious/react-tether)
+[![Dependency Status](https://david-dm.org/danreeves/react-tether.svg)](https://david-dm.org/danreeves/react-tether)
 
 React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 
@@ -96,7 +96,7 @@ The following methods are exposed on the component instance:
 
 clone repo
 
-`git clone git@github.com:souporserious/react-tether.git`
+`git clone git@github.com:danreeves/react-tether.git`
 
 move into folder
 
