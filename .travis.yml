@@ -1,0 +1,7 @@
+language: node_js
+node_js: "stable"
+
+before_install:
+  - "stty cols 80"
+  - "export SAUCE_JOB=react-tether"
+  - "export SAUCE_BUILD=$TRAVIS_COMMIT"
