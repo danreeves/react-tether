@@ -5,6 +5,8 @@
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/danreeves.svg)](https://saucelabs.com/u/danreeves)
 > Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com/).
 
+---
+
 React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 
 ![alt tag](images/tether-demo.gif)
