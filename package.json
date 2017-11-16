@@ -10,7 +10,8 @@
     "postbuild": "NODE_ENV=production TARGET=minify webpack --config webpack.prod.config.js",
     "prebuild": "rm -rf dist && mkdir dist",
     "prepublish": "npm run build",
-    "deploy": "NODE_ENV=production TARGET=minify webpack && git-directory-deploy --directory example --branch gh-pages"
+    "deploy": "NODE_ENV=production TARGET=minify webpack && git-directory-deploy --directory example --branch gh-pages",
+    "test": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Internet Explorer\",\"saucelabs:MicrosoftEdge\" tests/test.js --app 'npm run dev'"
   },
   "repository": {
     "type": "git",
@@ -54,10 +55,12 @@
     "postcss-loader": "^0.13.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-motion": "^0.4.2",
-    "react-motion-ui-pack": "^0.6.0",
+    "react-motion": "^0.5.2",
+    "react-motion-ui-pack": "^0.10.3",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "testcafe": "^0.18.3",
+    "testcafe-browser-provider-saucelabs": "^1.3.0",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.9.0"
   }
