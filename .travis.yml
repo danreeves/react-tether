@@ -1,9 +1,10 @@
- language: node_js
- node_js: "stable"
+language: node_js
+node_js: "stable"
 
- env:
-  - SAUCE_JOB="react-tether"
-  - SAUCE_BUILD=$TRAVIS_COMMIT
+env:
+  global:
+    - SAUCE_JOB="react-tether"
+    - SAUCE_BUILD=$TRAVIS_COMMIT
 
- before_install:
-   - stty cols 80
+before_install:
+  - stty cols 80
