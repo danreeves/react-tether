@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/danreeves/react-tether.svg?branch=browser-tests)](https://travis-ci.org/danreeves/react-tether) [![Dependency Status](https://david-dm.org/danreeves/react-tether.svg)](https://david-dm.org/danreeves/react-tether)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/danreeves.svg)](https://saucelabs.com/u/danreeves)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/react-tether.svg)](https://saucelabs.com/u/react-tether)
 > Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com/).
 
 ---
