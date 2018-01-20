@@ -6,7 +6,7 @@
   "scripts": {
     "build:lib": "babel src --out-dir lib",
     "build": "npm run build:lib && NODE_ENV=production webpack --config webpack.prod.config.js",
-    "dev": "webpack-dev-server --inline --hot --progress --colors --host 0.0.0.0 --devtool eval",
+    "dev": "webpack-dev-server --watch --inline --hot --progress --colors --host 0.0.0.0 --devtool eval",
     "postbuild": "NODE_ENV=production TARGET=minify webpack --config webpack.prod.config.js",
     "prebuild": "rm -rf dist && mkdir dist",
     "prepublish": "npm run build",
@@ -32,7 +32,9 @@
   },
   "homepage": "https://github.com/danreeves/react-tether",
   "dependencies": {
+    "parcel-bundler": "^1.1.0",
     "prop-types": "^15.5.8",
+    "styled-components": "^2.2.3",
     "tether": "^1.3.7"
   },
   "peerDependencies": {
@@ -48,8 +50,10 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "chokidar": "^1.6.1",
+    "chroma-js": "^1.3.4",
     "css-loader": "^0.25.0",
     "git-directory-deploy": "^1.5.1",
+    "html-webpack-plugin": "^2.30.1",
     "http-server": "^0.9.0",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.2.0",
