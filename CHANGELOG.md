@@ -1,4 +1,8 @@
 ## CHANGELOG
+
+### 0.6.1
+- Upgrade react-tether to 1.4.3 [#63](https://github.com/danreeves/react-tether/pull/63)
+
 ### 0.6.0
 - Update compatibility for React 16 [#57](https://github.com/souporserious/react-tether/pull/57)
 - Update repo to point at danreeves/react-tether
