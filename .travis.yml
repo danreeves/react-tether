@@ -2,12 +2,12 @@ language: node_js
 node_js: "stable"
 
 before_install:
-	- "stty cols 80"
-	- "export SAUCE_JOB=react-tether"
-	- "export SAUCE_BUILD=$TRAVIS_COMMIT"
+  - "stty cols 80"
+  - "export SAUCE_JOB=react-tether"
+  - "export SAUCE_BUILD=$TRAVIS_COMMIT"
 
 addons:
-	sauce_connect:
-		username: "react-tether"
-	jwt:
-		secure: "UVzxLxwPTotUMVcfIU4T7xNCaMK/PQhyAeWwe6effyy3nCDslpNWmM9M/Uw3/MKplEuYKE5nMtSPn95kOiYrPGJhZ4VwZdw2S1PQaK/uLve0YM7nplo+rNiplc8O5qPFuQtoGK6TYGvHM/rdWUNJO3l0r2TXKLCLh1GK+D0HUs0IZUIWlSc28GmWk79o9oC9FrXgGBHDiwI9rNuzR726HRE7bAG5mN7SN5XhigJKTzZrQOleQ9ENajWp9DGoPGF8CS0C7aSZ5w+YrGb22nO+I2/RDVed0nNuMgbBaOwf/QzJu19wgv7bze1fdV+bt9mQ7Zp8OQDQ3ywVj3RJX6nEVmPVuQs40XdUfecYJ7stvpbnhhQa8zdefRH3dRXwHnwN+2Yui3oVfujDYaZ+LinAMPF3xQL0JCNjz+H8KKkxcHTvyUyLl3jrQx6+ArsF9Yhj4k2aQSkNnba7OzxF9UNW4BaEQMFvGe1Sob+mbCJBq4tJjk5b3T7tcv+qrd5v78n0AZcYZT0PT9dZG1ExnIXRf5G2BP61gbp773ex/KvfSjBEs5jK0ta5EJS19g3VyVvy4oa5En1vxC7vsFRIpKIMRNtf3giP+l8vZCLHqfvs1UBOf8iGkwE/tU6sk31Cd6AhD3i8culVj6CSWD5wt6lHrLClIOhjKgVXSJaNUJjDQRU="
+  sauce_connect:
+    username: "react-tether"
+  jwt:
+    secure: "UVzxLxwPTotUMVcfIU4T7xNCaMK/PQhyAeWwe6effyy3nCDslpNWmM9M/Uw3/MKplEuYKE5nMtSPn95kOiYrPGJhZ4VwZdw2S1PQaK/uLve0YM7nplo+rNiplc8O5qPFuQtoGK6TYGvHM/rdWUNJO3l0r2TXKLCLh1GK+D0HUs0IZUIWlSc28GmWk79o9oC9FrXgGBHDiwI9rNuzR726HRE7bAG5mN7SN5XhigJKTzZrQOleQ9ENajWp9DGoPGF8CS0C7aSZ5w+YrGb22nO+I2/RDVed0nNuMgbBaOwf/QzJu19wgv7bze1fdV+bt9mQ7Zp8OQDQ3ywVj3RJX6nEVmPVuQs40XdUfecYJ7stvpbnhhQa8zdefRH3dRXwHnwN+2Yui3oVfujDYaZ+LinAMPF3xQL0JCNjz+H8KKkxcHTvyUyLl3jrQx6+ArsF9Yhj4k2aQSkNnba7OzxF9UNW4BaEQMFvGe1Sob+mbCJBq4tJjk5b3T7tcv+qrd5v78n0AZcYZT0PT9dZG1ExnIXRf5G2BP61gbp773ex/KvfSjBEs5jK0ta5EJS19g3VyVvy4oa5En1vxC7vsFRIpKIMRNtf3giP+l8vZCLHqfvs1UBOf8iGkwE/tU6sk31Cd6AhD3i8culVj6CSWD5wt6lHrLClIOhjKgVXSJaNUJjDQRU="
