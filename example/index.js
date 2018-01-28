@@ -93,10 +93,10 @@ class App extends Component {
               {strip(`
                 import TetherComponent from 'react-tether';
 
-                const TetheredThing = () => (<TetheredComponent>
+                const TetheredThing = () => (<TetherComponent>
                   <p>The target component</p>
                   <p>The tethered component</p>
-                </TetheredComponent>)
+                </TetherComponent>)
               `)
                 .replace(/^\n*/, '')
                 .replace(/\s*\n*$/, '')}
