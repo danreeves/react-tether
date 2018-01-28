@@ -54,7 +54,7 @@
     "http-server": "^0.9.0",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.2.0",
-    "parcel-bundler": "^1.1.0",
+    "parcel-bundler": "^1.5.1",
     "postcss-loader": "^0.13.0",
     "prop-types": "^15.5.8",
     "react": "^16.0.0",
