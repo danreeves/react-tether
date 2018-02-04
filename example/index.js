@@ -109,6 +109,16 @@ class App extends Component {
               <Demo />
             </DemoZone>
           </Section>
+          <Section>
+            <br />
+            <p>
+              For more documentation see the{' '}
+              <Link href="https://github.com/danreeves/react-tether#react-tether">
+                readme
+              </Link>{' '}
+              or the <Link href="http://tether.io/">Tether documentation</Link>.
+            </p>
+          </Section>
         </Page>
       </Body>
     );
