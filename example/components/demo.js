@@ -25,6 +25,7 @@ export default class Demo extends React.Component {
   container = null;
 
   componentDidMount() {
+    // Rerender with the container ref
     this.setState({});
   }
 
