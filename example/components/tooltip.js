@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components';
 
+// THIS FILE IS AN ABSOLUTE MESS
+// IM TOO TIRED TO FIX IT
+// :)
+
 function triangleForSide(side) {
   if (side === 'left') {
     return css`
@@ -27,7 +31,13 @@ function triangleForSide(side) {
     `;
   }
 }
-
+const triangleCommon = css`
+  position: absolute;
+  content: ' ';
+  font-size: 0;
+  line-height: 0;
+  width: 0;
+`;
 export default styled.div`
   display: inline-block;
   border-radius: 6px;
@@ -35,6 +45,10 @@ export default styled.div`
   opacity: 0.8;
   position: relative;
   padding: 0.25em;
+
+  ${props =>
+    props.side
+      ? css`
   margin-${props => props.side}: 10px;
   &:after {
     position: absolute;
@@ -43,5 +57,28 @@ export default styled.div`
     line-height: 0;
     width: 0;
     ${props => triangleForSide(props.side)};
-  }
+  }`
+      : css`
+          .tether-target-attached-right &:after {
+            ${props => triangleForSide('left')};
+            ${triangleCommon};
+          }
+          .tether-target-attached-right & {
+            margin-left: 10px;
+          }
+          .tether-target-attached-left &:after {
+            ${props => triangleForSide('right')};
+            ${triangleCommon};
+          }
+          .tether-target-attached-left & {
+            margin-right: 10px;
+          }
+          .tether-target-attached-bottom &:after {
+            ${props => triangleForSide('top')};
+            ${triangleCommon};
+          }
+          .tether-target-attached-bottom & {
+            margin-top: 10px;
+          }
+        `};
 `;

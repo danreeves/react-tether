@@ -10,6 +10,7 @@ import PageTitle from './components/page-title';
 import Target from './components/target';
 import Tooltip from './components/tooltip';
 import Link from './components/link';
+import Demo from './components/demo';
 
 injectGlobal`
   html, body {
@@ -51,13 +52,13 @@ const CodeBlock = styled(InlineCode)`
 `;
 
 const DemoZone = styled.div`
-  padding: 1rem;
   border: 4px solid
     ${chroma('#3acbba')
       .darken()
       .hex()};
-
   border-radius: 4px;
+  height: 600px;
+  position: relative;
 `;
 
 class App extends Component {
@@ -104,7 +105,9 @@ class App extends Component {
           </Section>
           <Section>
             <h2>Demo</h2>
-            <DemoZone>Hello</DemoZone>
+            <DemoZone>
+              <Demo />
+            </DemoZone>
           </Section>
         </Page>
       </Body>
