@@ -17,7 +17,7 @@ if (modifiedSrc.length > 1 && !changelogChanges) {
 }
 
 // Pull requests should have descriptions
-if (pr.body.length === 0) {
+if (danger.github.pr.body.length === 0) {
   fail('Please add a description to your PR');
 }
 
