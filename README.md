@@ -113,6 +113,6 @@ install dependencies
 
 run dev mode
 
-`npm run dev`
+`npm run demo`
 
-open your browser and visit: `http://localhost:8080/`
+open your browser and visit: `http://localhost:1234/`
