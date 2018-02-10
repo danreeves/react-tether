@@ -113,10 +113,9 @@ class App extends Component {
             <br />
             <p>
               For more documentation see the{' '}
-              <Link href="https://github.com/danreeves/react-tether#react-tether">
+              <Link href="https://github.com/danreeves/react-tether#props">
                 readme
-              </Link>{' '}
-              or the <Link href="http://tether.io/">Tether documentation</Link>.
+              </Link>.
             </p>
           </Section>
         </Page>
