@@ -13,7 +13,8 @@
     "demo:build": "parcel build example/index.html --out-dir example-dist --public-url /react-tether/",
     "demo:deploy": "npm run demo:build && git-directory-deploy --directory example-dist --branch gh-pages && rm -rf example-dist",
     "test": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/test.js --app 'npm run demo'",
-    "test:local": "testcafe chrome tests/test.js --app 'npm run demo'"
+    "test:local": "testcafe chrome tests/test.js --app 'npm run demo'",
+    "danger": "danger ci"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "chroma-js": "^1.3.4",
+    "danger": "^3.1.6",
     "git-directory-deploy": "^1.5.1",
     "parcel-bundler": "^1.5.1",
     "prettier": "^1.10.2",
