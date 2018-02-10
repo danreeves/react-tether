@@ -14,7 +14,7 @@
     "demo:deploy": "npm run demo:build && git-directory-deploy --directory example-dist --branch gh-pages && rm -rf example-dist",
     "test": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/test.js --app 'npm run demo'",
     "test:local": "testcafe chrome tests/test.js --app 'npm run demo'",
-    "danger": "danger"
+    "danger": "danger ci"
   },
   "repository": {
     "type": "git",

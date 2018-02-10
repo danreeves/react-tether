@@ -7,4 +7,4 @@ before_install:
   - "export SAUCE_BUILD=$TRAVIS_COMMIT"
 
 before_script:
-  - npm run danger ci
+  - npm run danger
