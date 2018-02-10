@@ -59,10 +59,11 @@ class App extends Component {
                 {`
                 import TetherComponent from 'react-tether';
 
-                const TetheredThing = () => (<TetherComponent>
-                  <p>The target component</p>
-                  <p>The tethered component</p>
-                </TetherComponent>)
+                const TetheredThing = () => (
+                  <TetherComponent attachment="middle left">
+                    <p>The target component</p>
+                    <p>The tethered component</p>
+                  </TetherComponent>)
                 `}
               </CodeBlock>
             </Section>
