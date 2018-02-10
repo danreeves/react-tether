@@ -20,6 +20,12 @@ injectGlobal`
   }
 `;
 
+const HidesOnMobileSection = Section.extend`
+  @media (max-width: 390px) {
+    display: none;
+  }
+`;
+
 class App extends Component {
   render() {
     return (
@@ -45,8 +51,7 @@ class App extends Component {
             </Section>
             <Section>
               <h2>Installation</h2>
-              <InlineCode>npm i --save react-tether</InlineCode>
-              <InlineCode>yarn add react-tether</InlineCode>
+              <InlineCode>npm i react-tether</InlineCode>
             </Section>
             <Section>
               <h2>Usage</h2>
@@ -61,10 +66,10 @@ class App extends Component {
                 `}
               </CodeBlock>
             </Section>
-            <Section>
+            <HidesOnMobileSection>
               <h2>Demo</h2>
               <Demo />
-            </Section>
+            </HidesOnMobileSection>
             <Section>
               <br />
               <p>

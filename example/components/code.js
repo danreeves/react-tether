@@ -17,9 +17,9 @@ export const InlineCode = styled(Code)`
   padding: 1rem;
   border-radius: 4px;
   opacity: 0.9;
-  margin: 0;
-  margin-right: 1rem;
   line-height: 1rem;
+  overflow: scroll;
+  max-width: 100%;
 `;
 
 export const CodeBlock = styled(InlineCode)`
