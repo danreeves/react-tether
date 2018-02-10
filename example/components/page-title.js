@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import TetherComponent from '../../src/react-tether';
 import Target from './target';
 import Tooltip from './tooltip';
-import { colors } from '../constants';
 import shuffle from '../shuffle';
 
 const Wrapper = styled.div`
@@ -16,21 +15,14 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  color: #fff;
-  font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+  color: ${({ theme }) => theme.lightText};
+  font-family: ${({ theme }) => theme.font};
   letter-spacing: -4px;
   word-spacing: 0.5rem;
   margin: 1rem;
   font-size: 3rem;
   display: inline-block;
 `;
-
-const shuffledColors = shuffle(colors).slice(0, 4);
-const sides = ['middle left', 'top center', 'middle right', 'top center'];
-
-function direction(tetherString) {
-  return tetherString.match(/left|top|right/)[0];
-}
 
 class PageTitle extends React.Component {
   constructor(props) {
@@ -40,6 +32,12 @@ class PageTitle extends React.Component {
       interval: null,
     };
     this.incrementCount = this.incrementCount.bind(this);
+  }
+
+  sides = ['middle left', 'top center', 'middle right', 'top center'];
+
+  direction(tetherString) {
+    return tetherString.match(/left|top|right/)[0];
   }
 
   incrementCount() {
@@ -64,7 +62,7 @@ class PageTitle extends React.Component {
   render() {
     const { children } = this.props;
     const side =
-      window.innerWidth > 750 ? sides[this.state.count] : 'top center';
+      window.innerWidth > 750 ? this.sides[this.state.count] : 'top center';
     return (
       <Wrapper>
         <TetherComponent
@@ -79,9 +77,9 @@ class PageTitle extends React.Component {
           <Target
             height="100"
             width="100"
-            color={shuffledColors[this.state.count]}
+            color={this.props.theme.colors[this.state.count]}
           />
-          <Tooltip side={direction(side)}>
+          <Tooltip side={this.direction(side)}>
             <Title>{children}</Title>
           </Tooltip>
         </TetherComponent>
@@ -90,4 +88,4 @@ class PageTitle extends React.Component {
   }
 }
 
-export default PageTitle;
+export default withTheme(PageTitle);
