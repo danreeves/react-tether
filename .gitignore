@@ -11,6 +11,7 @@ npm-debug.log
 /dist/
 /lib/
 /example/bundle.js
+/example-dist
 
 # General Files
 .sass-cache
