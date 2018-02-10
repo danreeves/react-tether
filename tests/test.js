@@ -1,20 +1,24 @@
 import { Selector } from 'testcafe';
 
-fixture`My first test`.page`http://localhost:8080/`;
+fixture`My first test`.page`http://localhost:1234/`;
 
-const ySelect = Selector('select').nth(0);
-const yOptions = ySelect.find('option');
-const xSelect = Selector('select').nth(1);
-const xOptions = xSelect.find('option');
-const heightButton = Selector('button').nth(2);
-const target = Selector('.drop-scroll-content');
+const target = Selector('#DRAG_ME');
+const tooltip = Selector('#WATCH_ME');
 
 test(`It doesn't crash`, async t => {
+  await t.hover(target);
+  // Target is to the left of the tooltip
+  const { left: targetInitialLeft } = await target.boundingClientRect;
+  const { left: tooltipInitialLeft } = await tooltip.boundingClientRect;
   await t
-    .hover(target)
-    .click(ySelect)
-    .click(yOptions.withText('Top'))
-    .click(xSelect)
-    .click(xOptions.withText('Left'))
-    .click(heightButton);
+    .expect(targetInitialLeft < tooltipInitialLeft)
+    .ok(`${targetInitialLeft} < ${tooltipInitialLeft}`);
+
+  await t.drag(target, 600, 0);
+  // Target is to the right of the tooltip
+  const { left: targetAfterLeft } = await target.boundingClientRect;
+  const { left: tooltipAfterLeft } = await tooltip.boundingClientRect;
+  await t
+    .expect(targetAfterLeft > tooltipAfterLeft)
+    .ok(`${targetAfterLeft} > ${tooltipAfterLeft}`);
 });

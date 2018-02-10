@@ -5,9 +5,9 @@ import TetherComponent from '../../src/react-tether';
 import Target from './target';
 import Tooltip from './tooltip';
 
-const DraggableTarget = ({ color, height, width, ...props }) => (
+const DraggableTarget = ({ color, height, id, width, ...props }) => (
   <Draggable {...props}>
-    <Target color={color} height={height} width={width} />
+    <Target color={color} height={height} width={width} id={id} />
   </Draggable>
 );
 
@@ -47,6 +47,7 @@ export default class Demo extends React.Component {
             ]}
           >
             <DraggableTarget
+              id="DRAG_ME"
               height={100}
               width={100}
               color="red"
@@ -54,7 +55,7 @@ export default class Demo extends React.Component {
               onDrag={() => this.tether.position()}
               defaultPosition={{ x: 25, y: 25 }}
             />
-            <Tooltip>
+            <Tooltip id="WATCH_ME">
               <Text>Drag the box around</Text>
               <Text>I'll stay within the outline</Text>
             </Tooltip>
