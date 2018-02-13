@@ -7,6 +7,8 @@ if (!Tether) {
   console.error('It looks like Tether has not been included. Please load this dependency first https://github.com/HubSpot/tether')
 }
 
+const isReact16 = ReactDOM.createPortal !== undefined
+
 const renderElementToPropTypes = [
   PropTypes.string,
   PropTypes.shape({
@@ -69,12 +71,28 @@ class TetherComponent extends Component {
 
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
-    this._update()
+
+    if (isReact16) {
+      // if we're not destroyed, update Tether once the subtree has finished rendering
+      if (this._elementParentNode) {
+        this._updateTether()
+      }
+    } else {
+      this._update()
+    }
   }
 
   componentDidUpdate(prevProps) {
     this._targetNode = ReactDOM.findDOMNode(this)
-    this._update()
+
+    if (isReact16) {
+      // if we're not destroyed, update Tether once the subtree has finished rendering
+      if (this._elementParentNode) {
+        this._updateTether()
+      }
+    } else {
+      this._update()
+    }
   }
 
   componentWillUnmount() {
@@ -142,8 +160,21 @@ class TetherComponent extends Component {
     this._tether = null
   }
 
+  _createContainer() {
+    const { renderElementTag } = this.props
+
+    // create element node container if it hasn't been yet
+    if (!this._elementParentNode) {
+      // create a node that we can stick our content Component in
+      this._elementParentNode = document.createElement(renderElementTag)
+
+      // append node to the render node
+      this._renderNode.appendChild(this._elementParentNode)
+    }
+  }
+
   _update() {
-    const { children, renderElementTag } = this.props
+    const { children } = this.props
     const elementComponent = Children.toArray(children)[1]
 
     // if no element component provided, bail out
@@ -155,14 +186,7 @@ class TetherComponent extends Component {
       return
     }
 
-    // create element node container if it hasn't been yet
-    if (!this._elementParentNode) {
-      // create a node that we can stick our content Component in
-      this._elementParentNode = document.createElement(renderElementTag)
-
-      // append node to the render node
-      this._renderNode.appendChild(this._elementParentNode)
-    }
+    this._createContainer()
 
     // render element component into the DOM
     ReactDOM.unstable_renderSubtreeIntoContainer(
@@ -208,7 +232,29 @@ class TetherComponent extends Component {
   }
 
   render() {
-    return Children.toArray(this.props.children)[0]
+    const { children } = this.props
+
+    if (!isReact16) {
+      return Children.toArray(children)[0]
+    }
+
+    const elementComponent = Children.toArray(children)[1]
+
+    // if no element component provided, bail out
+    if (!elementComponent) {
+      // destroy Tether element if it has been created
+      if (this._tether) {
+        this._destroy()
+      }
+      return
+    }
+
+    this._createContainer()
+
+    return [
+        Children.toArray(children)[0],
+        ReactDOM.createPortal(elementComponent, this._elementParentNode)
+    ]
   }
 }
 
