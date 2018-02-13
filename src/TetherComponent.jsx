@@ -148,7 +148,7 @@ class TetherComponent extends Component {
 
   _destroy() {
     if (this._elementParentNode) {
-      ReactDOM.unmountComponentAtNode(this._elementParentNode)
+      !isReact16 && ReactDOM.unmountComponentAtNode(this._elementParentNode)
       this._elementParentNode.parentNode.removeChild(this._elementParentNode)
     }
 
