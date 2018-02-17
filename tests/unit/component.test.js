@@ -107,15 +107,18 @@ describe('TetherComponent', () => {
     expect(document.querySelector('.tether-element').nodeName).toBe('ASIDE');
   });
 
-  // TODO
-  // Bug with renderElementTo not working
-  it.skip('allows changing the tether element tag', () => {
+  it('allows changing the tether element tag', () => {
     const container = document.createElement('div');
     container.setAttribute('id', 'test-container');
     document.body.appendChild(container);
 
     wrapper = mount(
-      <TetherComponent attachment="top left" renderElementTo="#test-container">
+      <TetherComponent
+        attachment="top left"
+        renderElementTo="#test-container"
+        // TODO: Why do we need to do this?
+        bodyElement={document.querySelector('#test-container')}
+      >
         <div id="child1" />
         <div id="child2" />
       </TetherComponent>
