@@ -7,7 +7,7 @@ if (!Tether) {
   console.error('It looks like Tether has not been included. Please load this dependency first https://github.com/HubSpot/tether')
 }
 
-const isReact16 = ReactDOM.createPortal !== undefined
+const hasCreatePortal = ReactDOM.createPortal !== undefined
 
 const renderElementToPropTypes = [
   PropTypes.string,
@@ -72,7 +72,7 @@ class TetherComponent extends Component {
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
 
-    if (isReact16) {
+    if (hasCreatePortal) {
       // if we're not destroyed, update Tether once the subtree has finished rendering
       if (this._elementParentNode) {
         this._updateTether()
@@ -85,7 +85,7 @@ class TetherComponent extends Component {
   componentDidUpdate(prevProps) {
     this._targetNode = ReactDOM.findDOMNode(this)
 
-    if (isReact16) {
+    if (hasCreatePortal) {
       // if we're not destroyed, update Tether once the subtree has finished rendering
       if (this._elementParentNode) {
         this._updateTether()
@@ -148,7 +148,7 @@ class TetherComponent extends Component {
 
   _destroy() {
     if (this._elementParentNode) {
-      !isReact16 && ReactDOM.unmountComponentAtNode(this._elementParentNode)
+      !hasCreatePortal && ReactDOM.unmountComponentAtNode(this._elementParentNode)
       this._elementParentNode.parentNode.removeChild(this._elementParentNode)
     }
 
@@ -234,7 +234,7 @@ class TetherComponent extends Component {
   render() {
     const { children } = this.props
 
-    if (!isReact16) {
+    if (!hasCreatePortal) {
       return Children.toArray(children)[0]
     }
 
@@ -246,7 +246,7 @@ class TetherComponent extends Component {
       if (this._tether) {
         this._destroy()
       }
-      return
+      return Children.toArray(children)[0]
     }
 
     this._createContainer()
