@@ -69,6 +69,23 @@ class TetherComponent extends Component {
   _elementParentNode = null
   _tether = false
 
+  constructor(props) {
+    super(props)
+    const elementComponent = Children.toArray(props.children)[1]
+
+    if (elementComponent) {
+      this._createContainer()
+    }
+  }
+
+  componentWillUpdate({ children }) {
+    const elementComponent = Children.toArray(children)[1]
+
+    if (elementComponent) {
+      this._createContainer()
+    }
+  }
+
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
@@ -173,8 +190,6 @@ class TetherComponent extends Component {
     if (hasCreatePortal) {
       this._updateTether()
     } else {
-      this._createContainer()
-
       // render element component into the DOM
       ReactDOM.unstable_renderSubtreeIntoContainer(
         this, elementComponent, this._elementParentNode, () => {
@@ -226,8 +241,6 @@ class TetherComponent extends Component {
     if (!hasCreatePortal || !elementComponent) {
       return Children.toArray(children)[0]
     }
-
-    this._createContainer()
 
     return [
         Children.toArray(children)[0],
