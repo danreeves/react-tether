@@ -96,4 +96,34 @@ describe('TetherComponent', () => {
     expect(document.querySelector('.tether-element')).toBeFalsy();
     expect(document.querySelector('.tether-element #child2')).toBeFalsy();
   });
+
+  it('allows changing the tether element tag', () => {
+    wrapper = mount(
+      <TetherComponent attachment="top left" renderElementTag="aside">
+        <div id="child1" />
+        <div id="child2" />
+      </TetherComponent>
+    );
+    expect(document.querySelector('.tether-element').nodeName).toBe('ASIDE');
+  });
+
+  // TODO
+  // Bug with renderElementTo not working
+  it.skip('allows changing the tether element tag', () => {
+    const container = document.createElement('div');
+    container.setAttribute('id', 'test-container');
+    document.body.appendChild(container);
+
+    wrapper = mount(
+      <TetherComponent attachment="top left" renderElementTo="#test-container">
+        <div id="child1" />
+        <div id="child2" />
+      </TetherComponent>
+    );
+
+    expect(document.querySelector('#test-container')).toBeTruthy();
+    expect(
+      document.querySelector('#test-container .tether-element')
+    ).toBeTruthy();
+  });
 });
