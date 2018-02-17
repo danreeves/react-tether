@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
+npm run react:15
+npm run unit
+
+npm run react:16
 npm run unit
 
 if [ -z "$SAUCE_USERNAME" ] && [ -z "$SAUCE_ACCESS_KEY"]; then
   echo
-  echo "ATTENTION: Skipping E2E tests because the environment variables are not set!"
+  echo "ATTENTION"
+  echo "Skipping E2E tests because the environment variables are not set!"
 else
   npm run e2e:full
 fi
