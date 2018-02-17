@@ -71,28 +71,12 @@ class TetherComponent extends Component {
 
   componentDidMount() {
     this._targetNode = ReactDOM.findDOMNode(this)
-
-    if (hasCreatePortal) {
-      // if we're not destroyed, update Tether once the subtree has finished rendering
-      if (this._elementParentNode) {
-        this._updateTether()
-      }
-    } else {
-      this._update()
-    }
+    this._update()
   }
 
   componentDidUpdate(prevProps) {
     this._targetNode = ReactDOM.findDOMNode(this)
-
-    if (hasCreatePortal) {
-      // if we're not destroyed, update Tether once the subtree has finished rendering
-      if (this._elementParentNode) {
-        this._updateTether()
-      }
-    } else {
-      this._update()
-    }
+    this._update()
   }
 
   componentWillUnmount() {
@@ -176,7 +160,7 @@ class TetherComponent extends Component {
   _update() {
     const { children } = this.props
     const elementComponent = Children.toArray(children)[1]
-
+    
     // if no element component provided, bail out
     if (!elementComponent) {
       // destroy Tether element if it has been created
@@ -186,17 +170,21 @@ class TetherComponent extends Component {
       return
     }
 
-    this._createContainer()
+    if (hasCreatePortal) {
+      this._updateTether()
+    } else {
+      this._createContainer()
 
-    // render element component into the DOM
-    ReactDOM.unstable_renderSubtreeIntoContainer(
-      this, elementComponent, this._elementParentNode, () => {
-        // if we're not destroyed, update Tether once the subtree has finished rendering
-        if (this._elementParentNode) {
-          this._updateTether()
+      // render element component into the DOM
+      ReactDOM.unstable_renderSubtreeIntoContainer(
+        this, elementComponent, this._elementParentNode, () => {
+          // if we're not destroyed, update Tether once the subtree has finished rendering
+          if (this._elementParentNode) {
+            this._updateTether()
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   _updateTether() {
@@ -233,19 +221,9 @@ class TetherComponent extends Component {
 
   render() {
     const { children } = this.props
-
-    if (!hasCreatePortal) {
-      return Children.toArray(children)[0]
-    }
-
     const elementComponent = Children.toArray(children)[1]
 
-    // if no element component provided, bail out
-    if (!elementComponent) {
-      // destroy Tether element if it has been created
-      if (this._tether) {
-        this._destroy()
-      }
+    if (!hasCreatePortal || !elementComponent) {
       return Children.toArray(children)[0]
     }
 
