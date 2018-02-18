@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+npm run danger
+
 npm run react:15
 npm run unit
 

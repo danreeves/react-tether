@@ -9,8 +9,5 @@ before_install:
   - "export SAUCE_JOB=react-tether"
   - "export SAUCE_BUILD=$TRAVIS_COMMIT"
 
-before_script:
-  - npm run danger
-
 script:
   - ./bin/test
