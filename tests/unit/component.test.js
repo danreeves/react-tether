@@ -1,6 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
 import TetherComponent from '../../lib/react-tether';
+
+const hasCreatePortal = ReactDOM.createPortal != null;
 
 describe('TetherComponent', () => {
   let wrapper;
@@ -22,15 +25,27 @@ describe('TetherComponent', () => {
     expect(wrapper.find('#child1').exists()).toBeTruthy();
   });
 
-  it('should not render the second child', () => {
-    wrapper = mount(
-      <TetherComponent attachment="top left">
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
-    );
-    expect(wrapper.find('#child2').exists()).toBeFalsy();
-  });
+  if (hasCreatePortal) {
+    it('should render the second child', () => {
+      wrapper = mount(
+        <TetherComponent attachment="top left">
+          <div id="child1" />
+          <div id="child2" />
+        </TetherComponent>
+      );
+      expect(wrapper.find('#child2').exists()).toBeTruthy();
+    });
+  } else {
+    it('should not render the second child', () => {
+      wrapper = mount(
+        <TetherComponent attachment="top left">
+          <div id="child1" />
+          <div id="child2" />
+        </TetherComponent>
+      );
+      expect(wrapper.find('#child2').exists()).toBeFalsy();
+    });
+  }
 
   it('should create a tether element', () => {
     wrapper = mount(
