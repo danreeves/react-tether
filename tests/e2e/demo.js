@@ -4,8 +4,10 @@ fixture`My first test`.page`http://localhost:1234/`;
 
 const target = Selector('#DRAG_ME');
 const tooltip = Selector('#WATCH_ME');
+const button = Selector('#CLICK_ME');
 
-test(`It doesn't crash`, async t => {
+test(`It handles repositioning, constraints,
+      and unmounting the tethered component`, async t => {
   await t.hover(target);
   // Target is to the left of the tooltip
   const { left: targetInitialLeft } = await target.boundingClientRect;
@@ -21,4 +23,11 @@ test(`It doesn't crash`, async t => {
   await t
     .expect(targetAfterLeft > tooltipAfterLeft)
     .ok(`${targetAfterLeft} > ${tooltipAfterLeft}`);
+
+  // Toggle the tooltip off
+  await t.click(button);
+  await t.drag(target, -300, 0);
+  // Toggle the tooltip on
+  await t.click(button);
+  await t.drag(target, -300, 0);
 });
