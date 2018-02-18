@@ -17,9 +17,16 @@ const DemoZone = styled.div`
   position: relative;
 `;
 
+const GrabbableTarget = styled(Target)`
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+`;
+
 const DraggableTarget = ({ color, height, id, width, ...props }) => (
   <Draggable {...props}>
-    <Target color={color} height={height} width={width} id={id} />
+    <GrabbableTarget color={color} height={height} width={width} id={id} />
   </Draggable>
 );
 
@@ -32,10 +39,47 @@ const Text = styled.p`
   text-align: center;
 `;
 
+const ToggleButton = styled.button`
+  border: 4px solid
+    ${({ theme }) =>
+      chroma(theme.colors[1])
+        .darken()
+        .hex()};
+  border-radius: 4px;
+  font-family: ${({ theme }) => theme.font};
+  color: ${({ theme }) =>
+    chroma(theme.colors[1])
+      .darken()
+      .hex()};
+  font-size: 1.5rem;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: transparent;
+  outline: none;
+  &:hover {
+    background-color: ${({ theme }) =>
+      chroma(theme.colors[1])
+        .alpha(0.5)
+        .css()};
+    color: ${({ theme }) =>
+      chroma(theme.colors[1])
+        .darken(1.5)
+        .hex()};
+    border-color: ${({ theme }) =>
+      chroma(theme.colors[1])
+        .darken(1.5)
+        .hex()};
+    cursor: pointer;
+  }
+  &:active {
+    background-color: ${({ theme }) => chroma(theme.colors[1]).css()};
+  }
+`;
+
 export default class Demo extends React.Component {
   tether = null;
   container = null;
-
+  state = { on: true };
   componentDidMount() {
     // Rerender with the container ref
     this.setState({});
@@ -44,6 +88,16 @@ export default class Demo extends React.Component {
   render() {
     return (
       <DemoZone>
+        <ToggleButton
+          id="CLICK_ME"
+          onClick={() =>
+            this.setState(({ on }) => {
+              return { on: !on };
+            })
+          }
+        >
+          Toggle tooltip
+        </ToggleButton>
         <div
           ref={container => (this.container = container)}
           style={{ height: '100%' }}
@@ -65,13 +119,17 @@ export default class Demo extends React.Component {
                 width={100}
                 color="red"
                 bounds="parent"
-                onDrag={() => this.tether.position()}
+                onDrag={() =>
+                  this.tether.getTetherInstance() && this.tether.position()
+                }
                 defaultPosition={{ x: 25, y: 25 }}
               />
-              <Tooltip id="WATCH_ME">
-                <Text>Drag the box around</Text>
-                <Text>I'll stay within the outline</Text>
-              </Tooltip>
+              {this.state.on && (
+                <Tooltip id="WATCH_ME">
+                  <Text>Drag the box around</Text>
+                  <Text>I'll stay within the outline</Text>
+                </Tooltip>
+              )}
             </TetherComponent>
           )}
         </div>
