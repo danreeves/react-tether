@@ -1,10 +1,13 @@
 language: node_js
 node_js: "stable"
+branches:
+  only:
+    - master
 
 before_install:
   - "stty cols 80"
   - "export SAUCE_JOB=react-tether"
   - "export SAUCE_BUILD=$TRAVIS_COMMIT"
 
-before_script:
-  - npm run danger
+script:
+  - ./bin/test
