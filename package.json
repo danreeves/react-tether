@@ -12,8 +12,13 @@
     "demo": "parcel example/index.html",
     "demo:build": "parcel build example/index.html --out-dir example-dist --public-url /react-tether/",
     "demo:deploy": "npm run demo:build && git-directory-deploy --directory example-dist --branch gh-pages && rm -rf example-dist",
-    "test": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/test.js --app 'npm run demo'",
-    "test:local": "testcafe chrome tests/test.js --app 'npm run demo'",
+    "unit": "jest tests/unit",
+    "e2e": "testcafe chrome tests/e2e --app 'npm run demo'",
+    "e2e:full": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/e2e --app 'npm run demo'",
+    "test": "npm run unit",
+    "tdd": "npm run unit -- --watch",
+    "react:16": "enzyme-adapter-react-install 16",
+    "react:15": "enzyme-adapter-react-install 15",
     "danger": "danger ci"
   },
   "repository": {
@@ -51,10 +56,12 @@
     "babel-preset-stage-0": "^6.16.0",
     "chroma-js": "^1.3.4",
     "danger": "^3.1.6",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-helper": "^1.2.3",
     "git-directory-deploy": "^1.5.1",
+    "jest": "^22.2.2",
     "parcel-bundler": "^1.5.1",
     "prettier": "^1.10.2",
-    "prop-types": "^15.5.8",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-draggable": "^3.0.5",
@@ -67,5 +74,8 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.js"
   }
 }
