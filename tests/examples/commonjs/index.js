@@ -1,6 +1,6 @@
 const React = require('react');
 const { render } = require('react-dom');
-const ReactTether = require('../../../lib/react-tether');
+const { default: ReactTether } = require('../../../lib/react-tether');
 
 function App() {
   return (

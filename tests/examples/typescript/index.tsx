@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import ReactTether from '../../../lib/react-tether';
 
 function App () {
@@ -12,4 +12,4 @@ function App () {
     </div>
 }
 
-render(<App/>, document.querySelector('#app'));
+ReactDOM.render(<App/>, document.querySelector('#app'));
