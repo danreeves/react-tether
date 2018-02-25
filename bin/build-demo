@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Clean the folder dist folder
+echo 'Deleting ./example-dist'
+rm -rf ./example-dist
+
+# Build main demo
+echo 'Building ./example'
+npx parcel build ./example/index.html \
+  --out-dir example-dist \
+  --public-url /react-tether/
+
+# Build the renderelemento demo
+echo 'Building ./tests/examples/renderelementto'
+npx parcel build ./tests/examples/renderelementto/index.html \
+  --out-dir example-dist/renderelementto \
+  --public-url /react-tether/renderelementto/
+
+# Deploy to gh-pages
+echo 'Deploying to gh-pages'
+npx git-directory-deploy \
+  --directory ./example-dist \
+  --branch gh-pages
+
+# Tidy up after
+echo 'Deleting ./example-dist'
+rm -rf ./example-dist
