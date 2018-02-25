@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>renderElementTo example</title>
+    <style>
+      #good-parent .tether-element {
+        background: green;
+      }
+      #bad-parent .tether-element {
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="bad-parent" style="position: relative"></div>
+    <div id="good-parent" style="position: static"></div>
+    <script src="./index.js"></script>
+  </body>
+</html>
