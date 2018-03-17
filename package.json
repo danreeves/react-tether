@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/danreeves/react-tether",
   "dependencies": {
+    "pretty-quick": "^1.4.1",
     "prop-types": "^15.5.8",
     "tether": "^1.4.3"
   },
@@ -84,6 +85,6 @@
     "setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.js"
   },
   "lint-staged": {
-    "*.{js,jsx,json,md}": ["prettier --write", "git add"]
+    "*.{js,jsx,json,md}": "pretty-quick --staged"
   }
 }
