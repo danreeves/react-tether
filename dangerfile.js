@@ -1,4 +1,4 @@
-import { warning, fail, message, danger } from 'danger';
+import { warn, fail, message, danger } from 'danger';
 
 const modified = danger.git.modified_files;
 const modifiedSrc = modified.filter(p => p.includes('src/'));
@@ -13,12 +13,12 @@ message(
 
 // Updates to the source require changelog updates
 if (modifiedSrc.length > 1 && !changelogChanges) {
-  warning(`You changed a source file but didn't add to the changelog`);
+  warn(`You changed a source file but didn't add to the changelog`);
 }
 
 // Pull requests should have descriptions
 if (danger.github.pr.body.length === 0) {
-  warning('Please add a description to your PR');
+  warn('Please add a description to your PR');
 }
 
 // You added tests :tada:
