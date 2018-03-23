@@ -24,6 +24,7 @@
     "react:15": "enzyme-adapter-react-install 15",
     "danger": "danger ci",
     "typescript": "tsc -p tsconfig.json",
+    "lint": "xo",
     "precommit": "lint-staged"
   },
   "repository": {
@@ -39,7 +40,6 @@
   },
   "homepage": "https://github.com/danreeves/react-tether",
   "dependencies": {
-    "pretty-quick": "^1.4.1",
     "prop-types": "^15.5.8",
     "tether": "^1.4.3"
   },
@@ -53,6 +53,7 @@
     "@types/tether": "^1.4.3",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
+    "babel-eslint": "^8.2.2",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
@@ -61,12 +62,16 @@
     "danger": "^3.1.6",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-helper": "^1.2.3",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-xo-react": "^0.16.0",
+    "eslint-plugin-react": "^7.7.0",
     "git-directory-deploy": "^1.5.1",
     "husky": "^0.14.3",
     "jest": "^22.2.2",
     "lint-staged": "^7.0.0",
     "parcel-bundler": "^1.5.1",
     "prettier": "^1.11.1",
+    "pretty-quick": "^1.4.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-draggable": "^3.0.5",
@@ -75,11 +80,17 @@
     "testcafe": "^0.18.3",
     "testcafe-browser-provider-saucelabs": "^1.3.0",
     "typescript": "^2.7.2",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "xo": "^0.20.3"
   },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "xo": {
+    "parser": "babel-eslint",
+    "envs": ["node", "browser", "es6", "jest"],
+    "extends": ["prettier", "plugin:react/recommended"]
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.js"
