@@ -78,8 +78,11 @@ const ToggleButton = styled.button`
 
 export default class Demo extends React.Component {
   tether = null;
+
   container = null;
+
   state = { on: true };
+
   componentDidMount() {
     // Rerender with the container ref
     this.setState({});

@@ -90,6 +90,7 @@ describe('TetherComponent', () => {
   it('should destroy the tether element if the second child is unmounted', () => {
     class ToggleComponent extends React.Component {
       state = { on: true };
+
       render() {
         return (
           <TetherComponent attachment="top left">

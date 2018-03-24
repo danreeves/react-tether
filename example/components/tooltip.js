@@ -13,7 +13,8 @@ function triangleForSide(side) {
       border-bottom: 10px solid transparent;
       border-right: 10px solid #333;
     `;
-  } else if (side === 'top') {
+  }
+  if (side === 'top') {
     return css`
       top: -10px;
       left: calc(50% - 10px);
@@ -21,7 +22,8 @@ function triangleForSide(side) {
       border-right: 10px solid transparent;
       border-bottom: 10px solid #333;
     `;
-  } else if (side === 'right') {
+  }
+  if (side === 'right') {
     return css`
       top: calc(50% - 10px);
       right: -10px;
