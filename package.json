@@ -90,7 +90,16 @@
   "xo": {
     "parser": "babel-eslint",
     "envs": ["node", "browser", "es6", "jest"],
-    "extends": ["prettier", "plugin:react/recommended"]
+    "extends": ["prettier", "plugin:react/recommended"],
+    "overrides": [
+      {
+        "files": "tests/e2e/*.js",
+        "globals": ["fixture"],
+        "rules": {
+          "no-unused-expressions": 0
+        }
+      }
+    ]
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.js"
