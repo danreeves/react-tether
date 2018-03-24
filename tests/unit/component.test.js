@@ -126,15 +126,12 @@ describe('TetherComponent', () => {
   it('allows changing the tether element tag', () => {
     const container = document.createElement('div');
     container.setAttribute('id', 'test-container');
+    // Tether requires the container element to have position static
+    container.style.position = 'static';
     document.body.appendChild(container);
 
     wrapper = mount(
-      <TetherComponent
-        attachment="top left"
-        renderElementTo="#test-container"
-        // TODO: Why do we need to do this?
-        bodyElement={document.querySelector('#test-container')}
-      >
+      <TetherComponent attachment="top left" renderElementTo="#test-container">
         <div id="child1" />
         <div id="child2" />
       </TetherComponent>
