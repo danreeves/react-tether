@@ -1,1 +1,1 @@
-export default from './TetherComponent.jsx';
+export default from './TetherComponent';
