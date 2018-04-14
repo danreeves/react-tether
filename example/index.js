@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import styled, { injectGlobal } from 'styled-components';
-import TetherComponent from '../src/react-tether';
+import { injectGlobal } from 'styled-components';
 import Theme from './components/theme';
 import Body from './components/body';
 import Page from './components/page';
@@ -11,6 +10,7 @@ import { InlineCode, CodeBlock } from './components/code';
 import Link from './components/link';
 import Demo from './components/demo';
 
+/* eslint-disable  no-unused-expressions */
 injectGlobal`
   html, body {
     margin: 0;
@@ -19,6 +19,7 @@ injectGlobal`
     width: 100%;
   }
 `;
+/* eslint-enable  no-unused-expressions */
 
 const HidesOnMobileSection = Section.extend`
   @media (max-width: 390px) {

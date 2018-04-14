@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
 import TetherComponent from '../../lib/react-tether';
 
-const hasCreatePortal = ReactDOM.createPortal != null;
+const hasCreatePortal = ReactDOM.createPortal !== undefined;
 
 describe('TetherComponent', () => {
   let wrapper;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
 import chroma from 'chroma-js';
@@ -25,17 +24,23 @@ const GrabbableTarget = styled(Target)`
   }
 `;
 
-const DraggableTarget = ({ color, height, id, width, ...props }) => (
+type DraggableTargetProps = {
+  color: string,
+  height: number,
+  id: string,
+  width: number,
+};
+const DraggableTarget = ({
+  color,
+  height,
+  id,
+  width,
+  ...props
+}: DraggableTargetProps) => (
   <Draggable {...props}>
     <GrabbableTarget color={color} height={height} width={width} id={id} />
   </Draggable>
 );
-DraggableTarget.propTypes = {
-  color: PropTypes.string.isRequired,
-  height: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-};
 
 const Text = styled.p`
   color: ${({ theme }) => theme.lightText};

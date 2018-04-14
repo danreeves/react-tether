@@ -62,21 +62,21 @@ export default styled.div`
   }`
       : css`
           .tether-target-attached-right &:after {
-            ${props => triangleForSide('left')};
+            ${() => triangleForSide('left')};
             ${triangleCommon};
           }
           .tether-target-attached-right & {
             margin-left: 10px;
           }
           .tether-target-attached-left &:after {
-            ${props => triangleForSide('right')};
+            ${() => triangleForSide('right')};
             ${triangleCommon};
           }
           .tether-target-attached-left & {
             margin-right: 10px;
           }
           .tether-target-attached-bottom &:after {
-            ${props => triangleForSide('top')};
+            ${() => triangleForSide('top')};
             ${triangleCommon};
           }
           .tether-target-attached-bottom & {

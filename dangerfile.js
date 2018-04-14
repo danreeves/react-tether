@@ -1,4 +1,4 @@
-import { warn, fail, message, danger } from 'danger';
+import { warn, message, danger } from 'danger';
 
 const modified = danger.git.modified_files;
 const modifiedSrc = modified.filter(p => p.includes('src/'));

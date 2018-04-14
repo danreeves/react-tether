@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react';
+import { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tether from 'tether';
@@ -74,7 +74,7 @@ class TetherComponent extends Component {
 
   _elementParentNode = null;
 
-  _tether = false;
+  _tether = null;
 
   constructor(props) {
     super(props);
@@ -98,7 +98,7 @@ class TetherComponent extends Component {
     this._update();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     this._targetNode = ReactDOM.findDOMNode(this);
     this._update();
   }
@@ -158,8 +158,9 @@ class TetherComponent extends Component {
 
   _destroy() {
     if (this._elementParentNode) {
-      !hasCreatePortal &&
+      if (!hasCreatePortal) {
         ReactDOM.unmountComponentAtNode(this._elementParentNode);
+      }
       this._elementParentNode.parentNode.removeChild(this._elementParentNode);
     }
 
@@ -245,11 +246,11 @@ class TetherComponent extends Component {
       });
     }
 
-    if (!this._tether) {
+    if (this._tether) {
+      this._tether.setOptions(tetherOptions);
+    } else {
       this._tether = new Tether(tetherOptions);
       this._registerEventListeners();
-    } else {
-      this._tether.setOptions(tetherOptions);
     }
 
     this._tether.position();

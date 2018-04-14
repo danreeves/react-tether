@@ -1,8 +1,8 @@
 // https://stackoverflow.com/a/2450976
 export default function shuffle(array) {
-  let currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
+  let currentIndex = array.length;
+  let temporaryValue;
+  let randomIndex;
 
   // While there remain elements to shuffle...
   while (currentIndex !== 0) {
