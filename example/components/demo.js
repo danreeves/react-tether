@@ -24,7 +24,19 @@ const GrabbableTarget = styled(Target)`
   }
 `;
 
-const DraggableTarget = ({ color, height, id, width, ...props }) => (
+type DraggableTargetProps = {
+  color: string,
+  height: number,
+  id: string,
+  width: number,
+};
+const DraggableTarget = ({
+  color,
+  height,
+  id,
+  width,
+  ...props
+}: DraggableTargetProps) => (
   <Draggable {...props}>
     <GrabbableTarget color={color} height={height} width={width} id={id} />
   </Draggable>
@@ -78,8 +90,11 @@ const ToggleButton = styled.button`
 
 export default class Demo extends React.Component {
   tether = null;
+
   container = null;
+
   state = { on: true };
+
   componentDidMount() {
     // Rerender with the container ref
     this.setState({});
@@ -99,12 +114,16 @@ export default class Demo extends React.Component {
           Toggle tooltip
         </ToggleButton>
         <div
-          ref={container => (this.container = container)}
+          ref={container => {
+            this.container = container;
+          }}
           style={{ height: '100%' }}
         >
           {this.container && (
             <TetherComponent
-              ref={tether => (this.tether = tether)}
+              ref={tether => {
+                this.tether = tether;
+              }}
               attachment="middle left"
               constraints={[
                 {
@@ -127,7 +146,7 @@ export default class Demo extends React.Component {
               {this.state.on && (
                 <Tooltip id="WATCH_ME">
                   <Text>Drag the box around</Text>
-                  <Text>I'll stay within the outline</Text>
+                  <Text>I&apos;ll stay within the outline</Text>
                 </Tooltip>
               )}
             </TetherComponent>

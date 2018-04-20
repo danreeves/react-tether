@@ -3,7 +3,7 @@ import styled, { withTheme } from 'styled-components';
 import TetherComponent from '../../src/react-tether';
 import Target from './target';
 import Tooltip from './tooltip';
-import shuffle from '../shuffle';
+import type { Theme } from './theme';
 
 const Wrapper = styled.div`
   position: relative;
@@ -24,7 +24,11 @@ const Title = styled.h1`
   display: inline-block;
 `;
 
-class PageTitle extends React.Component {
+type PageTitleProps = {
+  children: React.Node,
+  theme: Theme,
+};
+class PageTitle extends React.Component<PageTitleProps> {
   constructor(props) {
     super(props);
     this.state = {

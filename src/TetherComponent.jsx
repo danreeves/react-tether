@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react';
+import { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tether from 'tether';
@@ -24,7 +24,8 @@ const childrenPropType = ({ children }, propName, componentName) => {
     return new Error(
       `${componentName} expects at least one child to use as the target element.`
     );
-  } else if (childCount > 2) {
+  }
+  if (childCount > 2) {
     return new Error(`Only a max of two children allowed in ${componentName}.`);
   }
 };
@@ -70,8 +71,10 @@ class TetherComponent extends Component {
   };
 
   _targetNode = null;
+
   _elementParentNode = null;
-  _tether = false;
+
+  _tether = null;
 
   constructor(props) {
     super(props);
@@ -95,7 +98,7 @@ class TetherComponent extends Component {
     this._update();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     this._targetNode = ReactDOM.findDOMNode(this);
     this._update();
   }
@@ -149,15 +152,15 @@ class TetherComponent extends Component {
     const { renderElementTo } = this.props;
     if (typeof renderElementTo === 'string') {
       return document.querySelector(renderElementTo);
-    } else {
-      return renderElementTo || document.body;
     }
+    return renderElementTo || document.body;
   }
 
   _destroy() {
     if (this._elementParentNode) {
-      !hasCreatePortal &&
+      if (!hasCreatePortal) {
         ReactDOM.unmountComponentAtNode(this._elementParentNode);
+      }
       this._elementParentNode.parentNode.removeChild(this._elementParentNode);
     }
 
@@ -172,12 +175,12 @@ class TetherComponent extends Component {
   _createContainer() {
     const { renderElementTag } = this.props;
 
-    // create element node container if it hasn't been yet
+    // Create element node container if it hasn't been yet
     if (!this._elementParentNode) {
-      // create a node that we can stick our content Component in
+      // Create a node that we can stick our content Component in
       this._elementParentNode = document.createElement(renderElementTag);
 
-      // append node to the render node
+      // Append node to the render node
       this._renderNode.appendChild(this._elementParentNode);
     }
   }
@@ -186,9 +189,9 @@ class TetherComponent extends Component {
     const { children } = this.props;
     const elementComponent = Children.toArray(children)[1];
 
-    // if no element component provided, bail out
+    // If no element component provided, bail out
     if (!elementComponent) {
-      // destroy Tether element if it has been created
+      // Destroy Tether element if it has been created
       if (this._tether) {
         this._destroy();
       }
@@ -198,13 +201,13 @@ class TetherComponent extends Component {
     if (hasCreatePortal) {
       this._updateTether();
     } else {
-      // render element component into the DOM
+      // Render element component into the DOM
       ReactDOM.unstable_renderSubtreeIntoContainer(
         this,
         elementComponent,
         this._elementParentNode,
         () => {
-          // if we're not destroyed, update Tether once the subtree has finished rendering
+          // If we're not destroyed, update Tether once the subtree has finished rendering
           if (this._elementParentNode) {
             this._updateTether();
           }
@@ -243,11 +246,11 @@ class TetherComponent extends Component {
       });
     }
 
-    if (!this._tether) {
+    if (this._tether) {
+      this._tether.setOptions(tetherOptions);
+    } else {
       this._tether = new Tether(tetherOptions);
       this._registerEventListeners();
-    } else {
-      this._tether.setOptions(tetherOptions);
     }
 
     this._tether.position();

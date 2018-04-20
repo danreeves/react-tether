@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
 import TetherComponent from '../../lib/react-tether';
 
-const hasCreatePortal = ReactDOM.createPortal != null;
+const hasCreatePortal = ReactDOM.createPortal !== undefined;
 
 describe('TetherComponent', () => {
   let wrapper;
@@ -90,6 +90,7 @@ describe('TetherComponent', () => {
   it('should destroy the tether element if the second child is unmounted', () => {
     class ToggleComponent extends React.Component {
       state = { on: true };
+
       render() {
         return (
           <TetherComponent attachment="top left">
@@ -125,15 +126,12 @@ describe('TetherComponent', () => {
   it('allows changing the tether element tag', () => {
     const container = document.createElement('div');
     container.setAttribute('id', 'test-container');
+    // Tether requires the container element to have position static
+    container.style.position = 'static';
     document.body.appendChild(container);
 
     wrapper = mount(
-      <TetherComponent
-        attachment="top left"
-        renderElementTo="#test-container"
-        // TODO: Why do we need to do this?
-        bodyElement={document.querySelector('#test-container')}
-      >
+      <TetherComponent attachment="top left" renderElementTo="#test-container">
         <div id="child1" />
         <div id="child2" />
       </TetherComponent>

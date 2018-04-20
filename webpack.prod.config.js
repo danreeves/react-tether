@@ -1,30 +1,31 @@
-var path = require('path');
-var webpack = require('webpack');
-var banner = require('./webpack.banner');
-var TARGET = process.env.TARGET || null;
+const path = require('path');
+const webpack = require('webpack');
+const banner = require('./webpack.banner');
 
-var externals = {
-  'react': {
+const TARGET = process.env.TARGET || null;
+
+const externals = {
+  react: {
     root: 'React',
     commonjs2: 'react',
     commonjs: 'react',
-    amd: 'react'
+    amd: 'react',
   },
   'react-dom': {
     root: 'ReactDOM',
     commonjs2: 'react-dom',
     commonjs: 'react-dom',
-    amd: 'react-dom'
+    amd: 'react-dom',
   },
-  'tether': {
+  tether: {
     root: 'Tether',
     commonjs2: 'tether',
     commonjs: 'tether',
-    amd: 'tether'
-  }
+    amd: 'tether',
+  },
 };
 
-var config = {
+const config = {
   entry: {
     index: './src/react-tether.js',
   },
@@ -34,33 +35,31 @@ var config = {
     filename: 'react-tether.js',
     sourceMapFilename: 'react-tether.sourcemap.js',
     library: 'TetherComponent',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   module: {
-    loaders: [
-      { test: /\.(js|jsx)/, loader: 'babel-loader' }
-    ]
+    loaders: [{ test: /\.(js|jsx)/, loader: 'babel-loader' }],
   },
-  plugins: [
-    new webpack.BannerPlugin(banner)
-  ],
+  plugins: [new webpack.BannerPlugin(banner)],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
-  externals: externals
+  externals,
 };
 
 if (TARGET === 'minify') {
   config.output.filename = 'react-tether.min.js';
   config.output.sourceMapFilename = 'react-tether.min.js';
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false
-    },
-    mangle: {
-      except: ['React', 'ReactDOM', 'Tether', 'TetherComponent']
-    }
-  }));
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      mangle: {
+        except: ['React', 'ReactDOM', 'Tether', 'TetherComponent'],
+      },
+    })
+  );
 }
 
 module.exports = config;

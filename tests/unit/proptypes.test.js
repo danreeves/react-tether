@@ -1,6 +1,4 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { shallow, mount } from 'enzyme';
 import TetherComponent from '../../lib/react-tether';
 
 describe('propTypes', () => {
@@ -29,7 +27,6 @@ describe('propTypes', () => {
   });
 
   describe('renderElementTo', () => {
-    const renderElementTo = TetherComponent.propTypes.renderElementTo;
     const errorSpy = jest
       .spyOn(console, 'error')
       .mockImplementation(() => () => {});
