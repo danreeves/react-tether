@@ -15,3 +15,6 @@ if [ -z "$SAUCE_USERNAME" ] && [ -z "$SAUCE_ACCESS_KEY"]; then
 else
   npm run e2e:full
 fi
+
+npm run unit -- --coverage --collectCoverageFrom=lib/**/*.js --coverageReporters=text-lcov | coveralls
+
