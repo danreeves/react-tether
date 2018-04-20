@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-npm run danger
-
-npm run react:15
-npm run unit
-
-npm run react:16
-npm run unit
+npx nyc '
+  npm run react:15 && npm run unit \
+\
+  npm run react:16 && npm run unit \
+'
 
 if [ -z "$SAUCE_USERNAME" ] && [ -z "$SAUCE_ACCESS_KEY"]; then
   echo
@@ -16,5 +14,5 @@ else
   npm run e2e:full
 fi
 
-npm run unit -- --coverage --collectCoverageFrom=lib/**/*.js --coverageReporters=text-lcov | coveralls
+npx nyc report --reporter=text-lcov | npx coveralls
 
