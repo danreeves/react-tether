@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
-import TetherComponent from '../../lib/react-tether';
+import TetherComponent from '../../src/react-tether';
 
 const hasCreatePortal = ReactDOM.createPortal !== undefined;
 
