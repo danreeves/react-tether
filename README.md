@@ -1,8 +1,9 @@
 # React Tether
 
-[![Build Status](https://travis-ci.org/danreeves/react-tether.svg?branch=browser-tests)](https://travis-ci.org/danreeves/react-tether) [![Dependency Status](https://david-dm.org/danreeves/react-tether.svg)](https://david-dm.org/danreeves/react-tether)
+[![Build Status](https://travis-ci.org/danreeves/react-tether.svg?branch=browser-tests)](https://travis-ci.org/danreeves/react-tether) [![Dependency Status](https://david-dm.org/danreeves/react-tether.svg)](https://david-dm.org/danreeves/react-tether) [![Coverage Status](https://coveralls.io/repos/github/danreeves/react-tether/badge.svg?branch=master)](https://coveralls.io/github/danreeves/react-tether?branch=master)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/react-tether.svg)](https://saucelabs.com/u/react-tether)
+
 > Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com/).
 
 ---
@@ -20,41 +21,46 @@ React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 ## Example Usage
 
 ```javascript
-import TetherComponent from 'react-tether'
+import TetherComponent from 'react-tether';
 
 class SimpleDemo extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      isOpen: false
-    }
+      isOpen: false,
+    };
   }
 
   render() {
-    const { isOpen } = this.state
+    const { isOpen } = this.state;
 
-    return(
+    return (
       <TetherComponent
         attachment="top center"
-        constraints={[{
-          to: 'scrollParent',
-          attachment: 'together'
-        }]}
+        constraints={[
+          {
+            to: 'scrollParent',
+            attachment: 'together',
+          },
+        ]}
       >
-        { /* First child: This is what the item will be tethered to */ }
-        <button onClick={() => {this.setState({isOpen: !isOpen})}}>
+        {/* First child: This is what the item will be tethered to */}
+        <button
+          onClick={() => {
+            this.setState({ isOpen: !isOpen });
+          }}
+        >
           Toggle Tethered Content
         </button>
-        { /* Second child: If present, this item will be tethered to the the first child */ }
-        {
-          isOpen &&
+        {/* Second child: If present, this item will be tethered to the the first child */}
+        {isOpen && (
           <div>
             <h2>Tethered Content</h2>
             <p>A paragraph to accompany the title.</p>
           </div>
-        }
+        )}
       </TetherComponent>
-    )
+    );
   }
 }
 ```
@@ -83,15 +89,16 @@ Any valid [Tether options](http://tether.io/#options).
 
 The following methods are exposed on the component instance:
 
-- `getTetherInstance(): Tether`
-- `disable(): void`
-- `enable(): void`
-- `on(event: string, handler: function, ctx: any): void`
-- `once(event: string, handler: function, ctx: any): void`
-- `off(event: string, handler: function): void`
-- `position(): void`
+* `getTetherInstance(): Tether`
+* `disable(): void`
+* `enable(): void`
+* `on(event: string, handler: function, ctx: any): void`
+* `once(event: string, handler: function, ctx: any): void`
+* `off(event: string, handler: function): void`
+* `position(): void`
 
 #### Example usage:
+
 ```javascript
 <TetherComponent ref={tether => this.tether = tether}>
   <Target/>
