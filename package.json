@@ -74,7 +74,7 @@
     "lint-staged": "7.0.0",
     "nyc": "11.7.0",
     "parcel-bundler": "1.6.2",
-    "prettier": "1.11.1",
+    "prettier": "1.12.1",
     "pretty-quick": "1.4.1",
     "react": "16.2.0",
     "react-dom": "16.2.0",
