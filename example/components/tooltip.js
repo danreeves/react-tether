@@ -23,6 +23,15 @@ function triangleForSide(side) {
       border-bottom: 10px solid #333;
     `;
   }
+  if (side === 'bottom') {
+    return css`
+      bottom: -10px;
+      left: calc(50% - 10px);
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #333;
+    `;
+  }
   if (side === 'right') {
     return css`
       top: calc(50% - 10px);
@@ -33,6 +42,7 @@ function triangleForSide(side) {
     `;
   }
 }
+
 const triangleCommon = css`
   position: absolute;
   content: ' ';
@@ -40,6 +50,7 @@ const triangleCommon = css`
   line-height: 0;
   width: 0;
 `;
+
 export default styled.div`
   display: inline-block;
   border-radius: 6px;
@@ -81,6 +92,13 @@ export default styled.div`
           }
           .tether-target-attached-bottom & {
             margin-top: 10px;
+          }
+          .tether-target-attached-top &:after {
+            ${() => triangleForSide('bottom')};
+            ${triangleCommon};
+          }
+          .tether-target-attached-top & {
+            margin-bottom: 10px;
           }
         `};
 `;

@@ -88,31 +88,52 @@ const ToggleButton = styled.button`
   }
 `;
 
+const AbsoluteDiv = styled.div`
+  position: absolute;
+`;
+
 export default class Demo extends React.Component {
   tether = null;
 
   container = null;
 
-  state = { on: true };
+  attachments = ['middle left', 'top center', 'middle right', 'bottom center'];
+
+  state = { on: true, attachment: this.attachments[0] };
 
   componentDidMount() {
     // Rerender with the container ref
     this.setState({});
   }
 
+  toggleTooltip = () => {
+    this.setState(({ on }) => {
+      return { on: !on };
+    });
+  };
+
+  cycleAttachment = () => {
+    const { attachment } = this.state;
+    let nextAttachment = this.attachments.indexOf(attachment) + 1;
+    if (nextAttachment === this.attachments.length) {
+      nextAttachment = 0;
+    }
+    this.setState(() => ({
+      attachment: this.attachments[nextAttachment],
+    }));
+  };
+
   render() {
     return (
       <DemoZone>
-        <ToggleButton
-          id="CLICK_ME"
-          onClick={() =>
-            this.setState(({ on }) => {
-              return { on: !on };
-            })
-          }
-        >
-          Toggle tooltip
-        </ToggleButton>
+        <AbsoluteDiv>
+          <ToggleButton id="TOGGLE_TOOLTIP" onClick={this.toggleTooltip}>
+            Toggle tooltip
+          </ToggleButton>
+          <ToggleButton id="CYCLE_ATTACHMENT" onClick={this.cycleAttachment}>
+            Change side
+          </ToggleButton>
+        </AbsoluteDiv>
         <div
           ref={container => {
             this.container = container;
@@ -124,7 +145,7 @@ export default class Demo extends React.Component {
               ref={tether => {
                 this.tether = tether;
               }}
-              attachment="middle left"
+              attachment={this.state.attachment}
               constraints={[
                 {
                   to: this.container,
@@ -141,7 +162,7 @@ export default class Demo extends React.Component {
                 onDrag={() =>
                   this.tether.getTetherInstance() && this.tether.position()
                 }
-                defaultPosition={{ x: 25, y: 25 }}
+                defaultPosition={{ x: 25, y: 125 }}
               />
               {this.state.on && (
                 <Tooltip id="WATCH_ME">

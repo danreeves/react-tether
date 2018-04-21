@@ -8,7 +8,8 @@ test(`It handles repositioning, constraints,
       and unmounting the tethered component`, async t => {
   const target = new Selector('#DRAG_ME');
   const tooltip = new Selector('#WATCH_ME');
-  const button = new Selector('#CLICK_ME');
+  const toggleTooltip = new Selector('#TOGGLE_TOOLTIP');
+  const cycleAttachment = new Selector('#CYCLE_ATTACHMENT');
 
   await t.hover(target);
   // Target is to the left of the tooltip
@@ -27,11 +28,17 @@ test(`It handles repositioning, constraints,
     .expect(targetAfterLeft > tooltipAfterLeft)
     .ok(`${targetAfterLeft} > ${tooltipAfterLeft}`);
 
+  // The attachement can be changed
+  await t.click(cycleAttachment);
+  await t.click(cycleAttachment);
+  await t.click(cycleAttachment);
+  await t.click(cycleAttachment);
+
   // Toggle the tooltip off
-  await t.click(button);
+  await t.click(toggleTooltip);
   await t.drag(target, -300, 0);
   // Toggle the tooltip on
-  await t.click(button);
+  await t.click(toggleTooltip);
   await t.drag(target, -300, 0);
 });
 
