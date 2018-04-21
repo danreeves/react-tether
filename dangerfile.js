@@ -1,5 +1,5 @@
 import { warn, message, schedule, danger } from 'danger';
-import istanbulCoverage from 'danger-plugin-istanbul-coverage';
+import { istanbulCoverage } from 'danger-plugin-istanbul-coverage';
 
 const modified = danger.git.modified_files;
 const modifiedSrc = modified.filter(p => p.includes('src/'));
