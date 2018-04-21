@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import TetherComponent from '../../lib/react-tether';
+import TetherComponent from '../../src/react-tether';
 
 let wrapper;
 const render = () => {

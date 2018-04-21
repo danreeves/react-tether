@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import TetherComponent from '../../lib/react-tether';
+import TetherComponent from '../../src/react-tether';
 
 describe('propTypes', () => {
   describe('children', () => {

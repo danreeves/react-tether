@@ -1,4 +1,5 @@
-import { warn, message, danger } from 'danger';
+import { warn, message, schedule, danger } from 'danger';
+import { istanbulCoverage } from 'danger-plugin-istanbul-coverage';
 
 const modified = danger.git.modified_files;
 const modifiedSrc = modified.filter(p => p.includes('src/'));
@@ -25,3 +26,5 @@ if (danger.github.pr.body.length === 0) {
 if (testChanges.length > 0) {
   message(':tada: Thanks for working on tests!');
 }
+
+schedule(istanbulCoverage());
