@@ -73,7 +73,7 @@
     "jest": "22.4.3",
     "lint-staged": "7.0.0",
     "nyc": "11.7.0",
-    "parcel-bundler": "1.6.2",
+    "parcel-bundler": "1.7.1",
     "prettier": "1.11.1",
     "pretty-quick": "1.4.1",
     "react": "16.2.0",
