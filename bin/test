@@ -8,13 +8,16 @@ npm run react:16
 npm run unit -- --coverage
 mv coverage/coverage-final.json coverage/coverage-react16.json
 
-mkdir .nyc_output
+mkdir -p .nyc_output
 npx istanbul-merge \
   --out .nyc_output/coverage-final.json \
   coverage/coverage-react15.json \
   coverage/coverage-react16.json
 
+rm -rf coverage
+
 npx nyc report --reporter=text-lcov | npx coveralls
+npx nyc report --reporter=json-summary
 
 npm run danger
 
