@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { injectGlobal } from 'styled-components';
-import Theme from './components/theme';
+import ThemeProvider from './components/theme';
 import Body from './components/body';
 import Page from './components/page';
 import PageTitle from './components/page-title';
@@ -30,7 +30,7 @@ const HidesOnMobileSection = Section.extend`
 class App extends Component {
   render() {
     return (
-      <Theme>
+      <ThemeProvider>
         <Body>
           <Page>
             <PageTitle>React Tether</PageTitle>
@@ -83,7 +83,7 @@ class App extends Component {
             </Section>
           </Page>
         </Body>
-      </Theme>
+      </ThemeProvider>
     );
   }
 }
