@@ -27,4 +27,8 @@ if (testChanges.length > 0) {
   message(':tada: Thanks for working on tests!');
 }
 
-schedule(istanbulCoverage());
+schedule(
+  istanbulCoverage({
+    coveragePath: '.nyc_output/coverage-final.json',
+  })
+);
