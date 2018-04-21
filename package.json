@@ -69,6 +69,7 @@
     "eslint-plugin-react": "^7.7.0",
     "git-directory-deploy": "^1.5.1",
     "husky": "^0.14.3",
+    "istanbul-merge": "^1.1.1",
     "jest": "^22.4.3",
     "lint-staged": "^7.0.0",
     "nyc": "^11.7.1",
@@ -119,12 +120,10 @@
     }
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.js"
+    "setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.js",
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"]
   },
   "lint-staged": {
     "*.{js,jsx,json,md}": "pretty-quick --staged"
-  },
-  "nyc": {
-    "include": ["src/**/*.js"]
   }
 }

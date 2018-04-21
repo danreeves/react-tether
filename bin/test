@@ -1,10 +1,22 @@
 #!/usr/bin/env bash
 
-npx nyc '
-  npm run react:15 && npm run unit \
-\
-  npm run react:16 && npm run unit \
-'
+npm run react:15
+npm run unit -- --coverage
+mv coverage/coverage-final.json coverage/coverage-react15.json
+
+npm run react:16
+npm run unit -- --coverage
+mv coverage/coverage-final.json coverage/coverage-react16.json
+
+mkdir .nyc_output
+npx istanbul-merge \
+  --out .nyc_output/coverage-final.json \
+  coverage/coverage-react15.json \
+  coverage/coverage-react16.json
+
+npx nyc report --reporter=text-lcov | npx coveralls
+
+npm run danger
 
 if [ -z "$SAUCE_USERNAME" ] && [ -z "$SAUCE_ACCESS_KEY"]; then
   echo
@@ -13,6 +25,3 @@ if [ -z "$SAUCE_USERNAME" ] && [ -z "$SAUCE_ACCESS_KEY"]; then
 else
   npm run e2e:full
 fi
-
-npx nyc report --reporter=text-lcov | npx coveralls
-
