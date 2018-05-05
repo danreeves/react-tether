@@ -65,3 +65,11 @@ test('TypeScript example works', async t => {
   await t.expect(await app.hasChildElements).ok();
   await t.navigateTo(home);
 });
+
+test('UMD distributable example works', async t => {
+  const tsc = new Selector('#umd');
+  const app = new Selector('#app');
+  await t.navigateTo((await tsc.attributes).href);
+  await t.expect(await app.hasChildElements).ok();
+  await t.navigateTo(home);
+});
