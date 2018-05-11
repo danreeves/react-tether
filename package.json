@@ -69,7 +69,7 @@
     "husky": "0.14.3",
     "istanbul-merge": "1.1.1",
     "jest": "22.4.3",
-    "lint-staged": "7.0.5",
+    "lint-staged": "7.1.0",
     "nyc": "11.7.3",
     "parcel-bundler": "1.7.1",
     "prettier": "1.12.1",
