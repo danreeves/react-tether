@@ -70,7 +70,7 @@
     "istanbul-merge": "1.1.1",
     "jest": "22.4.3",
     "lint-staged": "7.1.0",
-    "nyc": "11.7.3",
+    "nyc": "11.8.0",
     "parcel-bundler": "1.7.1",
     "prettier": "1.12.1",
     "pretty-quick": "1.4.1",
