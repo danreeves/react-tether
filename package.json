@@ -124,5 +124,14 @@
   },
   "lint-staged": {
     "*.{js,jsx,json,md}": "pretty-quick --staged"
+  },
+  "renovate": {
+    "devDependencies": {
+      "schedule": ["on the last day of the month"],
+      "automerge": true,
+      "major": {
+        "automerge": false
+      }
+    }
   }
 }
