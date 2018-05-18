@@ -68,7 +68,7 @@
     "git-directory-deploy": "1.5.1",
     "husky": "0.14.3",
     "istanbul-merge": "1.1.1",
-    "jest": "22.4.3",
+    "jest": "22.4.4",
     "lint-staged": "7.1.0",
     "nyc": "11.8.0",
     "parcel-bundler": "1.7.1",
