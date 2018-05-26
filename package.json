@@ -9,7 +9,8 @@
     "build":
       "npm run build:lib && webpack --mode production && cp src/react-tether.d.ts lib/react-tether.d.ts",
     "prebuild": "rm -rf dist && mkdir dist && rm -rf lib && mkdir lib",
-    "prepublish": "npm run build",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run test",
     "demo": "parcel example/index.html",
     "demo:deploy": "./bin/build-demo",
     "unit": "jest tests/unit",
@@ -86,6 +87,7 @@
     "webpack-cli": "2.1.3",
     "xo": "0.20.3"
   },
+  "files": ["dist", "lib"],
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
