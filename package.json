@@ -1,13 +1,12 @@
 {
   "name": "react-tether",
-  "version": "0.6.1",
+  "version": "1.0.0",
   "description": "Drop content anywhere on the page.",
   "main": "lib/react-tether.js",
   "types": "lib/react-tether.d.ts",
   "scripts": {
     "build:lib": "babel src --out-dir lib",
-    "build":
-      "npm run build:lib && webpack --mode production && cp src/react-tether.d.ts lib/react-tether.d.ts",
+    "build": "npm run build:lib && webpack --mode production && cp src/react-tether.d.ts lib/react-tether.d.ts",
     "prebuild": "rm -rf dist && mkdir dist && rm -rf lib && mkdir lib",
     "prepack": "npm run build",
     "prepublishOnly": "npm run test",
@@ -15,8 +14,7 @@
     "demo:deploy": "./bin/build-demo",
     "unit": "jest tests/unit",
     "e2e": "testcafe chrome tests/e2e --app 'npm run demo'",
-    "e2e:full":
-      "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/e2e --app 'npm run demo'",
+    "e2e:full": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/e2e --app 'npm run demo'",
     "test": "npm run lint && npm run typescript && npm run unit",
     "tdd": "npm run unit -- --watch",
     "react:16": "enzyme-adapter-react-install 16",
@@ -30,9 +28,14 @@
     "type": "git",
     "url": "https://github.com/danreeves/react-tether"
   },
-  "keywords": ["react", "react-tether", "tether", "component", "drop"],
-  "author":
-    "Travis Arnold <travis@souporserious.com> (http://souporserious.com)",
+  "keywords": [
+    "react",
+    "react-tether",
+    "tether",
+    "component",
+    "drop"
+  ],
+  "author": "Travis Arnold <travis@souporserious.com> (http://souporserious.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/danreeves/react-tether/issues"
@@ -87,15 +90,26 @@
     "webpack-cli": "2.1.5",
     "xo": "0.20.3"
   },
-  "files": ["dist", "lib"],
+  "files": [
+    "dist",
+    "lib"
+  ],
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
   },
   "xo": {
     "parser": "babel-eslint",
-    "envs": ["node", "browser", "es6", "jest"],
-    "extends": ["prettier", "plugin:react/recommended"],
+    "envs": [
+      "node",
+      "browser",
+      "es6",
+      "jest"
+    ],
+    "extends": [
+      "prettier",
+      "plugin:react/recommended"
+    ],
     "overrides": [
       {
         "files": "src/TetherComponent.jsx",
@@ -106,7 +120,9 @@
       },
       {
         "files": "tests/e2e/*.js",
-        "globals": ["fixture"],
+        "globals": [
+          "fixture"
+        ],
         "rules": {
           "no-unused-expressions": 0
         }
@@ -115,14 +131,19 @@
     "settings": {
       "import/resolver": {
         "node": {
-          "extensions": [".js", ".jsx"]
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
         }
       }
     }
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.js",
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"]
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx,json,md}": "pretty-quick --staged"
