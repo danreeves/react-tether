@@ -34,5 +34,6 @@ declare namespace ReactTether {
     children: React.ReactNode;
     renderElementTag?: string;
     renderElementTo?: Element | string;
+    className?: string;
   }
 }
