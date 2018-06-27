@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.0.1
+
+- Add `className` to the TypeScript definition for the TetherComponent. Thanks @ryprice
+
 ### 1.0.0
 
 - Use `React.createPortal` :tada: Big thanks to @doronbrikman for their work on this. In versions where `createPortal` isn't available we still fall back to the old method.
