@@ -52,7 +52,7 @@
   "devDependencies": {
     "@types/react": "16.4.6",
     "@types/react-dom": "16.0.6",
-    "@types/tether": "1.4.3",
+    "@types/tether": "1.4.4",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.5",
