@@ -1,7 +1,6 @@
+/* globals React, ReactDOM */
 /* eslint-disable import/extensions */
-import React from '../../../node_modules/react/umd/react.production.min.js';
-import { render } from '../../../node_modules/react-dom/umd/react-dom.production.min.js';
-import ReactTether from '../../../dist/react-tether.min.js';
+import ReactTether from '../../../dist/react-tether.js';
 
 function App() {
   return (
@@ -15,4 +14,4 @@ function App() {
   );
 }
 
-render(<App />, document.querySelector('#app'));
+ReactDOM.render(<App />, document.querySelector('#app'));
