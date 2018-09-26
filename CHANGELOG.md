@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.0.2
+
+- Some rendering optimisations (#189). Thanks to @eaglus
+
 ### 1.0.1
 
 - Add `className` to the TypeScript definition for the TetherComponent. Thanks @ryprice
