@@ -87,15 +87,36 @@ describe('TetherComponent', () => {
     expect(document.querySelector('.tether-element')).toBeFalsy();
   });
 
-  it('should destroy the tether element if the second child is unmounted', () => {
+  it('should not create a tether element if there is no target', () => {
+    wrapper = mount(
+      <TetherComponent attachment="top left">
+        {null}
+        <div id={'child2'} />
+      </TetherComponent>
+    );
+    expect(document.querySelector('.tether-element')).toBeFalsy();
+  });
+
+  it('should not create a tether element if there is no dom node for target', () => {
+    const FalsyComponent = () => null;
+    wrapper = mount(
+      <TetherComponent attachment="top left">
+        <FalsyComponent />
+        <FalsyComponent />
+      </TetherComponent>
+    );
+    expect(document.querySelector('.tether-element')).toBeFalsy();
+  });
+
+  it('should destroy the tether element if the first/second child is unmounted', () => {
     class ToggleComponent extends React.Component {
-      state = { on: true };
+      state = { firstOn: true, secondOn: true };
 
       render() {
         return (
           <TetherComponent attachment="top left">
-            <div id="child1" />
-            {this.state.on && <div id="child2" />}
+            {this.state.firstOn && <div id="child1" />}
+            {this.state.secondOn && <div id="child2" />}
           </TetherComponent>
         );
       }
@@ -106,9 +127,21 @@ describe('TetherComponent', () => {
     expect(document.querySelector('.tether-element')).toBeTruthy();
     expect(document.querySelector('.tether-element #child2')).toBeTruthy();
 
-    wrapper.setState({ on: false });
+    wrapper.setState({ secondOn: false });
 
     expect(wrapper.find('#child1').exists()).toBeTruthy();
+    expect(document.querySelector('.tether-element')).toBeFalsy();
+    expect(document.querySelector('.tether-element #child2')).toBeFalsy();
+
+    wrapper.setState({ firstOn: false, secondOn: true });
+
+    expect(wrapper.find('#child1').exists()).toBeFalsy();
+    expect(document.querySelector('.tether-element')).toBeFalsy();
+    expect(document.querySelector('.tether-element #child2')).toBeFalsy();
+
+    wrapper.setState({ firstOn: false, secondOn: false });
+
+    expect(wrapper.find('#child1').exists()).toBeFalsy();
     expect(document.querySelector('.tether-element')).toBeFalsy();
     expect(document.querySelector('.tether-element #child2')).toBeFalsy();
   });
