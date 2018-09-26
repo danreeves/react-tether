@@ -76,30 +76,35 @@ class TetherComponent extends Component {
 
   _tether = null;
 
+  _elementComponent = null;
+
+  _targetComponent = null;
+
   constructor(props) {
     super(props);
-    const elementComponent = Children.toArray(props.children)[1];
 
-    if (elementComponent) {
+    this.updateChildrenComponents(this.props);
+  }
+
+  updateChildrenComponents(props) {
+    const childArray = Children.toArray(props.children);
+    this._targetComponent = childArray[0];
+    this._elementComponent = childArray[1];
+
+    if (this._targetComponent && this._elementComponent) {
       this._createContainer();
     }
   }
 
-  componentWillUpdate({ children }) {
-    const elementComponent = Children.toArray(children)[1];
-
-    if (elementComponent) {
-      this._createContainer();
-    }
+  componentWillUpdate(nextProps) {
+    this.updateChildrenComponents(nextProps);
   }
 
   componentDidMount() {
-    this._targetNode = ReactDOM.findDOMNode(this);
     this._update();
   }
 
   componentDidUpdate() {
-    this._targetNode = ReactDOM.findDOMNode(this);
     this._update();
   }
 
@@ -170,13 +175,16 @@ class TetherComponent extends Component {
 
     this._elementParentNode = null;
     this._tether = null;
+    this._targetNode = null;
+    this._targetComponent = null;
+    this._elementComponent = null;
   }
 
   _createContainer() {
-    const { renderElementTag } = this.props;
-
     // Create element node container if it hasn't been yet
     if (!this._elementParentNode) {
+      const { renderElementTag } = this.props;
+
       // Create a node that we can stick our content Component in
       this._elementParentNode = document.createElement(renderElementTag);
 
@@ -186,15 +194,16 @@ class TetherComponent extends Component {
   }
 
   _update() {
-    const { children } = this.props;
-    const elementComponent = Children.toArray(children)[1];
-
     // If no element component provided, bail out
-    if (!elementComponent) {
-      // Destroy Tether element if it has been created
-      if (this._tether) {
-        this._destroy();
-      }
+    let shouldDestroy = !this._elementComponent || !this._targetComponent;
+    if (!shouldDestroy) {
+      this._targetNode = ReactDOM.findDOMNode(this);
+      shouldDestroy = !this._targetNode;
+    }
+
+    if (shouldDestroy) {
+      // Destroy Tether element, or parent node, if those has been created
+      this._destroy();
       return;
     }
 
@@ -204,7 +213,7 @@ class TetherComponent extends Component {
       // Render element component into the DOM
       ReactDOM.unstable_renderSubtreeIntoContainer(
         this,
-        elementComponent,
+        this._elementComponent,
         this._elementParentNode,
         () => {
           // If we're not destroyed, update Tether once the subtree has finished rendering
@@ -232,17 +241,22 @@ class TetherComponent extends Component {
       ...options,
     };
 
-    if (id) {
-      this._elementParentNode.id = id;
+    const idStr = id || '';
+    if (this._elementParentNode.id !== idStr) {
+      this._elementParentNode.id = idStr;
     }
 
-    if (className) {
-      this._elementParentNode.className = className;
+    const classStr = className || '';
+    if (this._elementParentNode.className !== classStr) {
+      this._elementParentNode.className = classStr;
     }
 
     if (style) {
+      const elementStyle = this._elementParentNode.style;
       Object.keys(style).forEach(key => {
-        this._elementParentNode.style[key] = style[key];
+        if (elementStyle[key] !== style[key]) {
+          elementStyle[key] = style[key];
+        }
       });
     }
 
@@ -257,16 +271,17 @@ class TetherComponent extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    const elementComponent = Children.toArray(children)[1];
+    if (!this._targetComponent) {
+      return null;
+    }
 
-    if (!hasCreatePortal || !elementComponent) {
-      return Children.toArray(children)[0];
+    if (!hasCreatePortal || !this._elementComponent) {
+      return this._targetComponent;
     }
 
     return [
-      Children.toArray(children)[0],
-      ReactDOM.createPortal(elementComponent, this._elementParentNode),
+      this._targetComponent,
+      ReactDOM.createPortal(this._elementComponent, this._elementParentNode),
     ];
   }
 }
