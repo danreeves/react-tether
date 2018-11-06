@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.0.3
+
+- Added some missing props in the TypeScript definition. Thanks to @flacerdk
+
 ### 1.0.2
 
 - Some rendering optimisations (#189). Thanks to @eaglus
