@@ -35,5 +35,9 @@ declare namespace ReactTether {
     renderElementTag?: string;
     renderElementTo?: Element | string;
     className?: string;
+    id?: string
+    style?: React.CSSProperties
+    onUpdate?: (component: TetherComponent) => void
+    onRepositioned?: (component: TetherComponent) => void
   }
 }
