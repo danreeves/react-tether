@@ -12,7 +12,9 @@ describe('propTypes', () => {
         'TetherComponent'
       );
       expect(err).toBeInstanceOf(Error);
-      expect(err.toString()).toContain('TODO');
+      expect(err.toString()).toContain(
+        'TetherComponent no longer uses children to render components'
+      );
     });
 
     it('should not return an error if there are no children', () => {

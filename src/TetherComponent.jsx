@@ -1,4 +1,4 @@
-import { Component, Children } from 'react';
+import React, { Component, Children, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tether from 'tether';
@@ -20,13 +20,10 @@ const renderElementToPropTypes = [
 
 const childrenPropType = ({ children }, propName, componentName) => {
   const childCount = Children.count(children);
-  if (childCount <= 0) {
+  if (childCount > 0) {
     return new Error(
-      `${componentName} expects at least one child to use as the target element.`
+      `${componentName} no longer uses children to render components. Please use renderTarget and renderElement instead.`
     );
-  }
-  if (childCount > 2) {
-    return new Error(`Only a max of two children allowed in ${componentName}.`);
   }
 };
 
@@ -62,6 +59,8 @@ class TetherComponent extends Component {
     style: PropTypes.object,
     onUpdate: PropTypes.func,
     onRepositioned: PropTypes.func,
+    renderTarget: PropTypes.func,
+    renderElement: PropTypes.func,
     children: childrenPropType,
   };
 
@@ -70,7 +69,11 @@ class TetherComponent extends Component {
     renderElementTo: null,
   };
 
+  // The DOM node of the target, obtained using innerRef in the render prop
   _targetNode = null;
+
+  // The DOM node of the element, obtained using innerRef in the render prop
+  _elementNode = null;
 
   _elementParentNode = null;
 
@@ -80,16 +83,11 @@ class TetherComponent extends Component {
 
   _targetComponent = null;
 
-  constructor(props) {
-    super(props);
-
-    this.updateChildrenComponents(this.props);
-  }
-
   updateChildrenComponents(props) {
-    const childArray = Children.toArray(props.children);
-    this._targetComponent = childArray[0];
-    this._elementComponent = childArray[1];
+    const { targetComponent, elementComponent } = this._runRenders(props);
+
+    this._targetComponent = targetComponent;
+    this._elementComponent = elementComponent;
 
     if (this._targetComponent && this._elementComponent) {
       this._createContainer();
@@ -102,7 +100,8 @@ class TetherComponent extends Component {
   }
 
   componentDidMount() {
-    this._update();
+    this.updateChildrenComponents(this.props);
+    this.forceUpdate();
   }
 
   componentDidUpdate() {
@@ -141,6 +140,43 @@ class TetherComponent extends Component {
     this._tether.position();
   }
 
+  _getTargetRef = targetNode => {
+    this._targetNode = targetNode;
+    this._update();
+  };
+
+  _getElementRef = elementNode => {
+    this._elementNode = elementNode;
+    this._update();
+  };
+
+  _runRenders(props = this.props) {
+    // To obtain the components, we run the render functions and pass in innerRef
+    // Later, when the component is mounted, the ref functions will be called
+    // and trigger a tether update
+    let targetComponent =
+      typeof props.renderTarget === 'function'
+        ? props.renderTarget({ innerRef: this._getTargetRef })
+        : null;
+    let elementComponent =
+      typeof props.renderElement === 'function'
+        ? props.renderElement({ innerRef: this._getElementRef })
+        : null;
+
+    // Check if what has been returned is a valid react element
+    if (!isValidElement(targetComponent)) {
+      targetComponent = null;
+    }
+    if (!isValidElement(elementComponent)) {
+      elementComponent = null;
+    }
+
+    return {
+      targetComponent,
+      elementComponent,
+    };
+  }
+
   _registerEventListeners() {
     this.on('update', (...args) => {
       return this.props.onUpdate && this.props.onUpdate.apply(this, args);
@@ -176,6 +212,7 @@ class TetherComponent extends Component {
     this._elementParentNode = null;
     this._tether = null;
     this._targetNode = null;
+    this._elementNode = null;
     this._targetComponent = null;
     this._elementComponent = null;
   }
@@ -195,11 +232,8 @@ class TetherComponent extends Component {
 
   _update() {
     // If no element component provided, bail out
-    let shouldDestroy = !this._elementComponent || !this._targetComponent;
-    if (!shouldDestroy) {
-      this._targetNode = ReactDOM.findDOMNode(this);
-      shouldDestroy = !this._targetNode;
-    }
+    const shouldDestroy =
+      !this._elementComponent || !this._targetComponent || !this._targetNode;
 
     if (shouldDestroy) {
       // Destroy Tether element, or parent node, if those has been created
@@ -233,6 +267,8 @@ class TetherComponent extends Component {
       id,
       className,
       style,
+      renderTarget,
+      renderElement,
       ...options
     } = this.props;
     const tetherOptions = {
@@ -279,10 +315,12 @@ class TetherComponent extends Component {
       return this._targetComponent;
     }
 
-    return [
-      this._targetComponent,
-      ReactDOM.createPortal(this._elementComponent, this._elementParentNode),
-    ];
+    return (
+      <React.Fragment>
+        {this._targetComponent}
+        {ReactDOM.createPortal(this._elementComponent, this._elementParentNode)}
+      </React.Fragment>
+    );
   }
 }
 
