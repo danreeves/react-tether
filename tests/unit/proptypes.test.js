@@ -5,24 +5,23 @@ describe('propTypes', () => {
   describe('children', () => {
     const childrenProp = TetherComponent.propTypes.children;
 
-    it('should return an error if it has no children', () => {
+    it('should return an error if children are used', () => {
+      const err = childrenProp(
+        { children: [1, 2] },
+        'children',
+        'TetherComponent'
+      );
+      expect(err).toBeInstanceOf(Error);
+      expect(err.toString()).toContain('TODO');
+    });
+
+    it('should not return an error if there are no children', () => {
       const err = childrenProp(
         { children: null },
         'children',
         'TetherComponent'
       );
-      expect(err).toBeInstanceOf(Error);
-      expect(err.toString()).toContain('expects at least one child');
-    });
-
-    it('should return an error if it has more than 2 children', () => {
-      const err = childrenProp(
-        { children: [1, 2, 3] },
-        'children',
-        'TetherComponent'
-      );
-      expect(err).toBeInstanceOf(Error);
-      expect(err.toString()).toContain('Only a max of two children allowed');
+      expect(err).toBeUndefined();
     });
   });
 

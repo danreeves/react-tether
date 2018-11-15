@@ -15,44 +15,48 @@ describe('TetherComponent', () => {
     }
   });
 
-  it('should render the first child', () => {
+  it('should render the target', () => {
     wrapper = mount(
-      <TetherComponent attachment="top left">
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
-    expect(wrapper.find('#child1').exists()).toBeTruthy();
+    expect(wrapper.find('#target').exists()).toBeTruthy();
   });
 
   if (hasCreatePortal) {
-    it('should render the second child', () => {
+    it('should render the element', () => {
       wrapper = mount(
-        <TetherComponent attachment="top left">
-          <div id="child1" />
-          <div id="child2" />
-        </TetherComponent>
+        <TetherComponent
+          attachment="top left"
+          renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+          renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        />
       );
-      expect(wrapper.find('#child2').exists()).toBeTruthy();
+      expect(wrapper.find('#element').exists()).toBeTruthy();
     });
   } else {
-    it('should not render the second child', () => {
+    it('should not render the element', () => {
       wrapper = mount(
-        <TetherComponent attachment="top left">
-          <div id="child1" />
-          <div id="child2" />
-        </TetherComponent>
+        <TetherComponent
+          attachment="top left"
+          renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+          renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        />
       );
-      expect(wrapper.find('#child2').exists()).toBeFalsy();
+      expect(wrapper.find('#element').exists()).toBeFalsy();
     });
   }
 
   it('should create a tether element', () => {
     wrapper = mount(
-      <TetherComponent attachment="top left">
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
     const tetherElement = document.querySelector('.tether-element');
     expect(tetherElement).toBeTruthy();
@@ -60,50 +64,54 @@ describe('TetherComponent', () => {
 
   it('should render the second child in the tether element', () => {
     wrapper = mount(
-      <TetherComponent attachment="top left">
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
-    const child2 = document.querySelector('.tether-element #child2');
-    expect(child2).toBeTruthy();
+    const element = document.querySelector('.tether-element #element');
+    expect(element).toBeTruthy();
   });
 
-  it('should render a single child', () => {
+  it('should render a just a target', () => {
     wrapper = mount(
-      <TetherComponent attachment="top left">
-        <div id="child1" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+      />
     );
-    expect(wrapper.find('#child1').exists()).toBeTruthy();
+    expect(wrapper.find('#target').exists()).toBeTruthy();
   });
 
-  it('should not create a tether element if there is a single child', () => {
+  it('should not create a tether element if there is no renderElement', () => {
     wrapper = mount(
-      <TetherComponent attachment="top left">
-        <div id="child1" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+      />
     );
     expect(document.querySelector('.tether-element')).toBeFalsy();
   });
 
-  it('should not create a tether element if there is no target', () => {
+  it('should not create a tether element if there is no renderTarget', () => {
     wrapper = mount(
-      <TetherComponent attachment="top left">
-        {null}
-        <div id={'child2'} />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
     expect(document.querySelector('.tether-element')).toBeFalsy();
   });
 
-  it('should not create a tether element if there is no dom node for target', () => {
+  it('should not create a tether element if innerRef is not bound to a dom node', () => {
     const FalsyComponent = () => null;
     wrapper = mount(
-      <TetherComponent attachment="top left">
-        <FalsyComponent />
-        <FalsyComponent />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderTarget={() => <FalsyComponent />}
+        renderElement={() => <FalsyComponent />}
+      />
     );
     expect(document.querySelector('.tether-element')).toBeFalsy();
   });
@@ -114,44 +122,51 @@ describe('TetherComponent', () => {
 
       render() {
         return (
-          <TetherComponent attachment="top left">
-            {this.state.firstOn && <div id="child1" />}
-            {this.state.secondOn && <div id="child2" />}
-          </TetherComponent>
+          <TetherComponent
+            attachment="top left"
+            renderTarget={({ innerRef }) =>
+              this.state.firstOn && <div ref={innerRef} id="target" />
+            }
+            renderElement={({ innerRef }) =>
+              this.state.secondOn && <div ref={innerRef} id="element" />
+            }
+          />
         );
       }
     }
     wrapper = mount(<ToggleComponent />);
 
-    expect(wrapper.find('#child1').exists()).toBeTruthy();
+    expect(wrapper.find('#target').exists()).toBeTruthy();
     expect(document.querySelector('.tether-element')).toBeTruthy();
-    expect(document.querySelector('.tether-element #child2')).toBeTruthy();
+    expect(document.querySelector('.tether-element #element')).toBeTruthy();
 
     wrapper.setState({ secondOn: false });
 
-    expect(wrapper.find('#child1').exists()).toBeTruthy();
+    expect(wrapper.find('#target').exists()).toBeTruthy();
     expect(document.querySelector('.tether-element')).toBeFalsy();
-    expect(document.querySelector('.tether-element #child2')).toBeFalsy();
+    expect(document.querySelector('.tether-element #element')).toBeFalsy();
 
     wrapper.setState({ firstOn: false, secondOn: true });
 
-    expect(wrapper.find('#child1').exists()).toBeFalsy();
+    expect(wrapper.find('#target').exists()).toBeFalsy();
     expect(document.querySelector('.tether-element')).toBeFalsy();
-    expect(document.querySelector('.tether-element #child2')).toBeFalsy();
+    expect(document.querySelector('.tether-element #element')).toBeFalsy();
 
     wrapper.setState({ firstOn: false, secondOn: false });
 
-    expect(wrapper.find('#child1').exists()).toBeFalsy();
+    expect(wrapper.find('#target').exists()).toBeFalsy();
     expect(document.querySelector('.tether-element')).toBeFalsy();
-    expect(document.querySelector('.tether-element #child2')).toBeFalsy();
+    expect(document.querySelector('.tether-element #element')).toBeFalsy();
   });
 
   it('allows changing the tether element tag', () => {
     wrapper = mount(
-      <TetherComponent attachment="top left" renderElementTag="aside">
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderElementTag="aside"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
     expect(document.querySelector('.tether-element').nodeName).toBe('ASIDE');
   });
@@ -164,10 +179,12 @@ describe('TetherComponent', () => {
     document.body.appendChild(container);
 
     wrapper = mount(
-      <TetherComponent attachment="top left" renderElementTo="#test-container">
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        renderElementTo="#test-container"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
 
     expect(document.querySelector('#test-container')).toBeTruthy();
