@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
 import chroma from 'chroma-js';
@@ -29,16 +29,24 @@ type DraggableTargetProps = {
   height: number,
   id: string,
   width: number,
+  innerRef: RefObject<HTMLDivElement>,
 };
 const DraggableTarget = ({
   color,
   height,
   id,
   width,
+  innerRef,
   ...props
 }: DraggableTargetProps) => (
   <Draggable {...props}>
-    <GrabbableTarget color={color} height={height} width={width} id={id} />
+    <GrabbableTarget
+      innerRef={innerRef}
+      color={color}
+      height={height}
+      width={width}
+      id={id}
+    />
   </Draggable>
 );
 
@@ -152,25 +160,29 @@ export default class Demo extends React.Component {
                   attachment: 'together',
                 },
               ]}
-            >
-              <DraggableTarget
-                id="DRAG_ME"
-                height={100}
-                width={100}
-                color="red"
-                bounds="parent"
-                onDrag={() =>
-                  this.tether.getTetherInstance() && this.tether.position()
-                }
-                defaultPosition={{ x: 25, y: 125 }}
-              />
-              {this.state.on && (
-                <Tooltip id="WATCH_ME">
-                  <Text>Drag the box around</Text>
-                  <Text>I&apos;ll stay within the outline</Text>
-                </Tooltip>
+              renderTarget={({ innerRef }) => (
+                <DraggableTarget
+                  innerRef={innerRef}
+                  id="DRAG_ME"
+                  height={100}
+                  width={100}
+                  color="red"
+                  bounds="parent"
+                  onDrag={() =>
+                    this.tether.getTetherInstance() && this.tether.position()
+                  }
+                  defaultPosition={{ x: 25, y: 125 }}
+                />
               )}
-            </TetherComponent>
+              renderElement={({ innerRef }) =>
+                this.state.on && (
+                  <Tooltip innerRef={innerRef} id="WATCH_ME">
+                    <Text>Drag the box around</Text>
+                    <Text>I&apos;ll stay within the outline</Text>
+                  </Tooltip>
+                )
+              }
+            />
           )}
         </div>
       </DemoZone>
