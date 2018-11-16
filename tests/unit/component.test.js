@@ -175,4 +175,44 @@ describe('TetherComponent', () => {
       document.querySelector('#test-container .tether-element')
     ).toBeTruthy();
   });
+
+  it('passes arguments when on onUpdate() is called', () => {
+    const onUpdate = jest.fn();
+    const updateData = {
+      attachment: { top: 'top', left: 'left' },
+      targetAttachment: { top: 'bottom', left: 'right' },
+    };
+    wrapper = mount(
+      <TetherComponent attachment="top left" onUpdate={onUpdate}>
+        <div id="child1" />
+        <div id="child2" />
+      </TetherComponent>
+    );
+    wrapper
+      .instance()
+      .getTetherInstance()
+      .trigger('update', updateData);
+
+    expect(onUpdate).toHaveBeenCalledWith(updateData);
+  });
+
+  it('passes arguments when on onRepositioned() is called', () => {
+    const onRepositioned = jest.fn();
+    const updateData = {
+      foo: 'foo',
+      bar: 'bar',
+    };
+    wrapper = mount(
+      <TetherComponent attachment="top left" onRepositioned={onRepositioned}>
+        <div id="child1" />
+        <div id="child2" />
+      </TetherComponent>
+    );
+    wrapper
+      .instance()
+      .getTetherInstance()
+      .trigger('repositioned', updateData);
+
+    expect(onRepositioned).toHaveBeenCalledWith(updateData);
+  });
 });

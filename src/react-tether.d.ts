@@ -4,7 +4,9 @@ import * as Tether from 'tether';
 export default TetherComponent;
 export as namespace ReactTether;
 
-declare class TetherComponent extends React.Component<ReactTether.TetherComponentProps> {
+declare class TetherComponent extends React.Component<
+  ReactTether.TetherComponentProps
+> {
   props: ReactTether.TetherComponentProps;
 
   static propTypes: ReactTether.TetherComponentProps;
@@ -30,14 +32,22 @@ declare class TetherComponent extends React.Component<ReactTether.TetherComponen
 }
 
 declare namespace ReactTether {
-  interface TetherComponentProps extends React.Props<TetherComponent>, Tether.ITetherOptions {
+  type TetherAttachment = { top: string; left: string };
+  type UpdateEventData = {
+    attachment: TetherAttachment;
+    targetAttachment: TetherAttachment;
+  };
+
+  interface TetherComponentProps
+    extends React.Props<TetherComponent>,
+      Tether.ITetherOptions {
     children: React.ReactNode;
     renderElementTag?: string;
     renderElementTo?: Element | string;
     className?: string;
-    id?: string
-    style?: React.CSSProperties
-    onUpdate?: (component: TetherComponent) => void
-    onRepositioned?: (component: TetherComponent) => void
+    id?: string;
+    style?: React.CSSProperties;
+    onUpdate?: (data: UpdateEventData) => void;
+    onRepositioned?: () => void;
   }
 }
