@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { injectGlobal } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import ThemeProvider from './components/theme';
 import Body from './components/body';
 import Page from './components/page';
@@ -10,8 +10,7 @@ import { InlineCode, CodeBlock } from './components/code';
 import Link from './components/link';
 import Demo from './components/demo';
 
-/* eslint-disable  no-unused-expressions */
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   html, body {
     margin: 0;
     padding: 0;
@@ -21,7 +20,7 @@ injectGlobal`
 `;
 /* eslint-enable  no-unused-expressions */
 
-const HidesOnMobileSection = Section.extend`
+const HidesOnMobileSection = styled(Section)`
   @media (max-width: 390px) {
     display: none;
   }
@@ -32,6 +31,7 @@ class App extends Component {
     return (
       <ThemeProvider>
         <Body>
+          <GlobalStyle />
           <Page>
             <PageTitle>React Tether</PageTitle>
             <Section>
@@ -78,7 +78,8 @@ class App extends Component {
                 For more documentation see the{' '}
                 <Link href="https://github.com/danreeves/react-tether#props">
                   readme
-                </Link>.
+                </Link>
+                .
               </p>
             </Section>
           </Page>
