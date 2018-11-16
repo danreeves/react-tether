@@ -21,8 +21,7 @@
     "react:15": "enzyme-adapter-react-install 15",
     "danger": "danger ci",
     "typescript": "tsc -p tsconfig.json",
-    "lint": "xo",
-    "precommit": "lint-staged"
+    "lint": "xo"
   },
   "repository": {
     "type": "git",
@@ -73,7 +72,6 @@
     "husky": "^1.1.4",
     "istanbul-merge": "1.1.1",
     "jest": "^23.6.0",
-    "lint-staged": "^8.0.4",
     "nyc": "^13.1.0",
     "parcel-bundler": "^1.10.3",
     "prettier": "^1.15.2",
@@ -145,7 +143,9 @@
       "src/**/*.{js,jsx}"
     ]
   },
-  "lint-staged": {
-    "*.{js,jsx,json,md}": "pretty-quick --staged"
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
