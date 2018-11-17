@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.0.4
+
+- Fixed passing of event arguments to onUpdate and onRepositioned. Thanks @minznerjosh
+- Improved TypeScript definition. Thanks @minznerjosh
+
 ### 1.0.3
 
 - Added some missing props in the TypeScript definition. Thanks to @flacerdk
