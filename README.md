@@ -79,7 +79,7 @@ The tag that is used to render the Tether element, defaults to `div`.
 
 Where in the DOM the Tether element is appended. Passes in any valid selector to `document.querySelector`. Defaults to `document.body`.
 
-Tether requires this element to be `position: static;`, otherwise it will default to `document.body`. See [this example](https://danreeves.github.io/react-tether/renderelementto/) for more information.
+Tether requires this element to be `position: static;`, otherwise it will default to `document.body`. See [this example](https://danreeves.github.io/react-tether/tests/renderelementto/) for more information.
 
 #### `Tether Options`:
 
@@ -89,13 +89,13 @@ Any valid [Tether options](http://tether.io/#options).
 
 The following methods are exposed on the component instance:
 
-* `getTetherInstance(): Tether`
-* `disable(): void`
-* `enable(): void`
-* `on(event: string, handler: function, ctx: any): void`
-* `once(event: string, handler: function, ctx: any): void`
-* `off(event: string, handler: function): void`
-* `position(): void`
+- `getTetherInstance(): Tether`
+- `disable(): void`
+- `enable(): void`
+- `on(event: string, handler: function, ctx: any): void`
+- `once(event: string, handler: function, ctx: any): void`
+- `off(event: string, handler: function): void`
+- `position(): void`
 
 #### Example usage:
 
