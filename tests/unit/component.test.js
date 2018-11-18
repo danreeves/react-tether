@@ -137,25 +137,21 @@ describe('TetherComponent', () => {
     wrapper = mount(<ToggleComponent />);
 
     expect(wrapper.find('#target').exists()).toBeTruthy();
-    expect(document.querySelector('.tether-element')).toBeTruthy();
     expect(document.querySelector('.tether-element #element')).toBeTruthy();
 
     wrapper.setState({ secondOn: false });
 
     expect(wrapper.find('#target').exists()).toBeTruthy();
-    expect(document.querySelector('.tether-element')).toBeFalsy();
     expect(document.querySelector('.tether-element #element')).toBeFalsy();
 
     wrapper.setState({ firstOn: false, secondOn: true });
 
     expect(wrapper.find('#target').exists()).toBeFalsy();
-    expect(document.querySelector('.tether-element')).toBeFalsy();
     expect(document.querySelector('.tether-element #element')).toBeFalsy();
 
     wrapper.setState({ firstOn: false, secondOn: false });
 
     expect(wrapper.find('#target').exists()).toBeFalsy();
-    expect(document.querySelector('.tether-element')).toBeFalsy();
     expect(document.querySelector('.tether-element #element')).toBeFalsy();
   });
 

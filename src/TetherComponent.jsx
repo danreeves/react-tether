@@ -85,11 +85,20 @@ class TetherComponent extends Component {
 
   componentDidMount() {
     this._createContainer();
+    // The container is created after mounting
+    // so we need to force an update to
+    // enable tether
+    // Cannot move _createContainer into the constructor
+    // because of is a side effect: https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
     this.forceUpdate();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.renderElementTag !== this.props.renderElementTag) {
+    // If the container related props have changed, then update the container
+    if (
+      prevProps.renderElementTag !== this.props.renderElementTag ||
+      prevProps.renderElementTo !== this.props.renderElementTo
+    ) {
       this._createContainer();
     }
 
@@ -130,12 +139,17 @@ class TetherComponent extends Component {
 
   _getTargetRef = targetNode => {
     this._targetNode = targetNode;
-    this._update();
+    // This does not need to be done if we have portal support
+    if (!hasCreatePortal) {
+      this._update();
+    }
   };
 
   _getElementRef = elementNode => {
     this._elementNode = elementNode;
-    this._update();
+    if (!hasCreatePortal) {
+      this._update();
+    }
   };
 
   _runRenders() {
@@ -177,9 +191,9 @@ class TetherComponent extends Component {
   _destroyTetherInstance() {
     if (this._tetherInstance) {
       this._tetherInstance.destroy();
-    }
 
-    this._tetherInstance = null;
+      this._tetherInstance = null;
+    }
   }
 
   _registerEventListeners() {
@@ -233,11 +247,10 @@ class TetherComponent extends Component {
 
   _update() {
     // If no element component provided, bail out
-    const shouldDestroy =
-      !this._elementComponent || !this._targetComponent || !this._targetNode;
+    const shouldDestroy = !this._elementNode || !this._targetNode;
 
     if (shouldDestroy) {
-      // Destroy Tether element, or parent node, if those has been created
+      // Destroy Tether element if it has been created
       this._destroyTetherInstance();
       return;
     }
@@ -308,22 +321,27 @@ class TetherComponent extends Component {
 
   render() {
     const { targetComponent, elementComponent } = this._runRenders();
-    // uh oh
-    this._targetComponent = targetComponent;
-    this._elementComponent = elementComponent;
+    // This causes side effects in the render method, which can cause bugs in
+    // async and strict mode, should only be done if there is no portal support
+    // as we can assume there is no async or strict support if there is portal
+    if (!hasCreatePortal) {
+      this._targetComponent = targetComponent;
+      this._elementComponent = elementComponent;
+    }
 
     if (!targetComponent || !this._elementParentNode) {
       return null;
     }
 
-    if (!hasCreatePortal || !elementComponent) {
+    if (!hasCreatePortal) {
       return targetComponent;
     }
 
     return (
       <React.Fragment>
         {targetComponent}
-        {ReactDOM.createPortal(elementComponent, this._elementParentNode)}
+        {elementComponent &&
+          ReactDOM.createPortal(elementComponent, this._elementParentNode)}
       </React.Fragment>
     );
   }
