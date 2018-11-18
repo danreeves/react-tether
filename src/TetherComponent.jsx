@@ -216,7 +216,9 @@ class TetherComponent extends Component {
 
     // Create a node that we can stick our content Component in
     this._elementParentNode = document.createElement(renderElementTag);
+  }
 
+  _addContainerToDOM() {
     // Append node to the render node
     this._renderNode.appendChild(this._elementParentNode);
   }
@@ -233,7 +235,7 @@ class TetherComponent extends Component {
 
     if (shouldDestroy) {
       // Destroy Tether element if it has been created
-      this._destroyTetherInstance();
+      this._destroy();
       return;
     }
 
@@ -276,6 +278,8 @@ class TetherComponent extends Component {
         }
       });
     }
+
+    this._addContainerToDOM();
 
     if (this._tetherInstance) {
       this._tetherInstance.setOptions(tetherOptions);
