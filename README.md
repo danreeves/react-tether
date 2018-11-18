@@ -43,23 +43,27 @@ class SimpleDemo extends React.Component {
             attachment: 'together',
           },
         ]}
-      >
-        {/* First child: This is what the item will be tethered to */}
-        <button
-          onClick={() => {
-            this.setState({ isOpen: !isOpen });
-          }}
-        >
-          Toggle Tethered Content
-        </button>
-        {/* Second child: If present, this item will be tethered to the the first child */}
-        {isOpen && (
-          <div>
-            <h2>Tethered Content</h2>
-            <p>A paragraph to accompany the title.</p>
-          </div>
+        /* renderTarget: This is what the item will be tethered to, make sure to use innerRef */
+        renderTarget={({ innerRef }) => (
+          <button
+            ref={innerRef}
+            onClick={() => {
+              this.setState({ isOpen: !isOpen });
+            }}
+          >
+            Toggle Tethered Content
+          </button>
         )}
-      </TetherComponent>
+        /* renderElement: If present, this item will be tethered to the the component returned by renderTarget */
+        renderElement={({ innerRef }) =>
+          isOpen && (
+            <div ref={innerRef}>
+              <h2>Tethered Content</h2>
+              <p>A paragraph to accompany the title.</p>
+            </div>
+          )
+        }
+      />
     );
   }
 }
@@ -67,9 +71,13 @@ class SimpleDemo extends React.Component {
 
 ## Props
 
-#### `children`: PropTypes.node.isRequired (2 Max)
+#### `renderTarget`: PropTypes.func
 
-The first child is used as the Tether's `target` and the second child (which is optional) is used as Tether's `element` that will be moved.
+The component returned from this function will be Tether's `target`.
+
+#### `renderElement`: PropTypes.func
+
+The component returned from this function will be Tether's `element`, that will be moved. If no component is returned, the target will still render, but with no element tethered.
 
 #### `renderElementTag`: PropTypes.string
 
@@ -84,6 +92,10 @@ Tether requires this element to be `position: static;`, otherwise it will defaul
 #### `Tether Options`:
 
 Any valid [Tether options](http://tether.io/#options).
+
+#### `children`:
+
+Previous versions of react-tether used children to render the target and component, using children will now throw an error. Please use renderTarget and renderElement instead
 
 ## Imperative API
 
