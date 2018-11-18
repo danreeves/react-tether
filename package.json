@@ -18,7 +18,6 @@
     "test": "npm run lint && npm run typescript && npm run unit",
     "tdd": "npm run unit -- --watch",
     "react:16": "enzyme-adapter-react-install 16",
-    "react:15": "enzyme-adapter-react-install 15.5",
     "danger": "danger ci",
     "typescript": "tsc -p tsconfig.json",
     "lint": "xo"
@@ -45,8 +44,8 @@
     "tether": "^1.4.5"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

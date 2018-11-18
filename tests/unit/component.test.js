@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
 import TetherComponent from '../../src/react-tether';
-
-const hasCreatePortal = ReactDOM.createPortal !== undefined;
 
 describe('TetherComponent', () => {
   let wrapper;
@@ -26,29 +23,16 @@ describe('TetherComponent', () => {
     expect(wrapper.find('#target').exists()).toBeTruthy();
   });
 
-  if (hasCreatePortal) {
-    it('should render the element', () => {
-      wrapper = mount(
-        <TetherComponent
-          attachment="top left"
-          renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-          renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
-        />
-      );
-      expect(wrapper.find('#element').exists()).toBeTruthy();
-    });
-  } else {
-    it('should not render the element', () => {
-      wrapper = mount(
-        <TetherComponent
-          attachment="top left"
-          renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-          renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
-        />
-      );
-      expect(wrapper.find('#element').exists()).toBeFalsy();
-    });
-  }
+  it('should render the element', () => {
+    wrapper = mount(
+      <TetherComponent
+        attachment="top left"
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
+    );
+    expect(wrapper.find('#element').exists()).toBeTruthy();
+  });
 
   it('should create a tether element', () => {
     wrapper = mount(
