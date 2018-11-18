@@ -41,7 +41,7 @@ const DraggableTarget = ({
 }: DraggableTargetProps) => (
   <Draggable {...props}>
     <GrabbableTarget
-      innerRef={innerRef}
+      ref={innerRef}
       color={color}
       height={height}
       width={width}
@@ -176,7 +176,7 @@ export default class Demo extends React.Component {
               )}
               renderElement={({ innerRef }) =>
                 this.state.on && (
-                  <Tooltip innerRef={innerRef} id="WATCH_ME">
+                  <Tooltip ref={innerRef} id="WATCH_ME">
                     <Text>Drag the box around</Text>
                     <Text>I&apos;ll stay within the outline</Text>
                   </Tooltip>

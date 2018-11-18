@@ -79,14 +79,14 @@ class PageTitle extends React.Component<PageTitleProps> {
           ]}
           renderTarget={({ innerRef }) => (
             <Target
-              innerRef={innerRef}
+              ref={innerRef}
               height="100"
               width="100"
               color={this.props.theme.colors[this.state.count]}
             />
           )}
           renderElement={({ innerRef }) => (
-            <Tooltip innerRef={innerRef} side={this.direction(side)}>
+            <Tooltip ref={innerRef} side={this.direction(side)}>
               <Title>{children}</Title>
             </Tooltip>
           )}

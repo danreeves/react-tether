@@ -171,6 +171,32 @@ describe('TetherComponent', () => {
     expect(document.querySelector('.tether-element').nodeName).toBe('ASIDE');
   });
 
+  it('allows changing the tether element tag on the fly', () => {
+    class DifferentTagsComponent extends React.Component {
+      state = { isAside: false };
+
+      render() {
+        return (
+          <TetherComponent
+            attachment="top left"
+            renderElementTag={this.state.isAside ? 'aside' : 'div'}
+            renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+            renderElement={({ innerRef }) => (
+              <div ref={innerRef} id="element" />
+            )}
+          />
+        );
+      }
+    }
+    wrapper = mount(<DifferentTagsComponent />);
+
+    expect(document.querySelector('.tether-element').nodeName).toBe('DIV');
+
+    wrapper.setState({ isAside: true });
+
+    expect(document.querySelector('.tether-element').nodeName).toBe('ASIDE');
+  });
+
   it('allows changing the tether element tag', () => {
     const container = document.createElement('div');
     container.setAttribute('id', 'test-container');
@@ -193,6 +219,51 @@ describe('TetherComponent', () => {
     ).toBeTruthy();
   });
 
+  it('allows changing the tether element tag on the fly', () => {
+    const container = document.createElement('div');
+    container.setAttribute('id', 'test-container');
+    // Tether requires the container element to have position static
+    container.style.position = 'static';
+    document.body.appendChild(container);
+
+    const container2 = document.createElement('div');
+    container2.setAttribute('id', 'test-container2');
+    container2.style.position = 'static';
+    document.body.appendChild(container2);
+
+    class DifferentRenderElementToComponent extends React.Component {
+      state = { isOne: true };
+
+      render() {
+        return (
+          <TetherComponent
+            attachment="top left"
+            renderElementTo={
+              this.state.isOne ? '#test-container' : '#test-container2'
+            }
+            renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+            renderElement={({ innerRef }) => (
+              <div ref={innerRef} id="element" />
+            )}
+          />
+        );
+      }
+    }
+    wrapper = mount(<DifferentRenderElementToComponent />);
+
+    expect(document.querySelector('#test-container')).toBeTruthy();
+    expect(
+      document.querySelector('#test-container .tether-element')
+    ).toBeTruthy();
+
+    wrapper.setState({ isOne: false });
+
+    expect(document.querySelector('#test-container2')).toBeTruthy();
+    expect(
+      document.querySelector('#test-container2 .tether-element')
+    ).toBeTruthy();
+  });
+
   it('passes arguments when on onUpdate() is called', () => {
     const onUpdate = jest.fn();
     const updateData = {
@@ -200,11 +271,14 @@ describe('TetherComponent', () => {
       targetAttachment: { top: 'bottom', left: 'right' },
     };
     wrapper = mount(
-      <TetherComponent attachment="top left" onUpdate={onUpdate}>
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        onUpdate={onUpdate}
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
+
     wrapper
       .instance()
       .getTetherInstance()
@@ -220,11 +294,14 @@ describe('TetherComponent', () => {
       bar: 'bar',
     };
     wrapper = mount(
-      <TetherComponent attachment="top left" onRepositioned={onRepositioned}>
-        <div id="child1" />
-        <div id="child2" />
-      </TetherComponent>
+      <TetherComponent
+        attachment="top left"
+        onRepositioned={onRepositioned}
+        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      />
     );
+
     wrapper
       .instance()
       .getTetherInstance()
