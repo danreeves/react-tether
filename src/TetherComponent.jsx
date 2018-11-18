@@ -77,34 +77,22 @@ class TetherComponent extends Component {
 
   _elementParentNode = null;
 
-  _tether = null;
+  _tetherInstance = null;
 
   _elementComponent = null;
 
   _targetComponent = null;
 
-  updateChildrenComponents(props) {
-    const { targetComponent, elementComponent } = this._runRenders(props);
-
-    this._targetComponent = targetComponent;
-    this._elementComponent = elementComponent;
-
-    if (this._targetComponent && this._elementComponent) {
-      this._createContainer();
-    }
-  }
-
-  // eslint-disable-next-line react/no-deprecated
-  componentWillUpdate(nextProps) {
-    this.updateChildrenComponents(nextProps);
-  }
-
   componentDidMount() {
-    this.updateChildrenComponents(this.props);
+    this._createContainer();
     this.forceUpdate();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.renderElementTag !== this.props.renderElementTag) {
+      this._createContainer();
+    }
+
     this._update();
   }
 
@@ -113,31 +101,31 @@ class TetherComponent extends Component {
   }
 
   getTetherInstance() {
-    return this._tether;
+    return this._tetherInstance;
   }
 
   disable() {
-    this._tether.disable();
+    this._tetherInstance.disable();
   }
 
   enable() {
-    this._tether.enable();
+    this._tetherInstance.enable();
   }
 
   on(event, handler, ctx) {
-    this._tether.on(event, handler, ctx);
+    this._tetherInstance.on(event, handler, ctx);
   }
 
   once(event, handler, ctx) {
-    this._tether.once(event, handler, ctx);
+    this._tetherInstance.once(event, handler, ctx);
   }
 
   off(event, handler) {
-    this._tether.off(event, handler);
+    this._tetherInstance.off(event, handler);
   }
 
   position() {
-    this._tether.position();
+    this._tetherInstance.position();
   }
 
   _getTargetRef = targetNode => {
@@ -150,17 +138,17 @@ class TetherComponent extends Component {
     this._update();
   };
 
-  _runRenders(props = this.props) {
+  _runRenders() {
     // To obtain the components, we run the render functions and pass in innerRef
     // Later, when the component is mounted, the ref functions will be called
     // and trigger a tether update
     let targetComponent =
-      typeof props.renderTarget === 'function'
-        ? props.renderTarget({ innerRef: this._getTargetRef })
+      typeof this.props.renderTarget === 'function'
+        ? this.props.renderTarget({ innerRef: this._getTargetRef })
         : null;
     let elementComponent =
-      typeof props.renderElement === 'function'
-        ? props.renderElement({ innerRef: this._getElementRef })
+      typeof this.props.renderElement === 'function'
+        ? this.props.renderElement({ innerRef: this._getElementRef })
         : null;
 
     // Check if what has been returned is a valid react element
@@ -175,6 +163,23 @@ class TetherComponent extends Component {
       targetComponent,
       elementComponent,
     };
+  }
+
+  _createTetherInstance(tetherOptions) {
+    if (this._tetherInstance) {
+      this._destroy();
+    }
+
+    this._tetherInstance = new Tether(tetherOptions);
+    this._registerEventListeners();
+  }
+
+  _destroyTetherInstance() {
+    if (this._tetherInstance) {
+      this._tetherInstance.destroy();
+    }
+
+    this._tetherInstance = null;
   }
 
   _registerEventListeners() {
@@ -198,35 +203,31 @@ class TetherComponent extends Component {
   }
 
   _destroy() {
-    if (this._elementParentNode) {
-      if (!hasCreatePortal) {
-        ReactDOM.unmountComponentAtNode(this._elementParentNode);
-      }
-      this._elementParentNode.parentNode.removeChild(this._elementParentNode);
-    }
-
-    if (this._tether) {
-      this._tether.destroy();
-    }
-
-    this._elementParentNode = null;
-    this._tether = null;
-    this._targetNode = null;
-    this._elementNode = null;
-    this._targetComponent = null;
-    this._elementComponent = null;
+    this._destroyTetherInstance();
+    this._removeContainer();
   }
 
   _createContainer() {
     // Create element node container if it hasn't been yet
-    if (!this._elementParentNode) {
-      const { renderElementTag } = this.props;
+    this._removeContainer();
 
-      // Create a node that we can stick our content Component in
-      this._elementParentNode = document.createElement(renderElementTag);
+    const { renderElementTag } = this.props;
 
-      // Append node to the render node
-      this._renderNode.appendChild(this._elementParentNode);
+    // Create a node that we can stick our content Component in
+    this._elementParentNode = document.createElement(renderElementTag);
+
+    // Append node to the render node
+    this._renderNode.appendChild(this._elementParentNode);
+  }
+
+  _removeContainer() {
+    if (this._elementParentNode) {
+      if (!hasCreatePortal) {
+        ReactDOM.unmountComponentAtNode(this._elementParentNode);
+      }
+      if (this._elementParentNode.parentNode) {
+        this._elementParentNode.parentNode.removeChild(this._elementParentNode);
+      }
     }
   }
 
@@ -237,7 +238,7 @@ class TetherComponent extends Component {
 
     if (shouldDestroy) {
       // Destroy Tether element, or parent node, if those has been created
-      this._destroy();
+      this._destroyTetherInstance();
       return;
     }
 
@@ -296,29 +297,33 @@ class TetherComponent extends Component {
       });
     }
 
-    if (this._tether) {
-      this._tether.setOptions(tetherOptions);
+    if (this._tetherInstance) {
+      this._tetherInstance.setOptions(tetherOptions);
     } else {
-      this._tether = new Tether(tetherOptions);
-      this._registerEventListeners();
+      this._createTetherInstance(tetherOptions);
     }
 
-    this._tether.position();
+    this._tetherInstance.position();
   }
 
   render() {
-    if (!this._targetComponent) {
+    const { targetComponent, elementComponent } = this._runRenders();
+    // uh oh
+    this._targetComponent = targetComponent;
+    this._elementComponent = elementComponent;
+
+    if (!targetComponent || !this._elementParentNode) {
       return null;
     }
 
-    if (!hasCreatePortal || !this._elementComponent) {
-      return this._targetComponent;
+    if (!hasCreatePortal || !elementComponent) {
+      return targetComponent;
     }
 
     return (
       <React.Fragment>
-        {this._targetComponent}
-        {ReactDOM.createPortal(this._elementComponent, this._elementParentNode)}
+        {targetComponent}
+        {ReactDOM.createPortal(elementComponent, this._elementParentNode)}
       </React.Fragment>
     );
   }
