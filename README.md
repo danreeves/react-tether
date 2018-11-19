@@ -73,11 +73,11 @@ class SimpleDemo extends React.Component {
 
 #### `renderTarget`: PropTypes.func
 
-The component returned from this function will be Tether's `target`.
+This is a [render prop](https://reactjs.org/docs/render-props.html), the component returned from this function will be Tether's `target`. One argument, innerRef, is passed into this function. This is a ref that must be attached to the highest possible DOM node in the tree. If this is not done the element will not render.
 
 #### `renderElement`: PropTypes.func
 
-The component returned from this function will be Tether's `element`, that will be moved. If no component is returned, the target will still render, but with no element tethered.
+This is a [render prop](https://reactjs.org/docs/render-props.html), the component returned from this function will be Tether's `element`, that will be moved. If no component is returned, the target will still render, but with no element tethered. One argument, innerRef, is passed into this function. This is a ref that must be attached to the highest possible DOM node in the tree. If this is not done the element will not render.
 
 #### `renderElementTag`: PropTypes.string
 
