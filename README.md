@@ -44,7 +44,7 @@ class SimpleDemo extends React.Component {
           },
         ]}
         /* renderTarget: This is what the item will be tethered to, make sure to use innerRef */
-        renderTarget={({ innerRef }) => (
+        renderTarget={innerRef => (
           <button
             ref={innerRef}
             onClick={() => {
@@ -55,7 +55,7 @@ class SimpleDemo extends React.Component {
           </button>
         )}
         /* renderElement: If present, this item will be tethered to the the component returned by renderTarget */
-        renderElement={({ innerRef }) =>
+        renderElement={innerRef =>
           isOpen && (
             <div ref={innerRef}>
               <h2>Tethered Content</h2>

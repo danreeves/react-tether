@@ -16,8 +16,8 @@ describe('TetherComponent', () => {
     wrapper = mount(
       <TetherComponent
         attachment="top left"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
     expect(wrapper.find('#target').exists()).toBeTruthy();
@@ -27,8 +27,8 @@ describe('TetherComponent', () => {
     wrapper = mount(
       <TetherComponent
         attachment="top left"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
     expect(wrapper.find('#element').exists()).toBeTruthy();
@@ -38,8 +38,8 @@ describe('TetherComponent', () => {
     wrapper = mount(
       <TetherComponent
         attachment="top left"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
     const tetherElement = document.querySelector('.tether-element');
@@ -50,8 +50,8 @@ describe('TetherComponent', () => {
     wrapper = mount(
       <TetherComponent
         attachment="top left"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
     const element = document.querySelector('.tether-element #element');
@@ -62,7 +62,7 @@ describe('TetherComponent', () => {
     wrapper = mount(
       <TetherComponent
         attachment="top left"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
       />
     );
     expect(wrapper.find('#target').exists()).toBeTruthy();
@@ -72,7 +72,7 @@ describe('TetherComponent', () => {
     wrapper = mount(
       <TetherComponent
         attachment="top left"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
       />
     );
     expect(document.querySelector('.tether-element')).toBeFalsy();
@@ -82,7 +82,7 @@ describe('TetherComponent', () => {
     wrapper = mount(
       <TetherComponent
         attachment="top left"
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
     expect(document.querySelector('.tether-element')).toBeFalsy();
@@ -108,10 +108,10 @@ describe('TetherComponent', () => {
         return (
           <TetherComponent
             attachment="top left"
-            renderTarget={({ innerRef }) =>
+            renderTarget={innerRef =>
               this.state.firstOn && <div ref={innerRef} id="target" />
             }
-            renderElement={({ innerRef }) =>
+            renderElement={innerRef =>
               this.state.secondOn && <div ref={innerRef} id="element" />
             }
           />
@@ -144,8 +144,8 @@ describe('TetherComponent', () => {
       <TetherComponent
         attachment="top left"
         renderElementTag="aside"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
     expect(document.querySelector('.tether-element').nodeName).toBe('ASIDE');
@@ -160,10 +160,8 @@ describe('TetherComponent', () => {
           <TetherComponent
             attachment="top left"
             renderElementTag={this.state.isAside ? 'aside' : 'div'}
-            renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-            renderElement={({ innerRef }) => (
-              <div ref={innerRef} id="element" />
-            )}
+            renderTarget={innerRef => <div ref={innerRef} id="target" />}
+            renderElement={innerRef => <div ref={innerRef} id="element" />}
           />
         );
       }
@@ -188,8 +186,8 @@ describe('TetherComponent', () => {
       <TetherComponent
         attachment="top left"
         renderElementTo="#test-container"
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
 
@@ -221,10 +219,8 @@ describe('TetherComponent', () => {
             renderElementTo={
               this.state.isOne ? '#test-container' : '#test-container2'
             }
-            renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-            renderElement={({ innerRef }) => (
-              <div ref={innerRef} id="element" />
-            )}
+            renderTarget={innerRef => <div ref={innerRef} id="target" />}
+            renderElement={innerRef => <div ref={innerRef} id="element" />}
           />
         );
       }
@@ -254,8 +250,8 @@ describe('TetherComponent', () => {
       <TetherComponent
         attachment="top left"
         onUpdate={onUpdate}
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
 
@@ -277,8 +273,8 @@ describe('TetherComponent', () => {
       <TetherComponent
         attachment="top left"
         onRepositioned={onRepositioned}
-        renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-        renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+        renderTarget={innerRef => <div ref={innerRef} id="target" />}
+        renderElement={innerRef => <div ref={innerRef} id="element" />}
       />
     );
 

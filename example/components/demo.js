@@ -160,7 +160,7 @@ export default class Demo extends React.Component {
                   attachment: 'together',
                 },
               ]}
-              renderTarget={({ innerRef }) => (
+              renderTarget={innerRef => (
                 <DraggableTarget
                   innerRef={innerRef}
                   id="DRAG_ME"
@@ -174,7 +174,7 @@ export default class Demo extends React.Component {
                   defaultPosition={{ x: 25, y: 125 }}
                 />
               )}
-              renderElement={({ innerRef }) =>
+              renderElement={innerRef =>
                 this.state.on && (
                   <Tooltip ref={innerRef} id="WATCH_ME">
                     <Text>Drag the box around</Text>

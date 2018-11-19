@@ -145,11 +145,11 @@ class TetherComponent extends Component {
     // and trigger a tether update
     let targetComponent =
       typeof this.props.renderTarget === 'function'
-        ? this.props.renderTarget({ innerRef: this._getTargetRef })
+        ? this.props.renderTarget(this._getTargetRef)
         : null;
     let elementComponent =
       typeof this.props.renderElement === 'function'
-        ? this.props.renderElement({ innerRef: this._getElementRef })
+        ? this.props.renderElement(this._getElementRef)
         : null;
 
     // Check if what has been returned is a valid react element

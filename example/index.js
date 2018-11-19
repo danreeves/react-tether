@@ -63,10 +63,10 @@ class App extends Component {
                 const TetheredThing = () => (
                   <TetherComponent
                     attachment="middle left"
-                    renderTarget={({ innerRef }) => (
+                    renderTarget={innerRef => (
                       <p ref={innerRef}>The target component</p>
                     )}
-                    renderElement={({ innerRef }) => (
+                    renderElement={innerRef => (
                       <p>The tethered component</p>
                     )}
                   </TetherComponent>)

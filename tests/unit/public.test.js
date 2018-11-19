@@ -7,8 +7,8 @@ const render = () => {
   wrapper = mount(
     <TetherComponent
       attachment="top left"
-      renderTarget={({ innerRef }) => <div ref={innerRef} id="target" />}
-      renderElement={({ innerRef }) => <div ref={innerRef} id="element" />}
+      renderTarget={innerRef => <div ref={innerRef} id="target" />}
+      renderElement={innerRef => <div ref={innerRef} id="element" />}
     />
   );
   return wrapper;

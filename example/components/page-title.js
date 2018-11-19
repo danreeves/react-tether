@@ -77,7 +77,7 @@ class PageTitle extends React.Component<PageTitleProps> {
               attachment: 'together',
             },
           ]}
-          renderTarget={({ innerRef }) => (
+          renderTarget={innerRef => (
             <Target
               ref={innerRef}
               height="100"
@@ -85,7 +85,7 @@ class PageTitle extends React.Component<PageTitleProps> {
               color={this.props.theme.colors[this.state.count]}
             />
           )}
-          renderElement={({ innerRef }) => (
+          renderElement={innerRef => (
             <Tooltip ref={innerRef} side={this.direction(side)}>
               <Title>{children}</Title>
             </Tooltip>
