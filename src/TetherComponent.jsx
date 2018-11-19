@@ -68,10 +68,10 @@ class TetherComponent extends Component {
   };
 
   // The DOM node of the target, obtained using innerRef in the render prop
-  _targetNode = null;
+  _targetNode = React.createRef();
 
   // The DOM node of the element, obtained using innerRef in the render prop
-  _elementNode = null;
+  _elementNode = React.createRef();
 
   _elementParentNode = null;
 
@@ -131,25 +131,17 @@ class TetherComponent extends Component {
     this._tetherInstance.position();
   }
 
-  _getTargetRef = targetNode => {
-    this._targetNode = targetNode;
-  };
-
-  _getElementRef = elementNode => {
-    this._elementNode = elementNode;
-  };
-
   _runRenders() {
     // To obtain the components, we run the render functions and pass in innerRef
     // Later, when the component is mounted, the ref functions will be called
     // and trigger a tether update
     let targetComponent =
       typeof this.props.renderTarget === 'function'
-        ? this.props.renderTarget(this._getTargetRef)
+        ? this.props.renderTarget(this._targetNode)
         : null;
     let elementComponent =
       typeof this.props.renderElement === 'function'
-        ? this.props.renderElement(this._getElementRef)
+        ? this.props.renderElement(this._elementNode)
         : null;
 
     // Check if what has been returned is a valid react element
@@ -231,7 +223,8 @@ class TetherComponent extends Component {
 
   _update() {
     // If no element component provided, bail out
-    const shouldDestroy = !this._elementNode || !this._targetNode;
+    const shouldDestroy =
+      !this._elementNode.current || !this._targetNode.current;
 
     if (shouldDestroy) {
       // Destroy Tether element if it has been created
@@ -255,7 +248,7 @@ class TetherComponent extends Component {
       ...options
     } = this.props;
     const tetherOptions = {
-      target: this._targetNode,
+      target: this._targetNode.current,
       element: this._elementParentNode,
       ...options,
     };
