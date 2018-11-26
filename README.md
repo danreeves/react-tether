@@ -43,10 +43,10 @@ class SimpleDemo extends React.Component {
             attachment: 'together',
           },
         ]}
-        /* renderTarget: This is what the item will be tethered to, make sure to use innerRef */
-        renderTarget={innerRef => (
+        /* renderTarget: This is what the item will be tethered to, make sure to attach the ref */
+        renderTarget={ref => (
           <button
-            ref={innerRef}
+            ref={ref}
             onClick={() => {
               this.setState({ isOpen: !isOpen });
             }}
@@ -55,9 +55,9 @@ class SimpleDemo extends React.Component {
           </button>
         )}
         /* renderElement: If present, this item will be tethered to the the component returned by renderTarget */
-        renderElement={innerRef =>
+        renderElement={ref =>
           isOpen && (
-            <div ref={innerRef}>
+            <div ref={ref}>
               <h2>Tethered Content</h2>
               <p>A paragraph to accompany the title.</p>
             </div>
@@ -73,11 +73,11 @@ class SimpleDemo extends React.Component {
 
 #### `renderTarget`: PropTypes.func
 
-This is a [render prop](https://reactjs.org/docs/render-props.html), the component returned from this function will be Tether's `target`. One argument, innerRef, is passed into this function. This is a ref that must be attached to the highest possible DOM node in the tree. If this is not done the element will not render.
+This is a [render prop](https://reactjs.org/docs/render-props.html), the component returned from this function will be Tether's `target`. One argument, ref, is passed into this function. This is a ref that must be attached to the highest possible DOM node in the tree. If this is not done the element will not render.
 
 #### `renderElement`: PropTypes.func
 
-This is a [render prop](https://reactjs.org/docs/render-props.html), the component returned from this function will be Tether's `element`, that will be moved. If no component is returned, the target will still render, but with no element tethered. One argument, innerRef, is passed into this function. This is a ref that must be attached to the highest possible DOM node in the tree. If this is not done the element will not render.
+This is a [render prop](https://reactjs.org/docs/render-props.html), the component returned from this function will be Tether's `element`, that will be moved. If no component is returned, the target will still render, but with no element tethered. One argument, ref, is passed into this function. This is a ref that must be attached to the highest possible DOM node in the tree. If this is not done the element will not render.
 
 #### `renderElementTag`: PropTypes.string
 

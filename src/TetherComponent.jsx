@@ -67,10 +67,10 @@ class TetherComponent extends Component {
     renderElementTo: null,
   };
 
-  // The DOM node of the target, obtained using innerRef in the render prop
+  // The DOM node of the target, obtained using ref in the render prop
   _targetNode = React.createRef();
 
-  // The DOM node of the element, obtained using innerRef in the render prop
+  // The DOM node of the element, obtained using ref in the render prop
   _elementNode = React.createRef();
 
   _elementParentNode = null;
@@ -132,7 +132,7 @@ class TetherComponent extends Component {
   }
 
   _runRenders() {
-    // To obtain the components, we run the render functions and pass in innerRef
+    // To obtain the components, we run the render functions and pass in the ref
     // Later, when the component is mounted, the ref functions will be called
     // and trigger a tether update
     let targetComponent =

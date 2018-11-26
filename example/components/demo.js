@@ -29,25 +29,22 @@ type DraggableTargetProps = {
   height: number,
   id: string,
   width: number,
-  innerRef: RefObject<HTMLDivElement>,
 };
-const DraggableTarget = ({
-  color,
-  height,
-  id,
-  width,
-  innerRef,
-  ...props
-}: DraggableTargetProps) => (
-  <Draggable {...props}>
-    <GrabbableTarget
-      ref={innerRef}
-      color={color}
-      height={height}
-      width={width}
-      id={id}
-    />
-  </Draggable>
+const DraggableTarget = React.forwardRef(
+  (
+    { color, height, id, width, ...props }: DraggableTargetProps,
+    ref: RefObject<HTMLDivElement>
+  ) => (
+    <Draggable {...props}>
+      <GrabbableTarget
+        ref={ref}
+        color={color}
+        height={height}
+        width={width}
+        id={id}
+      />
+    </Draggable>
+  )
 );
 
 const Text = styled.p`
@@ -160,9 +157,9 @@ export default class Demo extends React.Component {
                   attachment: 'together',
                 },
               ]}
-              renderTarget={innerRef => (
+              renderTarget={ref => (
                 <DraggableTarget
-                  innerRef={innerRef}
+                  ref={ref}
                   id="DRAG_ME"
                   height={100}
                   width={100}
@@ -174,9 +171,9 @@ export default class Demo extends React.Component {
                   defaultPosition={{ x: 25, y: 125 }}
                 />
               )}
-              renderElement={innerRef =>
+              renderElement={ref =>
                 this.state.on && (
-                  <Tooltip ref={innerRef} id="WATCH_ME">
+                  <Tooltip ref={ref} id="WATCH_ME">
                     <Text>Drag the box around</Text>
                     <Text>I&apos;ll stay within the outline</Text>
                   </Tooltip>
