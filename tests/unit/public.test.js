@@ -5,10 +5,11 @@ import TetherComponent from '../../src/react-tether';
 let wrapper;
 const render = () => {
   wrapper = mount(
-    <TetherComponent attachment="top left">
-      <div id="child1" />
-      <div id="child2" />
-    </TetherComponent>
+    <TetherComponent
+      attachment="top left"
+      renderTarget={ref => <div ref={ref} id="target" />}
+      renderElement={ref => <div ref={ref} id="element" />}
+    />
   );
   return wrapper;
 };

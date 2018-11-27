@@ -37,11 +37,13 @@ declare namespace ReactTether {
     attachment: TetherAttachment;
     targetAttachment: TetherAttachment;
   };
+  type RenderProp = (ref: React.RefObject<HTMLElement>) => React.ReactNode;
 
   interface TetherComponentProps
     extends React.Props<TetherComponent>,
       Tether.ITetherOptions {
-    children: React.ReactNode;
+    renderTarget?: RenderProp;
+    renderElement?: RenderProp;
     renderElementTag?: string;
     renderElementTo?: Element | string;
     className?: string;

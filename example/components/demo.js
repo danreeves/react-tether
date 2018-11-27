@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
 import chroma from 'chroma-js';
@@ -30,16 +30,21 @@ type DraggableTargetProps = {
   id: string,
   width: number,
 };
-const DraggableTarget = ({
-  color,
-  height,
-  id,
-  width,
-  ...props
-}: DraggableTargetProps) => (
-  <Draggable {...props}>
-    <GrabbableTarget color={color} height={height} width={width} id={id} />
-  </Draggable>
+const DraggableTarget = React.forwardRef(
+  (
+    { color, height, id, width, ...props }: DraggableTargetProps,
+    ref: RefObject<HTMLDivElement>
+  ) => (
+    <Draggable {...props}>
+      <GrabbableTarget
+        ref={ref}
+        color={color}
+        height={height}
+        width={width}
+        id={id}
+      />
+    </Draggable>
+  )
 );
 
 const Text = styled.p`
@@ -152,25 +157,29 @@ export default class Demo extends React.Component {
                   attachment: 'together',
                 },
               ]}
-            >
-              <DraggableTarget
-                id="DRAG_ME"
-                height={100}
-                width={100}
-                color="red"
-                bounds="parent"
-                onDrag={() =>
-                  this.tether.getTetherInstance() && this.tether.position()
-                }
-                defaultPosition={{ x: 25, y: 125 }}
-              />
-              {this.state.on && (
-                <Tooltip id="WATCH_ME">
-                  <Text>Drag the box around</Text>
-                  <Text>I&apos;ll stay within the outline</Text>
-                </Tooltip>
+              renderTarget={ref => (
+                <DraggableTarget
+                  ref={ref}
+                  id="DRAG_ME"
+                  height={100}
+                  width={100}
+                  color="red"
+                  bounds="parent"
+                  onDrag={() =>
+                    this.tether.getTetherInstance() && this.tether.position()
+                  }
+                  defaultPosition={{ x: 25, y: 125 }}
+                />
               )}
-            </TetherComponent>
+              renderElement={ref =>
+                this.state.on && (
+                  <Tooltip ref={ref} id="WATCH_ME">
+                    <Text>Drag the box around</Text>
+                    <Text>I&apos;ll stay within the outline</Text>
+                  </Tooltip>
+                )
+              }
+            />
           )}
         </div>
       </DemoZone>

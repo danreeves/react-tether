@@ -77,16 +77,20 @@ class PageTitle extends React.Component<PageTitleProps> {
               attachment: 'together',
             },
           ]}
-        >
-          <Target
-            height="100"
-            width="100"
-            color={this.props.theme.colors[this.state.count]}
-          />
-          <Tooltip side={this.direction(side)}>
-            <Title>{children}</Title>
-          </Tooltip>
-        </TetherComponent>
+          renderTarget={ref => (
+            <Target
+              ref={ref}
+              height="100"
+              width="100"
+              color={this.props.theme.colors[this.state.count]}
+            />
+          )}
+          renderElement={ref => (
+            <Tooltip ref={ref} side={this.direction(side)}>
+              <Title>{children}</Title>
+            </Tooltip>
+          )}
+        />
       </Wrapper>
     );
   }
