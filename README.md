@@ -114,10 +114,16 @@ The following methods are exposed on the component instance:
 #### Example usage:
 
 ```javascript
-<TetherComponent ref={tether => this.tether = tether}>
-  <Target/>
-  <Element onResize={() => this.tether && this.tether.position()}
-</TetherComponent>
+<TetherComponent
+  ref={tether => (this.tether = tether)}
+  renderTarget={ref => (
+    /* Make sure your ref is forwarded or use an "innerRef" prop */
+    <Target ref={ref} />
+  )}
+  renderElement={ref => (
+    <Element ref={ref} onResize={() => this.tether && this.tether.position()} />
+  )}
+/>
 ```
 
 ## Run Example
