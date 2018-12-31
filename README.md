@@ -18,6 +18,8 @@ React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 
 `bower install react-tether --save`
 
+**As of version 2, a minimum of React 16.3 is required. If you need support for React < 16.3 please use the [1.x branch](https://github.com/danreeves/react-tether/tree/1.x).**
+
 ## Example Usage
 
 ```javascript
