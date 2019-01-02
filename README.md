@@ -18,6 +18,8 @@ React wrapper around [Tether](https://github.com/hubspot/tether) from Hub Spot.
 
 `bower install react-tether --save`
 
+**As of version 2, a minimum of React 16.3 is required. If you need support for React < 16.3 please use the [1.x branch](https://github.com/danreeves/react-tether/tree/1.x).**
+
 ## Example Usage
 
 ```javascript
@@ -112,10 +114,16 @@ The following methods are exposed on the component instance:
 #### Example usage:
 
 ```javascript
-<TetherComponent ref={tether => this.tether = tether}>
-  <Target/>
-  <Element onResize={() => this.tether && this.tether.position()}
-</TetherComponent>
+<TetherComponent
+  ref={tether => (this.tether = tether)}
+  renderTarget={ref => (
+    /* Make sure your ref is forwarded or use an "innerRef" prop */
+    <Target ref={ref} />
+  )}
+  renderElement={ref => (
+    <Element ref={ref} onResize={() => this.tether && this.tether.position()} />
+  )}
+/>
 ```
 
 ## Run Example
