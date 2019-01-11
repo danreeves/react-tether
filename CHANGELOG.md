@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+### 2.0.0
+
+**Breaking changes**
+New API which supports React Suspense and Concurrent rendering. See the README for the new render prop based API. Please not that you now have to manually pass refs to your components.
+
+This change also comes with a deprecation of older versions of React. If you want to use 2+ you must be on React 16.3+. For older versions please stick to version 1 of react-tether or see the [1.x branch](https://github.com/danreeves/react-tether/tree/1.x).
+
+A big thanks to @CorinChappy for all their work on this!
+
 ### 1.0.4
 
 - Fixed passing of event arguments to onUpdate and onRepositioned. Thanks @minznerjosh
