@@ -212,7 +212,9 @@ class TetherComponent extends Component {
 
   _addContainerToDOM() {
     // Append node to the render node
-    this._renderNode.appendChild(this._elementParentNode);
+    if (this._elementParentNode.parentNode !== this._renderNode) {
+      this._renderNode.appendChild(this._elementParentNode);
+    }
   }
 
   _removeContainer() {
