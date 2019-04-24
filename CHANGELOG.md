@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+# 2.0.2
+
+- Fixed attachment property in TypeScript defintion. Thanks @dylan-baskind
+
+### 2.0.1
+
+- Fix unnecessary DOM mutations in render, which caused unexpected behaviour. Thanks @NilSet
+
 ### 2.0.0
 
 **Breaking changes**
