@@ -46,6 +46,7 @@ declare namespace ReactTether {
     renderElement?: RenderProp;
     renderElementTag?: string;
     renderElementTo?: Element | string;
+    attachment: string;
     className?: string;
     id?: string;
     style?: React.CSSProperties;
