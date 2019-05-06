@@ -296,6 +296,7 @@ class TetherComponent extends Component {
       <React.Fragment>
         {targetComponent}
         {elementComponent &&
+          this._elementParentNode &&
           ReactDOM.createPortal(elementComponent, this._elementParentNode)}
       </React.Fragment>
     );
