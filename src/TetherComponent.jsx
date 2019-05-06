@@ -288,7 +288,7 @@ class TetherComponent extends Component {
   render() {
     const { targetComponent, elementComponent } = this._runRenders();
 
-    if (!targetComponent || !this._elementParentNode) {
+    if (!targetComponent) {
       return null;
     }
 
