@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+# 2.0.3
+
+- Fixed target rendering in SSR. Thanks @reintroducing
+
 # 2.0.2
 
 - Fixed attachment property in TypeScript defintion. Thanks @dylan-baskind
