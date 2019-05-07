@@ -288,7 +288,7 @@ class TetherComponent extends Component {
   render() {
     const { targetComponent, elementComponent } = this._runRenders();
 
-    if (!targetComponent || !this._elementParentNode) {
+    if (!targetComponent) {
       return null;
     }
 
@@ -296,6 +296,7 @@ class TetherComponent extends Component {
       <React.Fragment>
         {targetComponent}
         {elementComponent &&
+          this._elementParentNode &&
           ReactDOM.createPortal(elementComponent, this._elementParentNode)}
       </React.Fragment>
     );
