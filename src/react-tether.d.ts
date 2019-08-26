@@ -38,7 +38,17 @@ declare namespace ReactTether {
     targetAttachment: TetherAttachment;
   };
   type RenderProp = (ref: React.RefObject<HTMLElement>) => React.ReactNode;
-
+  
+  type ContraintsTo = string | 'window' | 'scrollParent' | HTMLElement;
+  
+  type Constraints = {
+    to?: ContraintsTo;
+    attachment?: string | 'together';
+    outOfBoundsClass?: string;
+    pinnedClass?: string;
+    pin?: boolean | string[];
+  };
+  
   interface TetherComponentProps
     extends React.Props<TetherComponent>,
       Tether.ITetherOptions {
@@ -47,6 +57,7 @@ declare namespace ReactTether {
     renderElementTag?: string;
     renderElementTo?: Element | string;
     attachment: string;
+    constraints?: Constraints[];
     className?: string;
     id?: string;
     style?: React.CSSProperties;
