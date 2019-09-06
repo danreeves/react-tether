@@ -98,8 +98,9 @@ class TetherComponent extends Component {
 
     // Verify if className props have changed
     if (this._elementParentNode && prevProps.className !== this.props.className) {
-      const prevClasses = (prevProps.className || '').split(' ');
-      const currClasses = (this.props.className || '').split(' ');
+      // Add a bunch of checks against weird classNames
+      const prevClasses = (prevProps.className || '').split(' ').filter(value => value.length > 0);
+      const currClasses = (this.props.className || '').split(' ').filter(value => value.length > 0);
 
       this._elementParentNode.classList.remove(...prevClasses);
       this._elementParentNode.classList.add(...currClasses);

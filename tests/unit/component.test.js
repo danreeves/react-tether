@@ -87,13 +87,14 @@ describe('TetherComponent', () => {
     expect(tetherElement.classList.contains("custom-class-2")).toBe(true);
 
     wrapper.setProps({
-      className: "custom-class-1 custom-class-3"
+      className: "custom-class-1 custom-class-3    custom-class-4" // Spacing is intentional
     });
 
     tetherElement = document.querySelector('.tether-element');
     expect(tetherElement.classList.contains("custom-class-1")).toBe(true);
     expect(tetherElement.classList.contains("custom-class-2")).toBe(false);
     expect(tetherElement.classList.contains("custom-class-3")).toBe(true);
+    expect(tetherElement.classList.contains("custom-class-4")).toBe(true);
   });
 
   it('should render a just a target', () => {
