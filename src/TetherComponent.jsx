@@ -97,7 +97,7 @@ class TetherComponent extends Component {
     }
 
     // Verify if className props have changed
-    if (prevProps.className !== this.props.className) {
+    if (this._elementParentNode && prevProps.className !== this.props.className) {
       const prevClasses = (prevProps.className || '').split(' ');
       const currClasses = (this.props.className || '').split(' ');
 
@@ -253,7 +253,7 @@ class TetherComponent extends Component {
       renderElementTag,
       renderElementTo,
       id,
-      className,
+      className, // This prop is specific to this._elementParentNode
       style,
       renderTarget,
       renderElement,
