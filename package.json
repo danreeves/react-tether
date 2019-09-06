@@ -5,8 +5,8 @@
   "main": "lib/react-tether.js",
   "types": "lib/react-tether.d.ts",
   "scripts": {
-    "build:lib": "./node_modules/@babel/cli/bin/babel.js src --out-dir lib",
-    "build": "npm run build:lib && ./node_modules/webpack/bin/webpack.js --mode production && cp src/react-tether.d.ts lib/react-tether.d.ts",
+    "build:lib": "babel src --out-dir lib",
+    "build": "npm run build:lib && webpack --mode production && cp src/react-tether.d.ts lib/react-tether.d.ts",
     "prebuild": "rm -rf dist && mkdir dist && rm -rf lib && mkdir lib",
     "prepack": "npm run build",
     "prepublishOnly": "npm run test",
@@ -20,7 +20,7 @@
     "react:16": "enzyme-adapter-react-install 16",
     "danger": "danger ci",
     "typescript": "tsc -p tsconfig.json",
-    "lint": "./node_modules/xo/cli.js"
+    "lint": "xo"
   },
   "repository": {
     "type": "git",
