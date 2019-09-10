@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+# 2.0.4
+
+- Added constraints property to Typescript type definitions. Thanks @JabbyPanda
+- Improved stability of class names on the tethered element. Thanks @j3tan
+
 # 2.0.3
 
 - Fixed target rendering in SSR. Thanks @reintroducing
