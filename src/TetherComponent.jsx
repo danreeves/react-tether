@@ -96,6 +96,16 @@ class TetherComponent extends Component {
       this._createContainer();
     }
 
+    // Verify if className props have changed
+    if (this._elementParentNode && prevProps.className !== this.props.className) {
+      // Add a bunch of checks against weird classNames
+      const prevClasses = (prevProps.className || '').split(' ').filter(value => value.length > 0);
+      const currClasses = (this.props.className || '').split(' ').filter(value => value.length > 0);
+
+      this._elementParentNode.classList.remove(...prevClasses);
+      this._elementParentNode.classList.add(...currClasses);
+    }
+
     this._update();
   }
 
@@ -204,10 +214,11 @@ class TetherComponent extends Component {
     // Create element node container if it hasn't been yet
     this._removeContainer();
 
-    const { renderElementTag } = this.props;
+    const { renderElementTag, className } = this.props;
 
     // Create a node that we can stick our content Component in
     this._elementParentNode = document.createElement(renderElementTag);
+    this._elementParentNode.className = className || '';
   }
 
   _addContainerToDOM() {
@@ -243,7 +254,7 @@ class TetherComponent extends Component {
       renderElementTag,
       renderElementTo,
       id,
-      className,
+      className, // This prop is specific to this._elementParentNode
       style,
       renderTarget,
       renderElement,
@@ -258,11 +269,6 @@ class TetherComponent extends Component {
     const idStr = id || '';
     if (this._elementParentNode.id !== idStr) {
       this._elementParentNode.id = idStr;
-    }
-
-    const classStr = className || '';
-    if (this._elementParentNode.className !== classStr) {
-      this._elementParentNode.className = classStr;
     }
 
     if (style) {
