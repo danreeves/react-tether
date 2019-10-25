@@ -96,8 +96,8 @@ class TetherComponent extends Component {
     }
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillUpdate(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillUpdate(nextProps) {
     this.updateChildrenComponents(nextProps);
   }
 
