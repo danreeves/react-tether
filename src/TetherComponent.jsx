@@ -1,4 +1,4 @@
-import { Component, Children } from 'react';
+import { default as React, Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tether from 'tether';
@@ -108,11 +108,6 @@ class TetherComponent extends Component {
       this._elementParentNode.classList.remove(...prevClasses);
       this._elementParentNode.classList.add(...currClasses);
     }
-  }
-
-  // eslint-disable-next-line react/no-deprecated
-  componentWillUpdate(nextProps) {
-    this.updateChildrenComponents(nextProps);
   }
 
   componentDidMount() {
@@ -294,6 +289,20 @@ class TetherComponent extends Component {
       ReactDOM.createPortal(this._elementComponent, this._elementParentNode),
     ];
   }
+}
+
+function componentWillUpdate(nextProps) {
+  this.updateChildrenComponents(nextProps);
+}
+
+const [major, patch] = React.version.split('.').map(Number);
+
+// Prevent deprecation notices in React 16.9+
+if (major < 16 || (major > 15 && patch < 9)) {
+  TetherComponent.prototype.componentWillUpdate = componentWillUpdate;
+} else {
+  // eslint-disable-next-line camelcase
+  TetherComponent.prototype.UNSAFE_componentWillUpdate = componentWillUpdate;
 }
 
 export default TetherComponent;
