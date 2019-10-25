@@ -298,7 +298,7 @@ function componentWillUpdate(nextProps) {
 const [major, patch] = React.version.split('.').map(Number);
 
 // Prevent deprecation notices in React 16.9+
-if (major < 16 || (major > 15 && patch < 9)) {
+if (major < 16 || (major === 16 && patch < 9)) {
   TetherComponent.prototype.componentWillUpdate = componentWillUpdate;
 } else {
   // eslint-disable-next-line camelcase
