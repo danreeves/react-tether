@@ -8,11 +8,6 @@ npm run build
 npm run lint
 npm run typescript
 
-# Unit test React 15 and collect coverage
-npm run react:15
-npm run unit -- --coverage
-mv coverage/coverage-final.json coverage/coverage-react15.json
-
 # Unit test React 16 and collect coverage
 npm run react:16
 npm run unit -- --coverage
