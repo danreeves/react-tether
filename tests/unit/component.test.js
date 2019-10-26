@@ -146,6 +146,47 @@ describe('TetherComponent', () => {
     expect(document.querySelector('.tether-element #child2')).toBeFalsy();
   });
 
+  it('should add className to tether element', () => {
+    wrapper = mount(
+      <TetherComponent
+        attachment="top left"
+        className="custom-class-1 custom-class-2"
+      >
+        <div id="child1" />
+        <div id="child2" />
+      </TetherComponent>
+    );
+    const tetherElement = document.querySelector('.tether-element');
+    expect(tetherElement).toBeTruthy();
+    expect(tetherElement.classList.contains('custom-class-1')).toBe(true);
+    expect(tetherElement.classList.contains('custom-class-2')).toBe(true);
+  });
+
+  it('should swap out classes when className changes', () => {
+    wrapper = mount(
+      <TetherComponent
+        attachment="top left"
+        className="custom-class-1 custom-class-2"
+      >
+        <div id="child1" />
+        <div id="child2" />
+      </TetherComponent>
+    );
+    let tetherElement = document.querySelector('.tether-element');
+    expect(tetherElement.classList.contains('custom-class-1')).toBe(true);
+    expect(tetherElement.classList.contains('custom-class-2')).toBe(true);
+
+    wrapper.setProps({
+      className: 'custom-class-1 custom-class-3    custom-class-4', // Spacing is intentional
+    });
+
+    tetherElement = document.querySelector('.tether-element');
+    expect(tetherElement.classList.contains('custom-class-1')).toBe(true);
+    expect(tetherElement.classList.contains('custom-class-2')).toBe(false);
+    expect(tetherElement.classList.contains('custom-class-3')).toBe(true);
+    expect(tetherElement.classList.contains('custom-class-4')).toBe(true);
+  });
+
   it('allows changing the tether element tag', () => {
     wrapper = mount(
       <TetherComponent attachment="top left" renderElementTag="aside">

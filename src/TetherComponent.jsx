@@ -1,4 +1,4 @@
-import { Component, Children } from 'react';
+import { default as React, Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tether from 'tether';
@@ -94,11 +94,20 @@ class TetherComponent extends Component {
     if (this._targetComponent && this._elementComponent) {
       this._createContainer();
     }
-  }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillUpdate(nextProps) {
-    this.updateChildrenComponents(nextProps);
+    // Verify if className props have changed
+    if (this._elementParentNode && this.props.className !== props.className) {
+      // Add a bunch of checks against weird classNames
+      const prevClasses = (this.props.className || '')
+        .split(' ')
+        .filter(value => value.length > 0);
+      const currClasses = (props.className || '')
+        .split(' ')
+        .filter(value => value.length > 0);
+
+      this._elementParentNode.classList.remove(...prevClasses);
+      this._elementParentNode.classList.add(...currClasses);
+    }
   }
 
   componentDidMount() {
@@ -183,10 +192,11 @@ class TetherComponent extends Component {
   _createContainer() {
     // Create element node container if it hasn't been yet
     if (!this._elementParentNode) {
-      const { renderElementTag } = this.props;
+      const { renderElementTag, className } = this.props;
 
       // Create a node that we can stick our content Component in
       this._elementParentNode = document.createElement(renderElementTag);
+      this._elementParentNode.className = className || '';
 
       // Append node to the render node
       this._renderNode.appendChild(this._elementParentNode);
@@ -231,7 +241,7 @@ class TetherComponent extends Component {
       renderElementTag,
       renderElementTo,
       id,
-      className,
+      className, // Extract this to prevent it from being spread incorrectly
       style,
       ...options
     } = this.props;
@@ -244,11 +254,6 @@ class TetherComponent extends Component {
     const idStr = id || '';
     if (this._elementParentNode.id !== idStr) {
       this._elementParentNode.id = idStr;
-    }
-
-    const classStr = className || '';
-    if (this._elementParentNode.className !== classStr) {
-      this._elementParentNode.className = classStr;
     }
 
     if (style) {
@@ -284,6 +289,20 @@ class TetherComponent extends Component {
       ReactDOM.createPortal(this._elementComponent, this._elementParentNode),
     ];
   }
+}
+
+function componentWillUpdate(nextProps) {
+  this.updateChildrenComponents(nextProps);
+}
+
+const [major, patch] = React.version.split('.').map(Number);
+
+// Prevent deprecation notices in React 16.9+
+if (major < 16 || (major === 16 && patch < 9)) {
+  TetherComponent.prototype.componentWillUpdate = componentWillUpdate;
+} else {
+  // eslint-disable-next-line camelcase
+  TetherComponent.prototype.UNSAFE_componentWillUpdate = componentWillUpdate;
 }
 
 export default TetherComponent;
