@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+# 2.0.5
+
+- Add targetAttachment to Typescript definitions (#217). Thanks @ilyamkin
+
 # 2.0.4
 
 - Added constraints property to Typescript type definitions. Thanks @JabbyPanda
