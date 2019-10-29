@@ -57,6 +57,7 @@ declare namespace ReactTether {
     renderElementTag?: string;
     renderElementTo?: Element | string;
     attachment: string;
+    targetAttachment?: string;
     constraints?: Constraints[];
     className?: string;
     id?: string;
