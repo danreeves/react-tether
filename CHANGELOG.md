@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 1.0.5
+
+- Add UNSAFE to componentWillUpdate in > React 16.9 to fix deprecation warnings (#215)
+- Fix elementParentNode class list re-render issue in 1.x (#216)
+- Thanks @j3tan & @mattcrowder
+
 ### 1.0.4
 
 - Fixed passing of event arguments to onUpdate and onRepositioned. Thanks @minznerjosh
