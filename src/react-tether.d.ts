@@ -64,5 +64,6 @@ declare namespace ReactTether {
     style?: React.CSSProperties;
     onUpdate?: (data: UpdateEventData) => void;
     onRepositioned?: () => void;
+    offset?: string;
   }
 }
