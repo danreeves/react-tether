@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+# 2.0.6
+
+- Add offset to Typescript definitions (#219) Thanks @tomeightyeight
+
 # 2.0.5
 
 - Add targetAttachment to Typescript definitions (#217). Thanks @ilyamkin
