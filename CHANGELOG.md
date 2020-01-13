@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+# 2.0.7
+
+- Make RenderProp typing more generic (#221) Thanks @leabaertschi
+
 # 2.0.6
 
 - Add offset to Typescript definitions (#219) Thanks @tomeightyeight
