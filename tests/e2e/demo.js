@@ -45,31 +45,47 @@ test(`It handles repositioning, constraints,
 test('CommonJS example works', async t => {
   const cjs = new Selector('#commonjs');
   const app = new Selector('#app');
+  const target = new Selector('#child-1');
+  const element = new Selector('#child-2');
   await t.navigateTo((await cjs.attributes).href);
   await t.expect(await app.hasChildElements).ok();
+  await t.expect(await target.exists).ok();
+  await t.expect(await element.exists).ok();
   await t.navigateTo(home);
 });
 
 test('ESM example works', async t => {
   const esm = new Selector('#esm');
   const app = new Selector('#app');
+  const target = new Selector('#child-1');
+  const element = new Selector('#child-2');
   await t.navigateTo((await esm.attributes).href);
   await t.expect(await app.hasChildElements).ok();
+  await t.expect(await target.exists).ok();
+  await t.expect(await element.exists).ok();
   await t.navigateTo(home);
 });
 
 test('TypeScript example works', async t => {
   const tsc = new Selector('#typescript');
   const app = new Selector('#app');
+  const target = new Selector('#child-1');
+  const element = new Selector('#child-2');
   await t.navigateTo((await tsc.attributes).href);
   await t.expect(await app.hasChildElements).ok();
+  await t.expect(await target.exists).ok();
+  await t.expect(await element.exists).ok();
   await t.navigateTo(home);
 });
 
 test('UMD distributable example works', async t => {
   const tsc = new Selector('#umd');
   const app = new Selector('#app');
+  const target = new Selector('#child-1');
+  const element = new Selector('#child-2');
   await t.navigateTo((await tsc.attributes).href);
   await t.expect(await app.hasChildElements).ok();
+  await t.expect(await target.exists).ok();
+  await t.expect(await element.exists).ok();
   await t.navigateTo(home);
 });

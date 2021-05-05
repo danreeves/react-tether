@@ -18,16 +18,20 @@ function App() {
         }}
       >
         <div>
-          <ReactTether attachment="top center" renderElementTo={badParent}>
-            <span>Target 1</span>
-            <span>Render to #bad-parent</span>
-          </ReactTether>
+          <ReactTether
+            attachment="top center"
+            renderElementTo={badParent}
+            renderTarget={ref => <span ref={ref}>Target 1</span>}
+            renderElement={ref => <span ref={ref}>Render to #bad-parent</span>}
+          />
         </div>
         <div>
-          <ReactTether attachment="top center" renderElementTo={goodParent}>
-            <span>Target 1</span>
-            <span>Render to #good-parent</span>
-          </ReactTether>
+          <ReactTether
+            attachment="top center"
+            renderElementTo={goodParent}
+            renderTarget={ref => <span ref={ref}>Target 1</span>}
+            renderElement={ref => <span ref={ref}>Render to #good-parent</span>}
+          />
         </div>
       </div>
       <h2>fixing it with bodyElement</h2>
@@ -48,16 +52,17 @@ function App() {
             attachment="top center"
             renderElementTo={badParent}
             bodyElement={badParent}
-          >
-            <span>Target 1</span>
-            <span>Render to #bad-parent</span>
-          </ReactTether>
+            renderTarget={ref => <span ref={ref}>Target 1</span>}
+            renderElement={ref => <span ref={ref}>Render to #bad-parent</span>}
+          />
         </div>
         <div>
-          <ReactTether attachment="top center" renderElementTo={goodParent}>
-            <span>Target 1</span>
-            <span>Render to #good-parent</span>
-          </ReactTether>
+          <ReactTether
+            attachment="top center"
+            renderElementTo={goodParent}
+            renderTarget={ref => <span ref={ref}>Target 1</span>}
+            renderElement={ref => <span ref={ref}>Render to #good-parent</span>}
+          />
         </div>
       </div>
     </div>
