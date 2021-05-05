@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+# 2.0.8
+
+- Add React 17 to the supported versions.
+- Some CI housekeeping
+
 # 2.0.7
 
 - Make RenderProp typing more generic (#221) Thanks @leabaertschi
