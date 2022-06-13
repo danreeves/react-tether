@@ -91,7 +91,7 @@ Tether requires this element to be `position: static;`, otherwise it will defaul
 
 #### `Tether Options`:
 
-Any valid [Tether options](http://tether.io/#options).
+Any valid [Tether options](https://tetherjs.dev/#usage).
 
 #### `children`:
 
