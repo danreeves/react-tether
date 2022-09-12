@@ -1,12 +1,10 @@
-import * as React from 'react';
-import * as Tether from 'tether';
+import * as React from "react";
+import type * as Tether from "tether";
 
 export default TetherComponent;
 export as namespace ReactTether;
 
-declare class TetherComponent extends React.Component<
-  ReactTether.TetherComponentProps
-> {
+declare class TetherComponent extends React.Component<ReactTether.TetherComponentProps> {
   props: ReactTether.TetherComponentProps;
 
   static propTypes: ReactTether.TetherComponentProps;
@@ -39,19 +37,17 @@ declare namespace ReactTether {
   };
   type RenderProp = (ref: React.RefObject<Element>) => React.ReactNode;
 
-  type ContraintsTo = string | 'window' | 'scrollParent' | HTMLElement;
+  type ContraintsTo = string | "window" | "scrollParent" | HTMLElement;
 
   type Constraints = {
     to?: ContraintsTo;
-    attachment?: string | 'together';
+    attachment?: string | "together";
     outOfBoundsClass?: string;
     pinnedClass?: string;
     pin?: boolean | string[];
   };
 
-  interface TetherComponentProps
-    extends React.Props<TetherComponent>,
-      Tether.ITetherOptions {
+  type TetherComponentProps = {
     renderTarget?: RenderProp;
     renderElement?: RenderProp;
     renderElementTag?: string;
@@ -65,5 +61,6 @@ declare namespace ReactTether {
     onUpdate?: (data: UpdateEventData) => void;
     onRepositioned?: () => void;
     offset?: string;
-  }
+  } & React.Props<TetherComponent> &
+    Tether.ITetherOptions;
 }

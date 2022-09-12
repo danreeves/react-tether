@@ -1,18 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import strip from 'strip-indent';
+import styled from "styled-components";
+import strip from "strip-indent";
 
 const Code = ({
   children,
   className,
 }: {
-  children: React.Node,
-  className: string,
+  children: string;
+  className: string;
 }) => (
   <pre className={className}>
     {strip(children)
-      .replace(/^\n*/, '')
-      .replace(/\s*\n*$/, '')}
+      .replace(/^\n*/, "")
+      .replace(/\s*\n*$/, "")}
   </pre>
 );
 

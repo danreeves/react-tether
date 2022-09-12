@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import styled, { createGlobalStyle } from 'styled-components';
-import ThemeProvider from './components/theme';
-import Body from './components/body';
-import Page from './components/page';
-import PageTitle from './components/page-title';
-import Section from './components/section';
-import { InlineCode, CodeBlock } from './components/code';
-import Link from './components/link';
-import Demo from './components/demo';
+import React, { Component } from "react";
+import { createRoot } from "react-dom/client";
+import styled, { createGlobalStyle } from "styled-components";
+import ThemeProvider from "./components/theme";
+import Body from "./components/body";
+import Page from "./components/page";
+import PageTitle from "./components/page-title";
+import Section from "./components/section";
+import { InlineCode, CodeBlock } from "./components/code";
+import Link from "./components/link";
+import Demo from "./components/demo";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -36,17 +36,17 @@ class App extends Component {
             <PageTitle>React Tether</PageTitle>
             <Section>
               <p>
-                A React wrapper around{' '}
-                <Link href="https://github.com/hubspot/tether">Tether</Link>{' '}
+                A React wrapper around{" "}
+                <Link href="https://github.com/hubspot/tether">Tether</Link>{" "}
                 from Hub Spot.
               </p>
               <nav>
                 <Link href="https://github.com/danreeves/react-tether">
                   GitHub
                 </Link>
-                {' ● '}
+                {" ● "}
                 <Link href="https://npmjs.com/package/react-tether">npm</Link>
-                {' ● '}
+                {" ● "}
                 <Link href="http://tether.io/#options">Tether docs</Link>
               </nav>
             </Section>
@@ -80,7 +80,7 @@ class App extends Component {
             <Section>
               <br />
               <p>
-                For more documentation see the{' '}
+                For more documentation see the{" "}
                 <Link href="https://github.com/danreeves/react-tether#props">
                   readme
                 </Link>
@@ -94,4 +94,6 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const container = document.getElementById("app");
+const root = createRoot(container);
+root.render(<App />);
