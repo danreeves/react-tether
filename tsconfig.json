@@ -1,27 +1,32 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "react-jsx",
+	"compilerOptions": {
+		// Output options
+		"outDir": "lib/esm",
+		"jsx": "react", // import React style
+		"declaration": true, // Generate .d.ts files
 
-    "strict": true,
-    "allowUnusedLabels": false,
-    "allowUnreachableCode": false,
-    "exactOptionalPropertyTypes": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+		// These two are just defaults, microbundle overrides for other builds
+		"target": "esnext", // Compile to es5
+		"module": "esnext", // Export esm syntax
 
-    "importsNotUsedAsValues": "error",
-    "checkJs": true,
+		// TS strictness
+		"strict": true,
+		"allowUnusedLabels": false,
+		"allowUnreachableCode": false,
+		"exactOptionalPropertyTypes": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"importsNotUsedAsValues": "error",
 
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+		// TSC config
+		"checkJs": true, // Typecheck JS files
+		"esModuleInterop": true, // Treat commonjs imports like esm
+		"skipLibCheck": true, // Don't typecheck all deps, only the ones we directly use
+		"forceConsistentCasingInFileNames": true // Force fs case sensitivity
+	}
 }
