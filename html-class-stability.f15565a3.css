@@ -1,0 +1,2 @@
+#app,body,html{height:100%;width:100%;display:flex;flex-direction:column;flex-grow:1;flex-shrink:0}@keyframes flyout-expand{0%{height:0;opacity:0}to{opacity:1}}.tether-content{height:300px;width:300px;overflow:scroll;background-color:#ff0}.flyout.tether-target-attached-bottom .tether-content{animation:flyout-expand 2s;transition:height 2s}
+/*# sourceMappingURL=/react-tether/html-class-stability.f15565a3.css.map */
