@@ -9,9 +9,9 @@
 
 React wrapper around [Tether](https://github.com/shipshapecode/tether), positioning engine to make overlays, tooltips and dropdowns better
 
-![alt tag](images/tether-header.png)
+![React Tether](images/tether-header.png)
 
-## Install
+## Installh
 
 `npm install react-tether`
 
