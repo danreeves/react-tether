@@ -1,7 +1,7 @@
 # React Tether
 
 ![CI Status](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/react-tether.svg)](https://saucelabs.com/u/react-tether)
+[![Sauce Test Status](https://app.saucelabs.com/buildstatus/react-tether)](https://app.saucelabs.com/u/react-tether)
 
 > Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com/).
 
