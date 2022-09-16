@@ -20,7 +20,8 @@
 		"e2e:full": "testcafe \"saucelabs:Chrome@latest\",\"saucelabs:Firefox@latest\",\"saucelabs:MicrosoftEdge@latest\",\"saucelabs:Safari@latest\" tests/e2e --app 'npm run demo'",
 		"test": "npm run typescript && npm run unit",
 		"tdd": "npm run unit -- --watch",
-		"typescript": "tsc"
+		"typescript": "tsc",
+		"prepare": "husky install"
 	},
 	"repository": {
 		"type": "git",
@@ -57,7 +58,7 @@
 		"@types/tether": "^1.4.6",
 		"chroma-js": "^2.4.2",
 		"git-directory-deploy": "1.5.1",
-		"husky": "^8.0.1",
+		"husky": "^8.0.0",
 		"jest": "^29.0.3",
 		"jest-environment-jsdom": "^29.0.3",
 		"microbundle": "^0.15.1",
@@ -84,10 +85,5 @@
 		"setupFilesAfterEnv": [
 			"@testing-library/jest-dom/extend-expect"
 		]
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "pretty-quick --staged"
-		}
 	}
 }
