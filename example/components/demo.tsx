@@ -120,6 +120,7 @@ function Radio({
 				checked={currentValue === value}
 				onChange={() => setValue(value)}
 				name="attachment"
+				id={`radio_${value}`}
 			/>
 			{label}
 		</Label>

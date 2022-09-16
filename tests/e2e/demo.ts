@@ -9,7 +9,10 @@ test(`It handles repositioning, constraints,
 	const target = Selector("#DRAG_ME");
 	const tooltip = Selector("#WATCH_ME");
 	const toggleTooltip = Selector("#TOGGLE_TOOLTIP");
-	const cycleAttachment = Selector("#CYCLE_ATTACHMENT");
+	const attachment1 = Selector("#radio_0");
+	const attachment2 = Selector("#radio_1");
+	const attachment3 = Selector("#radio_2");
+	const attachment4 = Selector("#radio_3");
 
 	await t.hover(target);
 	// Target is to the left of the tooltip
@@ -29,10 +32,10 @@ test(`It handles repositioning, constraints,
 		.ok(`${targetAfterLeft} > ${tooltipAfterLeft}`);
 
 	// The attachement can be changed
-	await t.click(cycleAttachment);
-	await t.click(cycleAttachment);
-	await t.click(cycleAttachment);
-	await t.click(cycleAttachment);
+	await t.click(attachment1);
+	await t.click(attachment2);
+	await t.click(attachment3);
+	await t.click(attachment4);
 
 	// Toggle the tooltip off
 	await t.click(toggleTooltip);
@@ -40,32 +43,4 @@ test(`It handles repositioning, constraints,
 	// Toggle the tooltip on
 	await t.click(toggleTooltip);
 	await t.drag(target, -300, 0);
-});
-
-test("CommonJS example works", async (t) => {
-	const cjs = Selector("#commonjs");
-	const app = Selector("#app");
-	const target = Selector("#child-1");
-	const element = Selector("#child-2");
-	const attrs = await cjs.attributes;
-	const href = attrs["href"];
-	await t.navigateTo(href || "");
-	await t.expect(app.hasChildElements).ok();
-	await t.expect(await target.exists).ok();
-	await t.expect(await element.exists).ok();
-	await t.navigateTo(home);
-});
-
-test("ESM example works", async (t) => {
-	const esm = Selector("#esm");
-	const app = Selector("#app");
-	const target = Selector("#child-1");
-	const element = Selector("#child-2");
-	const attrs = await esm.attributes;
-	const href = attrs["href"];
-	await t.navigateTo(href || "");
-	await t.expect(app.hasChildElements).ok();
-	await t.expect(await target.exists).ok();
-	await t.expect(await element.exists).ok();
-	await t.navigateTo(home);
 });
