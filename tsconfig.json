@@ -1,22 +1,39 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "lib": ["es6", "dom"],
-    "jsx": "react",
-    "noEmit": true,
+	"compilerOptions": {
+		// Output options
+		"outDir": "lib/esm",
+		"jsx": "react", // import React style
+		"declaration": true, // Generate .d.ts files
+		"noEmit": true, // Don't want to output while typechecking
 
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
+		// These two are just defaults, microbundle overrides for other builds
+		"target": "esnext", // Compile to es5
+		"module": "esnext", // Export esm syntax
 
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*", "tests/examples/**/*.tsx"]
+		// Support requires in tests
+		"moduleResolution": "node",
+		// Supporting types for tests
+		"types": ["node", "jest", "@testing-library/jest-dom"],
+
+		// TS strictness
+		"strict": true,
+		"allowUnusedLabels": false,
+		"allowUnreachableCode": false,
+		"exactOptionalPropertyTypes": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"importsNotUsedAsValues": "error",
+
+		// TSC config
+		"checkJs": true, // Typecheck JS files
+		"esModuleInterop": true, // Treat commonjs imports like esm
+		"skipLibCheck": true, // Don't typecheck all deps, only the ones we directly use
+		"forceConsistentCasingInFileNames": true // Force fs case sensitivity
+	},
+	"exclude": ["lib", "example"]
 }

@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+# 3.0.0
+
+This release doesn't change the component, it just refactors types and build setup
+
+- Ported the existing code to TypeScript
+- Reuse @types/tether for tether types
+- Simplify repo and build tools
+
 # 2.0.8
 
 - Add React 17 to the supported versions.
