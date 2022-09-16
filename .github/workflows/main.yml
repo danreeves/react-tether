@@ -1,27 +1,27 @@
 name: CI
 
 on:
-	push:
-		branches: [ "main" ]
+  push:
+    branches: ["main"]
 pull_request:
-	branches: [ "main" ]
+  branches: ["main"]
 
 jobs:
-	build:
-		runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-	steps:
-		- uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-	- name: Build
-	  run: |
-		  npm install
-		  npm run build
+      - name: Build
+        run: |
+          npm install
+          npm run build
 
-	- name: Test
-	  run: |
-		  npm test
+      - name: Test
+        run: |
+          npm test
 
-	- name: E2E
-	  run: |
-		  npm run e2e:full
+      - name: E2E
+        run: |
+          npm run e2e:full
