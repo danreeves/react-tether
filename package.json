@@ -17,7 +17,7 @@
 		"demo:deploy": "./bin/build-demo",
 		"unit": "jest tests/unit",
 		"e2e": "testcafe chrome tests/e2e --app \"npm run demo\"",
-		"e2e:full": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/e2e --app 'npm run demo'",
+		"e2e:full": "testcafe \"saucelabs:chrome\",\"saucelabs:firefox\",\"saucelabs:safari\",\"saucelabs:microsoftedge\" tests/e2e --app 'npm run demo'",
 		"test": "npm run typescript && npm run unit",
 		"tdd": "npm run unit -- --watch",
 		"typescript": "tsc"
