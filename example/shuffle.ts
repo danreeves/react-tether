@@ -1,5 +1,5 @@
 // https://stackoverflow.com/a/2450976
-export default function shuffle(array) {
+export default function shuffle(array: unknown[]) {
 	let currentIndex = array.length;
 	let temporaryValue;
 	let randomIndex;

@@ -1,55 +1,55 @@
-import React, { Component, Children, isValidElement } from "react";
+import React, { Component, isValidElement, RefObject } from "react";
 import ReactDOM from "react-dom";
 import Tether from "tether";
 
-if (!Tether) {
-	console.error(
-		"It looks like Tether has not been included. Please load this dependency first https://github.com/HubSpot/tether"
-	);
+type TetherEvent = "repositioned" | "update";
+type TetherEventHandler = (event?: { top: string; left: "string" }) => void;
+
+interface ReactTetherProps extends Tether.ITetherOptions {
+	// A HTML tag name. This is the element created in the DOM to contain the tethered component
+	renderElementTag?: string;
+
+	// Either a CSS selector to pass to document.querySelector or a DOM node
+	// This is the location in the DOM the parent render element is created in
+	// and the tethered component is rendered to
+	renderElementTo?: string | HTMLElement;
+
+	// Render prop for the element to be tethered to. This is rendered in place
+	// of the ReactTether component
+	renderTarget: (ref: React.RefObject<any>) => void;
+	// Render prop for the element to be tethered. This is rendered inside the element
+	// provided by renderElementTo or the end of the body via a React Portal.
+	// It's wrapped in an element defined by renderElementTag
+	renderElement?: (ref: React.RefObject<any>) => void;
+
+	// The id prop for the renderElement defined by renderElementTag
+	id?: string;
+
+	// The className prop for the renderElement defined by renderElementTag
+	className?: string;
+
+	// The style prop for the renderElement defined by renderElementTag
+	style?: Partial<CSSStyleDeclaration>;
+
+	// Called on Tethers update event
+	onUpdate?: TetherEventHandler;
+
+	// Called on Tethers repositioned event
+	onRepositioned?: TetherEventHandler;
 }
 
-// @ts-expect-error
-const childrenPropType = ({ children }, propName, componentName) => {
-	const childCount = Children.count(children);
-	if (childCount > 0) {
-		return new Error(
-			`${componentName} no longer uses children to render components. Please use renderTarget and renderElement instead.`
-		);
-	}
-};
-
-// @ts-expect-error
-const attachmentPositions = [
-	"auto auto",
-	"top left",
-	"top center",
-	"top right",
-	"middle left",
-	"middle center",
-	"middle right",
-	"bottom left",
-	"bottom center",
-	"bottom right",
-];
-
-class TetherComponent extends Component {
-	static defaultProps = {
-		renderElementTag: "div",
-		renderElementTo: null,
-	};
-
+export default class ReactTether extends Component<ReactTetherProps> {
 	// The DOM node of the target, obtained using ref in the render prop
-	_targetNode = React.createRef();
+	_targetNode: RefObject<HTMLElement> = React.createRef();
 
 	// The DOM node of the element, obtained using ref in the render prop
-	_elementNode = React.createRef();
+	_elementNode: RefObject<HTMLElement> = React.createRef();
 
-	_elementParentNode = null;
+	_elementParentNode: HTMLElement | null = null;
 
-	_tetherInstance = null;
+	_tetherInstance: Tether | null = null;
 
-	// @ts-expect-error
-	componentDidMount() {
+	override componentDidMount() {
 		this._createContainer();
 		// The container is created after mounting
 		// so we need to force an update to
@@ -59,13 +59,10 @@ class TetherComponent extends Component {
 		this.forceUpdate();
 	}
 
-	// @ts-expect-error
-	componentDidUpdate(previousProps) {
+	override componentDidUpdate(previousProps: ReactTetherProps) {
 		// If the container related props have changed, then update the container
 		if (
-			// @ts-expect-error
 			previousProps.renderElementTag !== this.props.renderElementTag ||
-			// @ts-expect-error
 			previousProps.renderElementTo !== this.props.renderElementTo
 		) {
 			this._createContainer();
@@ -74,31 +71,24 @@ class TetherComponent extends Component {
 		// Verify if className props have changed
 		if (
 			this._elementParentNode &&
-			// @ts-expect-error
 			previousProps.className !== this.props.className
 		) {
 			// Add a bunch of checks against weird classNames
 			const previousClasses = (previousProps.className || "")
 				.split(" ")
-				// @ts-expect-error
 				.filter((value) => value.length > 0);
-			// @ts-expect-error
 			const currClasses = (this.props.className || "")
 				.split(" ")
-				// @ts-expect-error
 				.filter((value) => value.length > 0);
 
-			// @ts-expect-error
 			this._elementParentNode.classList.remove(...previousClasses);
-			// @ts-expect-error
 			this._elementParentNode.classList.add(...currClasses);
 		}
 
 		this._update();
 	}
 
-	// @ts-expect-error
-	componentWillUnmount() {
+	override componentWillUnmount() {
 		this._destroy();
 	}
 
@@ -107,36 +97,30 @@ class TetherComponent extends Component {
 	}
 
 	disable() {
-		// @ts-expect-error
-		this._tetherInstance.disable();
+		this._tetherInstance?.disable();
 	}
 
 	enable() {
-		// @ts-expect-error
-		this._tetherInstance.enable();
+		this._tetherInstance?.enable();
 	}
 
-	// @ts-expect-error
-	on(event, handler, ctx) {
-		// @ts-expect-error
+	on(event: TetherEvent, handler: TetherEventHandler, ctx?: unknown) {
+		// @ts-expect-error -- TS types are incomplete
 		this._tetherInstance.on(event, handler, ctx);
 	}
 
-	// @ts-expect-error
-	once(event, handler, ctx) {
-		// @ts-expect-error
+	once(event: TetherEvent, handler: TetherEventHandler, ctx?: unknown) {
+		// @ts-expect-error -- TS types are incomplete
 		this._tetherInstance.once(event, handler, ctx);
 	}
 
-	// @ts-expect-error
-	off(event, handler) {
-		// @ts-expect-error
+	off(event: TetherEvent, handler: TetherEventHandler) {
+		// @ts-expect-error -- TS types are incomplete
 		this._tetherInstance.off(event, handler);
 	}
 
 	position() {
-		// @ts-expect-error
-		this._tetherInstance.position();
+		this._tetherInstance?.position();
 	}
 
 	_runRenders() {
@@ -144,16 +128,12 @@ class TetherComponent extends Component {
 		// Later, when the component is mounted, the ref functions will be called
 		// and trigger a tether update
 		let targetComponent =
-			// @ts-expect-error
 			typeof this.props.renderTarget === "function"
-				? // @ts-expect-error
-				this.props.renderTarget(this._targetNode)
+				? this.props.renderTarget(this._targetNode)
 				: null;
 		let elementComponent =
-			// @ts-expect-error
 			typeof this.props.renderElement === "function"
-				? // @ts-expect-error
-				this.props.renderElement(this._elementNode)
+				? this.props.renderElement(this._elementNode)
 				: null;
 
 		// Check if what has been returned is a valid react element
@@ -171,44 +151,35 @@ class TetherComponent extends Component {
 		};
 	}
 
-	// @ts-expect-error
-	_createTetherInstance(tetherOptions) {
+	_createTetherInstance(tetherOptions: Tether.ITetherOptions) {
 		if (this._tetherInstance) {
 			this._destroy();
 		}
 
-		// @ts-expect-error
 		this._tetherInstance = new Tether(tetherOptions);
 		this._registerEventListeners();
 	}
 
 	_destroyTetherInstance() {
 		if (this._tetherInstance) {
-			// @ts-expect-error
 			this._tetherInstance.destroy();
-
 			this._tetherInstance = null;
 		}
 	}
 
 	_registerEventListeners() {
-		// @ts-expect-error
 		this.on("update", (...args) => {
-			// @ts-expect-error
 			return this.props.onUpdate && this.props.onUpdate.apply(this, args);
 		});
 
-		// @ts-expect-error
 		this.on("repositioned", (...args) => {
 			return (
-				// @ts-expect-error
 				this.props.onRepositioned && this.props.onRepositioned.apply(this, args)
 			);
 		});
 	}
 
 	get _renderNode() {
-		// @ts-expect-error
 		const { renderElementTo } = this.props;
 		if (typeof renderElementTo === "string") {
 			return document.querySelector(renderElementTo);
@@ -226,27 +197,26 @@ class TetherComponent extends Component {
 		// Create element node container if it hasn't been yet
 		this._removeContainer();
 
-		// @ts-expect-error
-		const { renderElementTag, className } = this.props;
+		const { renderElementTag = "div", className } = this.props;
 
 		// Create a node that we can stick our content Component in
 		this._elementParentNode = document.createElement(renderElementTag);
-		// @ts-expect-error
 		this._elementParentNode.className = className || "";
 	}
 
 	_addContainerToDOM() {
 		// Append node to the render node
-		// @ts-expect-error
-		if (this._elementParentNode.parentNode !== this._renderNode) {
+		if (
+			this._elementParentNode &&
+			this._renderNode &&
+			this._elementParentNode.parentNode !== this._renderNode
+		) {
 			this._renderNode.append(this._elementParentNode);
 		}
 	}
 
 	_removeContainer() {
-		// @ts-expect-error
 		if (this._elementParentNode && this._elementParentNode.parentNode) {
-			// @ts-expect-error
 			this._elementParentNode.remove();
 		}
 	}
@@ -267,22 +237,20 @@ class TetherComponent extends Component {
 
 	_updateTether() {
 		const {
-			// @ts-expect-error
-			children,
-			// @ts-expect-error
-			renderElementTag,
-			// @ts-expect-error
-			renderElementTo,
-			// @ts-expect-error
-			id,
-			// @ts-expect-error
-			className, // This prop is specific to this._elementParentNode
-			// @ts-expect-error
-			style,
-			// @ts-expect-error
-			renderTarget,
-			// @ts-expect-error
+			// Unused, just making sure not to pass it to tether
+			onUpdate,
+			onRepositioned,
+
 			renderElement,
+			renderElementTag,
+			renderElementTo,
+			renderTarget,
+
+			className, // This prop is specific to this._elementParentNode
+			id, // This prop is specific to this._elementParentNode
+			style, // This prop is specific to this._elementParentNode
+
+			// Tether options
 			...options
 		} = this.props;
 		const tetherOptions = {
@@ -292,18 +260,18 @@ class TetherComponent extends Component {
 		};
 
 		const idString = id || "";
-		// @ts-expect-error
-		if (this._elementParentNode.id !== idString) {
-			// @ts-expect-error
+		if (this._elementParentNode && this._elementParentNode.id !== idString) {
 			this._elementParentNode.id = idString;
 		}
 
-		if (style) {
-			// @ts-expect-error
+		if (this._elementParentNode && style) {
 			const elementStyle = this._elementParentNode.style;
-			for (const key of Object.keys(style)) {
+			for (const key in style) {
 				if (elementStyle[key] !== style[key]) {
-					elementStyle[key] = style[key];
+					let val = style[key];
+					if (val) {
+						elementStyle[key] = val;
+					}
 				}
 			}
 		}
@@ -311,18 +279,15 @@ class TetherComponent extends Component {
 		this._addContainerToDOM();
 
 		if (this._tetherInstance) {
-			// @ts-expect-error
 			this._tetherInstance.setOptions(tetherOptions);
 		} else {
 			this._createTetherInstance(tetherOptions);
 		}
 
-		// @ts-expect-error
-		this._tetherInstance.position();
+		this._tetherInstance?.position();
 	}
 
-	// @ts-expect-error
-	render() {
+	override render() {
 		const { targetComponent, elementComponent } = this._runRenders();
 
 		if (!targetComponent) {
@@ -339,5 +304,3 @@ class TetherComponent extends Component {
 		);
 	}
 }
-
-export default TetherComponent;

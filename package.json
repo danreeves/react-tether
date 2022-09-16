@@ -15,12 +15,12 @@
 		"build": "microbundle --jsx React.createElement --jsxFragment React.Fragment",
 		"demo": "parcel example/index.html",
 		"demo:deploy": "./bin/build-demo",
-		"unit": "ts-jest tests/unit",
+		"unit": "jest tests/unit",
 		"e2e": "testcafe chrome tests/e2e --app \"npm run demo\"",
 		"e2e:full": "testcafe \"saucelabs:Chrome\",\"saucelabs:Firefox\",\"saucelabs:Safari\",\"saucelabs:MicrosoftEdge\" tests/e2e --app 'npm run demo'",
 		"test": "npm run typescript && npm run unit",
 		"tdd": "npm run unit -- --watch",
-		"typescript": "tsc -p tsconfig.json"
+		"typescript": "tsc"
 	},
 	"repository": {
 		"type": "git",
@@ -59,6 +59,7 @@
 		"git-directory-deploy": "1.5.1",
 		"husky": "^8.0.1",
 		"jest": "^29.0.3",
+		"jest-environment-jsdom": "^29.0.3",
 		"microbundle": "^0.15.1",
 		"parcel-bundler": "^1.10.3",
 		"prettier": "^2.7.1",
@@ -70,6 +71,7 @@
 		"styled-components": "^5.3.5",
 		"testcafe": "2.0.0",
 		"testcafe-browser-provider-saucelabs": "1.9.0",
+		"ts-jest": "^29.0.1",
 		"typescript": "^4.8.3"
 	},
 	"files": [
@@ -77,7 +79,11 @@
 		"lib"
 	],
 	"jest": {
-		"setupTestFrameworkScriptFile": "<rootDir>tests/jest-config.ts"
+		"preset": "ts-jest",
+		"testEnvironment": "jsdom",
+		"setupFilesAfterEnv": [
+			"@testing-library/jest-dom/extend-expect"
+		]
 	},
 	"husky": {
 		"hooks": {

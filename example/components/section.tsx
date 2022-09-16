@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.section`
 	width: 95%;
@@ -6,7 +6,6 @@ export default styled.section`
 	margin-left: auto;
 	margin-right: auto;
 	font-size: 2rem;
-	font-family: ${({theme}) => theme.font};
 	& p,
 	& nav {
 		margin-top: 0;

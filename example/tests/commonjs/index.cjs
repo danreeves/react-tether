@@ -1,6 +1,6 @@
 const React = require("react");
 const { render } = require("react-dom");
-const { default: ReactTether } = require("../../../src/react-tether");
+const { default: ReactTether } = require("../../../lib/react-tether.cjs");
 
 function App() {
 	return (
@@ -11,12 +11,12 @@ function App() {
 				renderTarget={(ref) => (
 					<span ref={ref} id="child-1">
 						Child 1
-          </span>
+					</span>
 				)}
 				renderElement={(ref) => (
 					<span ref={ref} id="child-2">
 						Child 2
-          </span>
+					</span>
 				)}
 			/>
 		</div>

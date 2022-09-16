@@ -1,11 +1,7 @@
-import React from "react";
-import { render } from "react-dom";
-import ReactTether from "../../../lib/react-tether.esm";
-
 function App() {
 	return (
 		<div>
-			<h1>ES Modules example</h1>
+			<h1>UMD Modules example</h1>
 			<ReactTether
 				attachment="top left"
 				renderTarget={(ref) => (
@@ -23,4 +19,4 @@ function App() {
 	);
 }
 
-render(<App />, document.querySelector("#app"));
+ReactDOM.render(<App />, document.querySelector("#app"));

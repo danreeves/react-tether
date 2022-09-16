@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled, { useTheme } from "styled-components";
 import TetherComponent from "../../src/react-tether";
 import Target from "./target";
-import Tooltip from "./tooltip";
+import Tooltip, { isSide } from "./tooltip";
+import type { Side } from "./tooltip";
 
 const Wrapper = styled.div`
 	position: relative;
@@ -14,19 +15,24 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-	color: ${({ theme }) => theme.lightText};
-	font-family: ${({ theme }) => theme.font};
-	letter-spacing: -4px;
-	word-spacing: 0.5rem;
 	margin: 1rem;
 	font-size: 3rem;
 	display: inline-block;
 `;
 
-const SIDES = ["middle left", "top center", "middle right", "top center"];
+const SIDES = [
+	"middle left",
+	"top center",
+	"middle right",
+	"top center",
+] as const;
 
-function direction(tetherString: string): string {
-	return (tetherString.match(/left|top|right/) || [])[0] ?? "right";
+function direction(tetherString: string): Side {
+	const s = (tetherString.match(/left|top|right/) || [])[0] ?? "";
+	if (isSide(s)) {
+		return s;
+	}
+	return "right";
 }
 
 type Props = {
@@ -44,7 +50,8 @@ export default function PageTitle(props: Props) {
 		return () => clearInterval(interval);
 	}, []);
 
-	const side = window.innerWidth > 750 ? SIDES[index] : "top center";
+	const side =
+		window.innerWidth > 750 ? SIDES[index] ?? "top center" : "top center";
 
 	return (
 		<Wrapper>
@@ -56,14 +63,7 @@ export default function PageTitle(props: Props) {
 						attachment: "together",
 					},
 				]}
-				renderTarget={(ref) => (
-					<Target
-						ref={ref}
-						height={100}
-						width={100}
-						color={theme.colors[index] || "red"}
-					/>
-				)}
+				renderTarget={(ref) => <Target ref={ref} height={100} width={100} />}
 				renderElement={(ref) => (
 					<Tooltip ref={ref} side={direction(side)}>
 						<Title>{props.children}</Title>

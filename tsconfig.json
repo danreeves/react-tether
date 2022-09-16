@@ -4,10 +4,16 @@
 		"outDir": "lib/esm",
 		"jsx": "react", // import React style
 		"declaration": true, // Generate .d.ts files
+		"noEmit": true, // Don't want to output while typechecking
 
 		// These two are just defaults, microbundle overrides for other builds
 		"target": "esnext", // Compile to es5
 		"module": "esnext", // Export esm syntax
+
+		// Support requires in tests
+		"moduleResolution": "node",
+		// Supporting types for tests
+		"types": ["node", "jest", "@testing-library/jest-dom"],
 
 		// TS strictness
 		"strict": true,
@@ -28,5 +34,6 @@
 		"esModuleInterop": true, // Treat commonjs imports like esm
 		"skipLibCheck": true, // Don't typecheck all deps, only the ones we directly use
 		"forceConsistentCasingInFileNames": true // Force fs case sensitivity
-	}
+	},
+	"exclude": ["lib", "example"]
 }
