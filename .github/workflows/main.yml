@@ -40,8 +40,9 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
+      - uses: actions/checkout@v3
+
       - name: E2E
-        uses: actions/checkout@v3
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
