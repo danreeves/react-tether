@@ -41,7 +41,7 @@ jobs:
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-          SAUCE_BUILD: ${{ github.ref_name }}${{ github.run_number }}
+          SAUCE_BUILD: ${{ github.head_ref }}-${{ github.run_number }}
         run: |
           npm install
           npm run e2e:full
