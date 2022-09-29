@@ -1,6 +1,6 @@
 {
 	"name": "react-tether",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "A positioning engine to make overlays, tooltips and dropdowns better",
 	"type": "module",
 	"source": "src/react-tether.tsx",
@@ -11,6 +11,7 @@
 	"main": "./lib/react-tether.cjs",
 	"module": "./lib/react-tether.esm.js",
 	"unpkg": "./lib/react-tether.umd.js",
+	"types": "./lib/react-tether.d.ts",
 	"scripts": {
 		"build": "microbundle --jsx React.createElement --jsxFragment React.Fragment",
 		"demo": "parcel example/index.html",

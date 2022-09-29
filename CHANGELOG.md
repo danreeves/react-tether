@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+# 3.0.1
+
+- Expose types in package.json
+
 # 3.0.0
 
 This release doesn't change the component, it just refactors types and build setup
