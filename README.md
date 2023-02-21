@@ -11,7 +11,7 @@ React wrapper around [Tether](https://github.com/shipshapecode/tether), a positi
 
 ![React Tether](images/tether-header.png)
 
-## Installh
+## Install
 
 `npm install react-tether`
 
