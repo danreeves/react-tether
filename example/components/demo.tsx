@@ -198,7 +198,7 @@ export default function Demo() {
 									bounds="parent"
 									onDrag={() => {
 										tether.current?.getTetherInstance() &&
-											tether.current?.getTetherInstance().position();
+											tether.current?.getTetherInstance()?.position();
 									}}
 									defaultPosition={{
 										x: container.clientWidth / 2 - 100 / 2,

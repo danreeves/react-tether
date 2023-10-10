@@ -1,4 +1,5 @@
-import React, { Component, isValidElement, RefObject } from "react";
+import React, { Component, isValidElement } from "react";
+import type { RefObject } from "react";
 import ReactDOM from "react-dom";
 import Tether from "tether";
 

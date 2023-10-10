@@ -34,7 +34,7 @@ class App extends React.Component {
 								}}
 							>
 								Toggle Tethered Content
-              </button>
+							</button>
 							<button
 								onClick={() => {
 									this.setState({
@@ -45,7 +45,7 @@ class App extends React.Component {
 								}}
 							>
 								Change Classes
-              </button>
+							</button>
 						</div>
 					)}
 					renderElement={(ref) =>
@@ -61,7 +61,7 @@ class App extends React.Component {
 									}}
 								>
 									Add More Content
-                </button>
+								</button>
 								<p>{content}</p>
 							</div>
 						)
