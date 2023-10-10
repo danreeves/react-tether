@@ -27,7 +27,6 @@
 		"noUncheckedIndexedAccess": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"verbatimModuleSyntax": true,
 
 		// TSC config
 		"checkJs": true, // Typecheck JS files
