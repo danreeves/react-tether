@@ -23,49 +23,50 @@ React wrapper around [Tether](https://github.com/shipshapecode/tether), a positi
 import TetherComponent from "react-tether";
 
 class SimpleDemo extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isOpen: false,
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+  }
 
-	render() {
-		const { isOpen } = this.state;
+  render() {
+    const { isOpen } = this.state;
 
-		return (
-			<TetherComponent
-				attachment="top center"
-				constraints={[
-					{
-						to: "scrollParent",
-						attachment: "together",
-					},
-				]}
-				/* renderTarget: This is what the item will be tethered to, make sure to attach the ref */
-				renderTarget={(ref) => (
-					<button
-						ref={ref}
-						onClick={() => {
-							this.setState({ isOpen: !isOpen });
-						}}
-					>
-						Toggle Tethered Content
-					</button>
-				)}
-				/* renderElement: If present, this item will be tethered to the the component returned by renderTarget */
-				renderElement={(ref) =>
-					isOpen && (
-						<div ref={ref}>
-							<h2>Tethered Content</h2>
-							<p>A paragraph to accompany the title.</p>
-						</div>
-					)
-				}
-			/>
-		);
-	}
+    return (
+      <TetherComponent
+        attachment="top center"
+        constraints={[
+          {
+            to: "scrollParent",
+            attachment: "together",
+          },
+        ]}
+        /* renderTarget: This is what the item will be tethered to, make sure to attach the ref */
+        renderTarget={(ref) => (
+          <button
+            ref={ref}
+            onClick={() => {
+              this.setState({ isOpen: !isOpen });
+            }}
+          >
+            Toggle Tethered Content
+          </button>
+        )}
+        /* renderElement: If present, this item will be tethered to the component returned by renderTarget */
+        renderElement={(ref) =>
+          isOpen && (
+            <div ref={ref}>
+              <h2>Tethered Content</h2>
+              <p>A paragraph to accompany the title.</p>
+            </div>
+          )
+        }
+      />
+    );
+  }
 }
+
 ```
 
 ## Props
